@@ -1,4 +1,4 @@
-/*M!999999\- enable the sandbox mode */ 
+
 -- MariaDB dump 10.19-12.2.2-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: tripistry
@@ -35,8 +35,8 @@ CREATE TABLE `accommodation` (
   PRIMARY KEY (`accommodation_id`),
   KEY `destination_id` (`destination_id`),
   KEY `agency_id` (`agency_id`),
-  CONSTRAINT `1` FOREIGN KEY (`destination_id`) REFERENCES `destination` (`destination_id`),
-  CONSTRAINT `2` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
+  CONSTRAINT `fk_accommodation_destination` FOREIGN KEY (`destination_id`) REFERENCES `destination` (`destination_id`),
+  CONSTRAINT `fk_accommodation_agency` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -79,12 +79,12 @@ CREATE TABLE `activity` (
   `end_time` datetime DEFAULT NULL,
   `destination_id` int(11) NOT NULL,
   `agency_id` int(11) NOT NULL,
-  `activity_type` enum('attraction','restaurant') NOT NULL,
+  `activity_type` varchar(30) NOT NULL,
   PRIMARY KEY (`activity_id`),
   KEY `destination_id` (`destination_id`),
   KEY `agency_id` (`agency_id`),
-  CONSTRAINT `1` FOREIGN KEY (`destination_id`) REFERENCES `destination` (`destination_id`),
-  CONSTRAINT `2` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
+  CONSTRAINT `fk_activity_destination` FOREIGN KEY (`destination_id`) REFERENCES `destination` (`destination_id`),
+  CONSTRAINT `fk_activity_agency` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,15 +96,15 @@ SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `activity` WRITE;
 /*!40000 ALTER TABLE `activity` DISABLE KEYS */;
 INSERT INTO `activity` VALUES
-(1,'Table Mountain Cableway','Tafelberg Road, Table Mountain','Cape Town',380.00,'Cable car to the top of Table Mountain','2026-06-02 09:00:00','2026-06-02 17:00:00',1,6,'attraction'),
-(2,'Robben Island Tour','V&A Waterfront','Cape Town',400.00,'Historical tour of Robben Island','2026-06-03 10:00:00','2026-06-03 14:00:00',1,6,'attraction'),
-(3,'Kruger Safari Drive','Skukuza Camp','Kruger',1850.00,'Morning safari game drive','2026-07-15 05:30:00','2026-07-15 11:30:00',3,7,'attraction'),
-(4,'Eiffel Tower Visit','Champ de Mars','Paris',320.00,'Access to 2nd floor of Eiffel Tower','2026-06-05 10:00:00','2026-06-05 20:00:00',4,8,'attraction'),
-(5,'Grand Palace Tour','Na Phra Lan Rd','Bangkok',500.00,'Visit to the Grand Palace','2026-07-12 08:30:00','2026-07-12 15:30:00',5,9,'attraction'),
-(6,'Everglades Airboat Tour','Miami Everglades','Miami',650.00,'Airboat ride through Everglades','2026-08-08 10:00:00','2026-08-08 13:00:00',6,10,'attraction'),
-(7,'Le Bernadin Fine Dining','155 W 51st St','New York',2500.00,'Three-Michelin-star restaurant','2026-08-10 19:00:00','2026-08-10 22:00:00',6,10,'restaurant'),
-(8,'Gaggan Anand','68 Sukhumvit 31','Bangkok',1800.00,'Progressive Indian cuisine','2026-07-13 18:30:00','2026-07-13 21:30:00',5,9,'restaurant'),
-(9,'The Test Kitchen','The Old Biscuit Mill','Cape Town',1450.00,'Fine dining experience','2026-06-04 19:00:00','2026-06-04 22:00:00',1,6,'restaurant');
+(1,'Table Mountain Cableway','Tafelberg Road, Table Mountain','Cape Town',380.00,'Cable car to the top of Table Mountain','2026-06-02 09:00:00','2026-06-02 17:00:00',1,6,'Natural Landmark'),
+(2,'Robben Island Tour','V&A Waterfront','Cape Town',400.00,'Historical tour of Robben Island','2026-06-03 10:00:00','2026-06-03 14:00:00',1,6,'Historical Site'),
+(3,'Kruger Safari Drive','Skukuza Camp','Kruger',1850.00,'Morning safari game drive','2026-07-15 05:30:00','2026-07-15 11:30:00',3,7,'Wildlife Safari'),
+(4,'Eiffel Tower Visit','Champ de Mars','Paris',320.00,'Access to 2nd floor of Eiffel Tower','2026-06-05 10:00:00','2026-06-05 20:00:00',4,8,'Landmark'),
+(5,'Grand Palace Tour','Na Phra Lan Rd','Bangkok',500.00,'Visit to the Grand Palace','2026-07-12 08:30:00','2026-07-12 15:30:00',5,9,'Palace'),
+(6,'Everglades Airboat Tour','Miami Everglades','Miami',650.00,'Airboat ride through Everglades','2026-08-08 10:00:00','2026-08-08 13:00:00',6,10,'Nature Tour'),
+(7,'Le Bernadin Fine Dining','155 W 51st St','New York',2500.00,'Three-Michelin-star restaurant','2026-08-10 19:00:00','2026-08-10 22:00:00',6,10,'Restaurant'),
+(8,'Gaggan Anand','68 Sukhumvit 31','Bangkok',1800.00,'Progressive Indian cuisine','2026-07-13 18:30:00','2026-07-13 21:30:00',5,9,'Restaurant'),
+(9,'The Test Kitchen','The Old Biscuit Mill','Cape Town',1450.00,'Fine dining experience','2026-06-04 19:00:00','2026-06-04 22:00:00',1,6,'Restaurant');
 /*!40000 ALTER TABLE `activity` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -127,7 +127,7 @@ CREATE TABLE `agency_staff` (
   `role` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`staff_id`),
   KEY `agency_id` (`agency_id`),
-  CONSTRAINT `1` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
+  CONSTRAINT `fk_staff_agency` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -169,9 +169,9 @@ CREATE TABLE `booking` (
   KEY `traveller_id` (`traveller_id`),
   KEY `package_id` (`package_id`),
   KEY `group_trip_id` (`group_trip_id`),
-  CONSTRAINT `1` FOREIGN KEY (`traveller_id`) REFERENCES `traveller` (`traveller_id`),
-  CONSTRAINT `2` FOREIGN KEY (`package_id`) REFERENCES `travel_package` (`package_id`),
-  CONSTRAINT `3` FOREIGN KEY (`group_trip_id`) REFERENCES `group_trip` (`group_trip_id`)
+  CONSTRAINT `fk_booking_traveller` FOREIGN KEY (`traveller_id`) REFERENCES `traveller` (`traveller_id`),
+  CONSTRAINT `fk_booking_package` FOREIGN KEY (`package_id`) REFERENCES `travel_package` (`package_id`),
+  CONSTRAINT `fk_booking_group` FOREIGN KEY (`group_trip_id`) REFERENCES `group_trip` (`group_trip_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -254,9 +254,9 @@ CREATE TABLE `flight` (
   KEY `origin_destination_id` (`origin_destination_id`),
   KEY `destination_id` (`destination_id`),
   KEY `agency_id` (`agency_id`),
-  CONSTRAINT `1` FOREIGN KEY (`origin_destination_id`) REFERENCES `destination` (`destination_id`),
-  CONSTRAINT `2` FOREIGN KEY (`destination_id`) REFERENCES `destination` (`destination_id`),
-  CONSTRAINT `3` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
+  CONSTRAINT `fk_flight_origin` FOREIGN KEY (`origin_destination_id`) REFERENCES `destination` (`destination_id`),
+  CONSTRAINT `fk_flight_destination` FOREIGN KEY (`destination_id`) REFERENCES `destination` (`destination_id`),
+  CONSTRAINT `fk_flight_agency` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -300,8 +300,8 @@ CREATE TABLE `group_trip` (
   PRIMARY KEY (`group_trip_id`),
   KEY `package_id` (`package_id`),
   KEY `agency_id` (`agency_id`),
-  CONSTRAINT `1` FOREIGN KEY (`package_id`) REFERENCES `travel_package` (`package_id`),
-  CONSTRAINT `2` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
+  CONSTRAINT `fk_grouptrip_package` FOREIGN KEY (`package_id`) REFERENCES `travel_package` (`package_id`),
+  CONSTRAINT `fk_grouptrip_agency` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -335,7 +335,7 @@ CREATE TABLE `package_component` (
   `component_id` int(11) NOT NULL,
   PRIMARY KEY (`package_component_id`),
   KEY `package_id` (`package_id`),
-  CONSTRAINT `1` FOREIGN KEY (`package_id`) REFERENCES `travel_package` (`package_id`) ON DELETE CASCADE
+  CONSTRAINT `fk_pkgcomponent_package` FOREIGN KEY (`package_id`) REFERENCES `travel_package` (`package_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -386,7 +386,7 @@ CREATE TABLE `receipt` (
   PRIMARY KEY (`receipt_id`),
   UNIQUE KEY `receipt_number` (`receipt_number`),
   KEY `booking_id` (`booking_id`),
-  CONSTRAINT `1` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`booking_id`)
+  CONSTRAINT `fk_receipt_booking` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`booking_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -411,36 +411,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 -- Table structure for table `restaurant`
 --
-
 DROP TABLE IF EXISTS `restaurant`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `restaurant` (
-  `restaurant_id` int(11) NOT NULL,
-  `cuisine_type` varchar(100) DEFAULT NULL,
-  `price_range` enum('$','$$','$$$','$$$$') DEFAULT NULL,
-  `opening_hours` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`restaurant_id`),
-  CONSTRAINT `1` FOREIGN KEY (`restaurant_id`) REFERENCES `activity` (`activity_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `restaurant`
---
-
-SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
-LOCK TABLES `restaurant` WRITE;
-/*!40000 ALTER TABLE `restaurant` DISABLE KEYS */;
-INSERT INTO `restaurant` VALUES
-(7,'French','$$$$','17:00-22:00'),
-(8,'Indian','$$$','18:00-23:00'),
-(9,'South African','$$$','18:00-22:00');
-/*!40000 ALTER TABLE `restaurant` ENABLE KEYS */;
-UNLOCK TABLES;
-COMMIT;
-SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
-
 --
 -- Table structure for table `review`
 --
@@ -460,9 +431,9 @@ CREATE TABLE `review` (
   KEY `traveller_id` (`traveller_id`),
   KEY `agency_id` (`agency_id`),
   KEY `package_id` (`package_id`),
-  CONSTRAINT `1` FOREIGN KEY (`traveller_id`) REFERENCES `traveller` (`traveller_id`),
-  CONSTRAINT `2` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`),
-  CONSTRAINT `3` FOREIGN KEY (`package_id`) REFERENCES `travel_package` (`package_id`),
+  CONSTRAINT `fk_review_traveller` FOREIGN KEY (`traveller_id`) REFERENCES `traveller` (`traveller_id`),
+  CONSTRAINT `fk_review_agency` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`),
+  CONSTRAINT `fk_review_package` FOREIGN KEY (`package_id`) REFERENCES `travel_package` (`package_id`),
   CONSTRAINT `CONSTRAINT_1` CHECK (`agency_id` is not null or `package_id` is not null)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -491,36 +462,6 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `tourist_attraction`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tourist_attraction` (
-  `attraction_id` int(11) NOT NULL,
-  `entry_fee` decimal(10,2) DEFAULT NULL,
-  `opening_hours` varchar(100) DEFAULT NULL,
-  `category` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`attraction_id`),
-  CONSTRAINT `1` FOREIGN KEY (`attraction_id`) REFERENCES `activity` (`activity_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tourist_attraction`
---
-
-SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
-LOCK TABLES `tourist_attraction` WRITE;
-/*!40000 ALTER TABLE `tourist_attraction` DISABLE KEYS */;
-INSERT INTO `tourist_attraction` VALUES
-(1,380.00,'08:00-19:00','Natural Landmark'),
-(2,400.00,'09:00-15:00','Historical Site'),
-(3,1850.00,'05:30-11:30','Wildlife Safari'),
-(4,320.00,'09:00-23:00','Landmark'),
-(5,500.00,'08:30-15:30','Palace'),
-(6,650.00,'09:00-17:00','Nature Tour');
-/*!40000 ALTER TABLE `tourist_attraction` ENABLE KEYS */;
-UNLOCK TABLES;
-COMMIT;
-SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `transport`
@@ -542,9 +483,9 @@ CREATE TABLE `transport` (
   KEY `origin_destination_id` (`origin_destination_id`),
   KEY `destination_id` (`destination_id`),
   KEY `agency_id` (`agency_id`),
-  CONSTRAINT `1` FOREIGN KEY (`origin_destination_id`) REFERENCES `destination` (`destination_id`),
-  CONSTRAINT `2` FOREIGN KEY (`destination_id`) REFERENCES `destination` (`destination_id`),
-  CONSTRAINT `3` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
+  CONSTRAINT `fk_transport_origin` FOREIGN KEY (`origin_destination_id`) REFERENCES `destination` (`destination_id`),
+  CONSTRAINT `fk_transport_destination` FOREIGN KEY (`destination_id`) REFERENCES `destination` (`destination_id`),
+  CONSTRAINT `fk_transport_agency` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -583,7 +524,7 @@ CREATE TABLE `travel_agency` (
   `address` varchar(255) DEFAULT NULL,
   `country` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`agency_id`),
-  CONSTRAINT `1` FOREIGN KEY (`agency_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+  CONSTRAINT `fk_travelagency_user` FOREIGN KEY (`agency_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -615,14 +556,21 @@ DROP TABLE IF EXISTS `travel_package`;
 CREATE TABLE `travel_package` (
   `package_id` int(11) NOT NULL AUTO_INCREMENT,
   `agency_id` int(11) NOT NULL,
+  `destination_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `base_price` decimal(10,2) NOT NULL,
   `duration_days` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `avg_rating` decimal(3,2) DEFAULT 0.00,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`package_id`),
   KEY `agency_id` (`agency_id`),
-  CONSTRAINT `1` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`)
+  KEY `destination_id` (`destination_id`),
+  CONSTRAINT `fk_package_agency` FOREIGN KEY (`agency_id`) REFERENCES `travel_agency` (`agency_id`),
+  CONSTRAINT `fk_package_destination` FOREIGN KEY (`destination_id`) REFERENCES `destination` (`destination_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -634,14 +582,14 @@ SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `travel_package` WRITE;
 /*!40000 ALTER TABLE `travel_package` DISABLE KEYS */;
 INSERT INTO `travel_package` VALUES
-(1,6,'Cape Town Explorer','5 days in beautiful Cape Town including Table Mountain',8500.00,5,'2026-05-12 16:12:32'),
-(2,6,'Garden Route Adventure','7 day road trip along South Africa\'s stunning coastline',12500.00,7,'2026-05-12 16:12:32'),
-(3,7,'Kruger Big 5 Safari','4 day safari in Kruger National Park',18500.00,4,'2026-05-12 16:12:32'),
-(4,8,'Paris Romance','5 days in Paris including Eiffel Tower and Seine cruise',15000.00,5,'2026-05-12 16:12:32'),
-(5,9,'Bangkok Foodie Tour','4 days of Thai street food and temples',12000.00,4,'2026-05-12 16:12:32'),
-(6,10,'Miami Beach Escape','5 days of sun, sand and nightlife',13500.00,5,'2026-05-12 16:12:32'),
-(7,8,'London Heritage','4 days exploring British history and royal sites',14200.00,4,'2026-05-12 16:12:32'),
-(8,9,'Tokyo Discovery','6 days of futuristic Tokyo and traditional culture',22000.00,6,'2026-05-12 16:12:32');
+(1,6,1,'Cape Town Explorer','5 days in beautiful Cape Town including Table Mountain',8500.00,5,'2026-06-01','2026-06-05','/images/packages/capetown_explorer.jpg',3.00,'2026-05-12 16:12:32'),
+(2,6,1,'Garden Route Adventure','7 day road trip along South Africa\'s stunning coastline',12500.00,7,'2026-07-01','2026-07-07','/images/packages/garden_route.jpg',0.00,'2026-05-12 16:12:32'),
+(3,7,3,'Kruger Big 5 Safari','4 day safari in Kruger National Park',18500.00,4,'2026-07-15','2026-07-19','/images/packages/kruger_safari.jpg',5.00,'2026-05-12 16:12:32'),
+(4,8,4,'Paris Romance','5 days in Paris including Eiffel Tower and Seine cruise',15000.00,5,'2026-06-05','2026-06-10','/images/packages/paris_romance.jpg',5.00,'2026-05-12 16:12:32'),
+(5,9,5,'Bangkok Foodie Tour','4 days of Thai street food and temples',12000.00,4,'2026-07-12','2026-07-16','/images/packages/bangkok_foodie.jpg',5.00,'2026-05-12 16:12:32'),
+(6,10,6,'Miami Beach Escape','5 days of sun, sand and nightlife',13500.00,5,'2026-08-05','2026-08-10','/images/packages/miami_escape.jpg',0.00,'2026-05-12 16:12:32'),
+(7,8,7,'London Heritage','4 days exploring British history and royal sites',14200.00,4,'2026-09-01','2026-09-05','/images/packages/london_heritage.jpg',0.00,'2026-05-12 16:12:32'),
+(8,9,8,'Tokyo Discovery','6 days of futuristic Tokyo and traditional culture',22000.00,6,'2026-09-10','2026-09-16','/images/packages/tokyo_discovery.jpg',0.00,'2026-05-12 16:12:32');
 /*!40000 ALTER TABLE `travel_package` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -663,7 +611,7 @@ CREATE TABLE `traveller` (
   `id_number` varchar(50) DEFAULT NULL,
   `passport_number` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`traveller_id`),
-  CONSTRAINT `1` FOREIGN KEY (`traveller_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+  CONSTRAINT `fk_traveller_user` FOREIGN KEY (`traveller_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
