@@ -13,13 +13,13 @@ header('Content-Type: text/html; charset=utf-8');
 
 $db = get_db();
 
-$search      = trim($_GET['search']      ?? '');
+$search = trim($_GET['search']      ?? '');
 $destination = (int)($_GET['destination'] ?? 0);
-$agency_id   = (int)($_GET['agency_id']  ?? 0);
-$min_price   = (float)($_GET['min_price'] ?? 0);
-$max_price   = (float)($_GET['max_price'] ?? 0);
-$duration    = (int)($_GET['duration']   ?? 0);
-$sort        = $_GET['sort'] ?? 'rating';
+$agency_id = (int)($_GET['agency_id']  ?? 0);
+$min_price = (float)($_GET['min_price'] ?? 0);
+$max_price = (float)($_GET['max_price'] ?? 0);
+$duration = (int)($_GET['duration']   ?? 0);
+$sort = $_GET['sort'] ?? 'rating';
 
 $sort_map = [
     'rating'    => 'avg_rating DESC',
@@ -31,12 +31,12 @@ $sort_map = [
 $order_by = $sort_map[$sort] ?? 'avg_rating DESC';
 
 $where = ['1=1']; $params = [];
-if ($search)      { $where[] = "(tp.name LIKE ? OR ta.company_name LIKE ?)"; $params[] = "%$search%"; $params[] = "%$search%"; }
+if ($search) { $where[] = "(tp.name LIKE ? OR ta.company_name LIKE ?)"; $params[] = "%$search%"; $params[] = "%$search%"; }
 if ($destination) { $where[] = "d.destination_id = ?"; $params[] = $destination; }
-if ($agency_id)   { $where[] = "tp.agency_id = ?"; $params[] = $agency_id; }
-if ($min_price)   { $where[] = "tp.base_price >= ?"; $params[] = $min_price; }
-if ($max_price)   { $where[] = "tp.base_price <= ?"; $params[] = $max_price; }
-if ($duration)    { $where[] = "tp.duration_days <= ?"; $params[] = $duration; }
+if ($agency_id) { $where[] = "tp.agency_id = ?"; $params[] = $agency_id; }
+if ($min_price) { $where[] = "tp.base_price >= ?"; $params[] = $min_price; }
+if ($max_price) { $where[] = "tp.base_price <= ?"; $params[] = $max_price; }
+if ($duration) { $where[] = "tp.duration_days <= ?"; $params[] = $duration; }
 
 $where_sql = implode(' AND ', $where);
 
@@ -80,11 +80,11 @@ if (empty($packages)): ?>
             </div>
             <?php if ($p['duration_days']): ?><p class="text-muted mt-1" style="font-size:.82rem">⏱ <?= $p['duration_days'] ?> days</p><?php endif; ?>
             <div style="margin-top:.9rem;display:flex;gap:.5rem">
-                <a href="/traveller/package_detail.php?id=<?= $p['package_id'] ?>" class="btn btn-outline btn-sm">Details</a>
+                <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>" class="btn btn-outline btn-sm">Details</a>
                 <?php if (is_logged_in()): ?>
-                <a href="/traveller/book.php?package_id=<?= $p['package_id'] ?>" class="btn btn-primary btn-sm">Book Now</a>
+                <a href="<?= BASE_URL ?>/traveller/book.php?package_id=<?= $p['package_id'] ?>" class="btn btn-primary btn-sm">Book Now</a>
                 <?php else: ?>
-                <a href="/login.php" class="btn btn-primary btn-sm">Login to Book</a>
+                <a href="<?= BASE_URL ?>/login.php" class="btn btn-primary btn-sm">Login to Book</a>
                 <?php endif; ?>
             </div>
         </div>

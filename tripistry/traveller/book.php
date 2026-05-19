@@ -11,13 +11,13 @@ $uid        = current_user_id();
 $package_id = (int)($_GET['package_id'] ?? $_POST['package_id'] ?? 0);
 $gt_id      = (int)($_GET['group_trip_id'] ?? $_POST['group_trip_id'] ?? 0) ?: null;
 
-if (!$package_id) { header('Location: /traveller/packages.php'); exit; }
+if (!$package_id) { header('Location: ' . BASE_URL . '/traveller/packages.php'); exit; }
 
 // Load package
 $stmt = $db->prepare("SELECT tp.*, ta.company_name FROM travel_package tp JOIN travel_agency ta ON ta.agency_id=tp.agency_id WHERE tp.package_id=?");
 $stmt->execute([$package_id]);
 $pkg = $stmt->fetch();
-if (!$pkg) { header('Location: /traveller/packages.php'); exit; }
+if (!$pkg) { header('Location: ' . BASE_URL . '/traveller/packages.php'); exit; }
 
 // Load group trip if given
 $gt = null;
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $db->commit();
                 set_flash('success', "Booking confirmed! Receipt: $receipt_num");
-                header('Location: /traveller/bookings.php'); exit;
+                header('Location: ' . BASE_URL . '/traveller/bookings.php'); exit;
             } catch (Exception $e) {
                 $db->rollBack();
                 $errors[] = 'Booking failed: ' . $e->getMessage();
@@ -72,7 +72,7 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div style="max-width:600px;margin:0 auto">
-    <a href="/traveller/package_detail.php?id=<?= $package_id ?>" class="text-muted" style="font-size:.9rem">← Back to Package</a>
+    <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $package_id ?>" class="text-muted" style="font-size:.9rem">← Back to Package</a>
 
     <div class="form-card" style="max-width:100%;margin-top:1.25rem">
         <h2>Confirm Booking</h2>
@@ -91,7 +91,7 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="flex-between"><strong>Total</strong><strong class="price-badge">R<?= number_format($pkg['base_price'], 2) ?></strong></div>
         </div>
 
-        <form method="POST" action="/traveller/book.php" data-validate>
+        <form method="POST" action="<?= BASE_URL ?>/traveller/book.php" data-validate>
             <?= csrf_field() ?>
             <input type="hidden" name="package_id" value="<?= $package_id ?>">
             <?php if ($gt_id): ?><input type="hidden" name="group_trip_id" value="<?= $gt_id ?>"><?php endif; ?>

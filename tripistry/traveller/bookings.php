@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'cance
         $stmt->execute([$bid, $uid]);
         set_flash('success', 'Booking cancelled.');
     }
-    header('Location: /traveller/bookings.php'); exit;
+    header('Location: ' . BASE_URL . '/traveller/bookings.php'); exit;
 }
 
 // Load bookings
@@ -60,7 +60,7 @@ require_once __DIR__ . '/../includes/header.php';
 <?php if ($detail): ?>
 <!-- ── Booking detail ── -->
 <div style="max-width:580px">
-    <a href="/traveller/bookings.php" class="text-muted" style="font-size:.9rem">← All Bookings</a>
+    <a href="<?= BASE_URL ?>/traveller/bookings.php" class="text-muted" style="font-size:.9rem">← All Bookings</a>
     <div class="card mt-2">
         <div class="card-body">
             <h2 style="margin-bottom:.25rem"><?= e($detail['package_name']) ?></h2>
@@ -92,7 +92,7 @@ require_once __DIR__ . '/../includes/header.php';
 
             <?php if ($detail['status'] === 'pending'): ?>
             <hr class="divider">
-            <form method="POST" action="/traveller/bookings.php">
+            <form method="POST" action="<?= BASE_URL ?>/traveller/bookings.php">
                 <?= csrf_field() ?>
                 <input type="hidden" name="action" value="cancel">
                 <input type="hidden" name="booking_id" value="<?= $detail['booking_id'] ?>">
@@ -102,7 +102,7 @@ require_once __DIR__ . '/../includes/header.php';
             <?php endif; ?>
 
             <hr class="divider">
-            <a href="/traveller/reviews.php?package_id=<?= $detail['package_id'] ?>" class="btn btn-outline btn-sm">Write a Review</a>
+            <a href="<?= BASE_URL ?>/traveller/reviews.php?package_id=<?= $detail['package_id'] ?>" class="btn btn-outline btn-sm">Write a Review</a>
         </div>
     </div>
 </div>
@@ -113,7 +113,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="empty-state">
         <div class="empty-icon">🗺️</div>
         <p>No bookings yet.</p>
-        <a href="/traveller/packages.php" class="btn btn-primary mt-2">Browse Packages</a>
+        <a href="<?= BASE_URL ?>/traveller/packages.php" class="btn btn-primary mt-2">Browse Packages</a>
     </div>
 <?php else: ?>
 <div class="table-wrap card">
@@ -122,13 +122,13 @@ require_once __DIR__ . '/../includes/header.php';
     <tbody>
     <?php foreach ($bookings as $b): ?>
     <tr>
-        <td><a href="/traveller/package_detail.php?id=<?= $b['package_id'] ?>"><?= e($b['package_name']) ?></a></td>
+        <td><a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $b['package_id'] ?>"><?= e($b['package_name']) ?></a></td>
         <td><?= e($b['company_name']) ?></td>
         <td><?= date('d M Y', strtotime($b['booking_date'])) ?></td>
         <td>R<?= number_format($b['total_price'], 2) ?></td>
         <td><span class="badge badge-<?= e($b['status']) ?>"><?= e($b['status']) ?></span></td>
         <td><?= $b['receipt_number'] ? e($b['receipt_number']) : '–' ?></td>
-        <td><a href="/traveller/bookings.php?id=<?= $b['booking_id'] ?>" class="btn btn-outline btn-sm">View</a></td>
+        <td><a href="<?= BASE_URL ?>/traveller/bookings.php?id=<?= $b['booking_id'] ?>" class="btn btn-outline btn-sm">View</a></td>
     </tr>
     <?php endforeach; ?>
     </tbody>

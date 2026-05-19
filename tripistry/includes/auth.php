@@ -32,7 +32,7 @@ function current_user_id(): ?int {
 /** Redirects to login if not logged in */
 function require_login(): void {
     if (!is_logged_in()) {
-        header('Location: /login.php?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+        header('Location: ' . BASE_URL . '/login.php?redirect=' . urlencode($_SERVER['REQUEST_URI']));
         exit;
     }
 }
@@ -41,7 +41,7 @@ function require_login(): void {
 function require_role(string $role): void {
     require_login();
     if (current_role() !== $role) {
-        header('Location: /index.php?error=access_denied');
+        header('Location: ' . BASE_URL . '/index.php?error=access_denied');
         exit;
     }
 }

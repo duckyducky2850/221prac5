@@ -82,14 +82,14 @@ require_once __DIR__ . '/../includes/header.php';
 <!-- Recent bookings -->
 <div class="section-heading">
     <h2>Recent Bookings</h2>
-    <a href="/traveller/bookings.php" class="btn btn-outline btn-sm">View All</a>
+    <a href="<?= BASE_URL ?>/traveller/bookings.php" class="btn btn-outline btn-sm">View All</a>
 </div>
 
 <?php if (empty($recent_bookings)): ?>
     <div class="empty-state">
         <div class="empty-icon">🗺️</div>
         <p>You haven't made any bookings yet.</p>
-        <a href="/traveller/packages.php" class="btn btn-primary mt-2">Browse Packages</a>
+        <a href="<?= BASE_URL ?>/traveller/packages.php" class="btn btn-primary mt-2">Browse Packages</a>
     </div>
 <?php else: ?>
 <div class="table-wrap card">
@@ -105,7 +105,7 @@ require_once __DIR__ . '/../includes/header.php';
             <td><?= date('d M Y', strtotime($b['booking_date'])) ?></td>
             <td>R<?= number_format($b['total_price'], 2) ?></td>
             <td><span class="badge badge-<?= e($b['status']) ?>"><?= e($b['status']) ?></span></td>
-            <td><a href="/traveller/bookings.php?id=<?= $b['booking_id'] ?>" class="btn btn-outline btn-sm">View</a></td>
+            <td><a href="<?= BASE_URL ?>/traveller/bookings.php?id=<?= $b['booking_id'] ?>" class="btn btn-outline btn-sm">View</a></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
@@ -117,11 +117,11 @@ require_once __DIR__ . '/../includes/header.php';
 <?php if (!empty($recommended)): ?>
 <div class="section-heading mt-3">
     <h2>Recommended for You</h2>
-    <a href="/traveller/packages.php" class="btn btn-outline btn-sm">Browse All</a>
+    <a href="<?= BASE_URL ?>/traveller/packages.php" class="btn btn-outline btn-sm">Browse All</a>
 </div>
 <div class="grid-4">
     <?php foreach ($recommended as $p): ?>
-    <a href="/traveller/package_detail.php?id=<?= $p['package_id'] ?>" style="text-decoration:none;color:inherit">
+    <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
         <div class="card-img-placeholder" style="height:120px">🌏</div>
         <div class="card-body" style="padding:.9rem">

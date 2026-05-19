@@ -1,24 +1,24 @@
 <?php
-/**
- * agency/package_form.php  –  Create or edit a travel package
- * Also manages the package_component relationships.
+/* agency/package_form.php  –  Create or edit a travel package. so it also manages the package_component relationships.
  */
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('agency');
 
-$db        = get_db();
+$db = get_db();
 $agency_id = (int)$_SESSION['agency_id'];
-$edit_id   = (int)($_GET['id'] ?? 0);
+$edit_id = (int)($_GET['id'] ?? 0);
 
-// Load existing package (edit mode)
+// loading our existing package 
 $pkg = null;
 $existing_components = [];
-if ($edit_id) {
+
+if ($edit_id) 
+{
     $s = $db->prepare("SELECT * FROM travel_package WHERE package_id=? AND agency_id=?");
     $s->execute([$edit_id, $agency_id]);
     $pkg = $s->fetch();
-    if (!$pkg) { set_flash('error','Package not found.'); header('Location: /agency/packages.php'); exit; }
+    if (!$pkg) { set_flash('error','Package not found.'); header('Location: ' . BASE_URL . '/agency/packages.php'); exit; }
 
     $s = $db->prepare("SELECT * FROM package_component WHERE package_id=? ORDER BY component_type");
     $s->execute([$edit_id]);
@@ -27,29 +27,35 @@ if ($edit_id) {
 
 $errors = [];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verify_csrf()) { $errors[] = 'Invalid request.'; }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+{
+    if (!verify_csrf()) { 
+        $errors[] = 'Invalid request.'; 
+    }
     else {
-        $name         = trim($_POST['name']         ?? '');
-        $description  = trim($_POST['description']  ?? '');
-        $base_price   = (float)($_POST['base_price'] ?? 0);
-        $duration     = (int)($_POST['duration_days'] ?? 0);
+        $name = trim($_POST['name'] ?? '');
+        $description = trim($_POST['description']  ?? '');
+        $base_price = (float)($_POST['base_price'] ?? 0);
+        $duration = (int)($_POST['duration_days'] ?? 0);
 
         // Component arrays
         $c_types = $_POST['component_type'] ?? [];
-        $c_ids   = $_POST['component_id']   ?? [];
+        $c_ids = $_POST['component_id'] ?? [];
 
-        if (!$name)            $errors[] = 'Package name is required.';
-        if ($base_price <= 0)  $errors[] = 'Base price must be greater than 0.';
+        if (!$name) $errors[] = 'Package name is required.';
+        if ($base_price <= 0) $errors[] = 'Base price must be greater than 0.';
 
-        if (empty($errors)) {
+        if (empty($errors)) 
+        {
             $db->beginTransaction();
-            try {
-                if ($edit_id) {
+            try 
+            {
+                if ($edit_id) 
+                {
                     $stmt = $db->prepare("UPDATE travel_package SET name=?,description=?,base_price=?,duration_days=? WHERE package_id=? AND agency_id=?");
                     $stmt->execute([$name, $description ?: null, $base_price, $duration ?: null, $edit_id, $agency_id]);
                     $pid = $edit_id;
-                    // Clear and re-insert components
+                    // Clearing and re inserting components
                     $db->prepare("DELETE FROM package_component WHERE package_id=?")->execute([$pid]);
                 } else {
                     $stmt = $db->prepare("INSERT INTO travel_package (agency_id,name,description,base_price,duration_days) VALUES (?,?,?,?,?)");
@@ -59,18 +65,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Insert components
                 $comp_stmt = $db->prepare("INSERT INTO package_component (package_id, component_type, component_id) VALUES (?,?,?)");
-                foreach ($c_types as $i => $type) {
+                foreach ($c_types as $i => $type) 
+                {
                     $cid = (int)($c_ids[$i] ?? 0);
                     $valid_types = ['flight','accommodation','transport','activity'];
-                    if ($cid > 0 && in_array($type, $valid_types)) {
+
+                    if ($cid > 0 && in_array($type, $valid_types)) 
+                    {
                         $comp_stmt->execute([$pid, $type, $cid]);
                     }
                 }
 
                 $db->commit();
+
                 set_flash('success', $edit_id ? 'Package updated.' : 'Package created.');
-                header('Location: /agency/packages.php'); exit;
-            } catch (Exception $e) {
+                header('Location: ' . BASE_URL . '/agency/packages.php'); exit;
+
+            } catch (Exception $e) 
+            {
                 $db->rollBack();
                 $errors[] = 'Save failed: ' . $e->getMessage();
             }
@@ -78,17 +90,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Component options for dropdowns
-$flights        = $db->prepare("SELECT flight_id AS id, CONCAT(flight_number,' – ',airline) AS label FROM flight WHERE agency_id=?"); $flights->execute([$agency_id]);
+// Component options for our dropdowns
+$flights = $db->prepare("SELECT flight_id AS id, CONCAT(flight_number,' – ',airline) AS label FROM flight WHERE agency_id=?"); $flights->execute([$agency_id]);
 $accommodations = $db->prepare("SELECT accommodation_id AS id, name AS label FROM accommodation WHERE agency_id=?"); $accommodations->execute([$agency_id]);
-$transports     = $db->prepare("SELECT transport_id AS id, CONCAT(type,' (',COALESCE(provider,''),' )') AS label FROM transport WHERE agency_id=?"); $transports->execute([$agency_id]);
-$activities     = $db->prepare("SELECT activity_id AS id, name AS label FROM activity WHERE agency_id=?"); $activities->execute([$agency_id]);
+$transports = $db->prepare("SELECT transport_id AS id, CONCAT(type,' (',COALESCE(provider,''),' )') AS label FROM transport WHERE agency_id=?"); $transports->execute([$agency_id]);
+$activities = $db->prepare("SELECT activity_id AS id, name AS label FROM activity WHERE agency_id=?"); $activities->execute([$agency_id]);
 
 $comp_options = [
-    'flight'        => $flights->fetchAll(),
+    'flight' => $flights->fetchAll(),
     'accommodation' => $accommodations->fetchAll(),
-    'transport'     => $transports->fetchAll(),
-    'activity'      => $activities->fetchAll(),
+    'transport' => $transports->fetchAll(),
+    'activity' => $activities->fetchAll(),
 ];
 
 $page_title = $edit_id ? 'Edit Package' : 'New Package';
@@ -96,14 +108,14 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div style="max-width:720px">
-    <a href="/agency/packages.php" class="text-muted" style="font-size:.9rem">← My Packages</a>
+    <a href="<?= BASE_URL ?>/agency/packages.php" class="text-muted" style="font-size:.9rem">← My Packages</a>
 
     <div class="form-card" style="max-width:100%;margin-top:1rem">
         <h2><?= $edit_id ? 'Edit Package' : 'Create Package' ?></h2>
 
         <?php foreach ($errors as $err): ?><div class="flash flash--error"><?= e($err) ?></div><?php endforeach; ?>
 
-        <form method="POST" action="/agency/package_form.php<?= $edit_id ? '?id='.$edit_id : '' ?>" data-validate>
+        <form method="POST" action="<?= BASE_URL ?>/agency/package_form.php<?= $edit_id ? '?id='.$edit_id : '' ?>" data-validate>
             <?= csrf_field() ?>
 
             <div class="form-group">

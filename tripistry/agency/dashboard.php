@@ -110,9 +110,9 @@ require_once __DIR__ . '/../includes/header.php';
     <?php endif; ?>
 
     <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap">
-        <a href="/agency/packages.php" class="btn btn-primary">Manage Packages</a>
-        <a href="/agency/group_trips.php" class="btn btn-outline">Group Trips</a>
-        <a href="/agency/manage_content.php" class="btn btn-outline">Manage Content</a>
+        <a href="<?= BASE_URL ?>/agency/packages.php" class="btn btn-primary">Manage Packages</a>
+        <a href="<?= BASE_URL ?>/agency/group_trips.php" class="btn btn-outline">Group Trips</a>
+        <a href="<?= BASE_URL ?>/agency/manage_content.php" class="btn btn-outline">Manage Content</a>
     </div>
 </div>
 

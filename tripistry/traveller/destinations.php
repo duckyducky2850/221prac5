@@ -51,7 +51,7 @@ require_once __DIR__ . '/../includes/header.php';
 <!-- ── Destinations grid ── -->
 <div class="grid-3">
     <?php foreach ($destinations as $d): ?>
-    <a href="/traveller/destinations.php?id=<?= $d['destination_id'] ?>" style="text-decoration:none;color:inherit">
+    <a href="<?= BASE_URL ?>/traveller/destinations.php?id=<?= $d['destination_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
         <div class="card-img-placeholder">🌆</div>
         <div class="card-body">
@@ -71,7 +71,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <?php else: ?>
 <!-- ── Destination detail ── -->
-<a href="/traveller/destinations.php" class="text-muted" style="font-size:.9rem">← All Destinations</a>
+<a href="<?= BASE_URL ?>/traveller/destinations.php" class="text-muted" style="font-size:.9rem">← All Destinations</a>
 
 <?php if ($dest['description']): ?>
     <p style="margin:1rem 0"><?= nl2br(e($dest['description'])) ?></p>

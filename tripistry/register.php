@@ -6,7 +6,7 @@ require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/auth.php';
 
 if (is_logged_in()) {
-    header('Location: /index.php'); exit;
+    header('Location: ' . BASE_URL . '/index.php'); exit;
 }
 
 $errors = [];
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $db->commit();
                 set_flash('success', 'Account created! Please log in.');
-                header('Location: /login.php'); exit;
+                header('Location: ' . BASE_URL . '/login.php'); exit;
             } catch (Exception $ex) {
                 $db->rollBack();
                 $errors[] = 'Registration failed: ' . $ex->getMessage();
@@ -105,7 +105,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="flash flash--error"><?= e($err) ?></div>
     <?php endforeach; ?>
 
-    <form method="POST" action="/register.php" data-validate>
+    <form method="POST" action="<?= BASE_URL ?>/register.php" data-validate>
         <?= csrf_field() ?>
 
         <!-- Role picker -->
@@ -191,7 +191,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <hr class="divider">
     <p class="text-center text-muted" style="font-size:.9rem">
-        Already have an account? <a href="/login.php">Log in here</a>
+        Already have an account? <a href="<?= BASE_URL ?>/login.php">Log in here</a>
     </p>
 </div>
 

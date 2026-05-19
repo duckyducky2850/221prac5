@@ -16,7 +16,7 @@ $errors = [];
 
 // ── Generic POST handler ──────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verify_csrf()) { set_flash('error','Invalid request.'); header('Location: /agency/manage_content.php'); exit; }
+    if (!verify_csrf()) { set_flash('error','Invalid request.'); header('Location: ' . BASE_URL . '/agency/manage_content.php'); exit; }
 
     $action = $_POST['action'] ?? '';
     $tab    = $_POST['tab']    ?? 'flights';
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         set_flash('success','Activity deleted.');
     }
 
-    header('Location: /agency/manage_content.php?tab=' . urlencode($tab)); exit;
+    header('Location: ' . BASE_URL . '/agency/manage_content.php?tab=' . urlencode($tab)); exit;
 }
 
 $active_tab = $_GET['tab'] ?? 'flights';

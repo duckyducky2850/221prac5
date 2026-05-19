@@ -1,6 +1,5 @@
 <?php
-/**
- * agency/packages.php  –  List + delete packages (CRUD entry point)
+/* agency/packages.php,  List + delete packages
  */
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
@@ -10,8 +9,11 @@ $db        = get_db();
 $agency_id = (int)$_SESSION['agency_id'];
 
 // Handle delete
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delete') {
-    if (!verify_csrf()) { set_flash('error','Invalid request.'); }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delete') 
+{
+    if (!verify_csrf()) { 
+        set_flash('error','Invalid request.'); 
+    }
     else {
         $pid = (int)$_POST['package_id'];
         // Only delete own packages
@@ -19,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delet
         $stmt->execute([$pid, $agency_id]);
         set_flash('success', 'Package deleted.');
     }
-    header('Location: /agency/packages.php'); exit;
+    header('Location: ' . BASE_URL . '/agency/packages.php'); exit;
 }
 
 // Fetch packages with booking + review stats
@@ -47,14 +49,14 @@ require_once __DIR__ . '/../includes/header.php';
         <h1>My Packages</h1>
         <p>Create and manage the travel packages you offer.</p>
     </div>
-    <a href="/agency/package_form.php" class="btn btn-primary">+ New Package</a>
+    <a href="<?= BASE_URL ?>/agency/package_form.php" class="btn btn-primary">+ New Package</a>
 </div>
 
 <?php if (empty($packages)): ?>
     <div class="empty-state">
         <div class="empty-icon">📦</div>
         <p>You haven't created any packages yet.</p>
-        <a href="/agency/package_form.php" class="btn btn-primary mt-2">Create Your First Package</a>
+        <a href="<?= BASE_URL ?>/agency/package_form.php" class="btn btn-primary mt-2">Create Your First Package</a>
     </div>
 <?php else: ?>
 <div class="table-wrap card">
@@ -63,7 +65,7 @@ require_once __DIR__ . '/../includes/header.php';
     <tbody>
     <?php foreach ($packages as $p): ?>
     <tr>
-        <td><a href="/traveller/package_detail.php?id=<?= $p['package_id'] ?>"><?= e($p['name']) ?></a></td>
+        <td><a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>"><?= e($p['name']) ?></a></td>
         <td>R<?= number_format($p['base_price'], 2) ?></td>
         <td><?= $p['duration_days'] ? $p['duration_days'].' days' : '–' ?></td>
         <td><?= $p['booking_count'] ?></td>
@@ -77,7 +79,7 @@ require_once __DIR__ . '/../includes/header.php';
         <td><?= date('d M Y', strtotime($p['created_at'])) ?></td>
         <td>
             <div style="display:flex;gap:.4rem">
-                <a href="/agency/package_form.php?id=<?= $p['package_id'] ?>" class="btn btn-outline btn-sm">Edit</a>
+                <a href="<?= BASE_URL ?>/agency/package_form.php?id=<?= $p['package_id'] ?>" class="btn btn-outline btn-sm">Edit</a>
                 <form method="POST" style="display:inline">
                     <?= csrf_field() ?>
                     <input type="hidden" name="action" value="delete">

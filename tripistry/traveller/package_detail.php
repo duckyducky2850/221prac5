@@ -9,7 +9,7 @@ require_once __DIR__ . '/../includes/auth.php';
 $db         = get_db();
 $package_id = (int)($_GET['id'] ?? 0);
 
-if (!$package_id) { header('Location: /traveller/packages.php'); exit; }
+if (!$package_id) { header('Location: ' . BASE_URL . '/traveller/packages.php'); exit; }
 
 // Package + agency
 $stmt = $db->prepare("
@@ -24,7 +24,7 @@ $stmt = $db->prepare("
 ");
 $stmt->execute([$package_id]);
 $pkg = $stmt->fetch();
-if (!$pkg) { header('Location: /traveller/packages.php'); exit; }
+if (!$pkg) { header('Location: ' . BASE_URL . '/traveller/packages.php'); exit; }
 
 // Components – grouped by type
 $comp_stmt = $db->prepare("
@@ -80,7 +80,7 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div style="margin-bottom:.75rem">
-    <a href="/traveller/packages.php" class="text-muted" style="font-size:.9rem">← Back to Packages</a>
+    <a href="<?= BASE_URL ?>/traveller/packages.php" class="text-muted" style="font-size:.9rem">← Back to Packages</a>
 </div>
 
 <div class="package-detail">
@@ -149,7 +149,7 @@ require_once __DIR__ . '/../includes/header.php';
                         </div>
                     </div>
                     <?php if (is_logged_in()): ?>
-                    <a href="/traveller/book.php?package_id=<?= $package_id ?>&group_trip_id=<?= $gt['group_trip_id'] ?>"
+                    <a href="<?= BASE_URL ?>/traveller/book.php?package_id=<?= $package_id ?>&group_trip_id=<?= $gt['group_trip_id'] ?>"
                        class="btn btn-primary btn-sm mt-1">Join Group Trip</a>
                     <?php endif; ?>
                 </div>
@@ -164,7 +164,7 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="card mb-3" style="box-shadow:none;border:1px dashed var(--clr-border)">
             <div class="card-body">
                 <h4 style="margin-bottom:1rem">Write a Review</h4>
-                <form method="POST" action="/traveller/reviews.php">
+                <form method="POST" action="<?= BASE_URL ?>/traveller/reviews.php">
                     <?= csrf_field() ?>
                     <input type="hidden" name="package_id" value="<?= $package_id ?>">
                     <div class="form-group">
@@ -217,9 +217,9 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
         <p class="text-muted mb-2">per person · <?= $pkg['duration_days'] ? $pkg['duration_days'].' days' : '' ?></p>
         <?php if (is_logged_in() && current_role() === 'traveller'): ?>
-            <a href="/traveller/book.php?package_id=<?= $package_id ?>" class="btn btn-primary btn-block">Book This Package</a>
+            <a href="<?= BASE_URL ?>/traveller/book.php?package_id=<?= $package_id ?>" class="btn btn-primary btn-block">Book This Package</a>
         <?php else: ?>
-            <a href="/login.php" class="btn btn-primary btn-block">Log In to Book</a>
+            <a href="<?= BASE_URL ?>/login.php" class="btn btn-primary btn-block">Log In to Book</a>
         <?php endif; ?>
     </div>
 
@@ -230,7 +230,7 @@ require_once __DIR__ . '/../includes/header.php';
         <?php if ($pkg['contact_number']): ?><p class="text-muted" style="font-size:.88rem">📞 <?= e($pkg['contact_number']) ?></p><?php endif; ?>
         <?php if ($pkg['website']): ?><p style="font-size:.88rem"><a href="<?= e($pkg['website']) ?>" target="_blank">🌐 Website</a></p><?php endif; ?>
         <?php if ($pkg['country']): ?><p class="text-muted" style="font-size:.88rem">📍 <?= e($pkg['country']) ?></p><?php endif; ?>
-        <a href="/traveller/packages.php?agency_id=<?= $pkg['agency_id'] ?>" class="btn btn-outline btn-sm mt-2">More from this agency</a>
+        <a href="<?= BASE_URL ?>/traveller/packages.php?agency_id=<?= $pkg['agency_id'] ?>" class="btn btn-outline btn-sm mt-2">More from this agency</a>
     </div>
 
     <!-- Quick stats -->

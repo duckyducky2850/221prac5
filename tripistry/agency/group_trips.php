@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delet
         $db->prepare("DELETE FROM group_trip WHERE group_trip_id=? AND agency_id=?")->execute([$gid, $agency_id]);
         set_flash('success','Group trip deleted.');
     }
-    header('Location: /agency/group_trips.php'); exit;
+    header('Location: ' . BASE_URL . '/agency/group_trips.php'); exit;
 }
 
 // Handle status update
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'updat
             set_flash('success','Status updated.');
         }
     }
-    header('Location: /agency/group_trips.php'); exit;
+    header('Location: ' . BASE_URL . '/agency/group_trips.php'); exit;
 }
 
 // Handle create
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'creat
                 set_flash('error','Invalid package.');
             }
         }
-        header('Location: /agency/group_trips.php'); exit;
+        header('Location: ' . BASE_URL . '/agency/group_trips.php'); exit;
     }
 }
 
@@ -90,7 +90,7 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="card mb-3">
 <div class="card-body">
     <h3 style="margin-bottom:1rem">Create New Group Trip</h3>
-    <form method="POST" action="/agency/group_trips.php" data-validate style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:flex-end">
+    <form method="POST" action="<?= BASE_URL ?>/agency/group_trips.php" data-validate style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:flex-end">
         <?= csrf_field() ?>
         <input type="hidden" name="action" value="create">
 

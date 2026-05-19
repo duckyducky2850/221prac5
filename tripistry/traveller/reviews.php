@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 set_flash('success', 'Review submitted. Thank you!');
-                header('Location: /traveller/reviews.php'); exit;
+                header('Location: ' . BASE_URL . '/traveller/reviews.php'); exit;
             }
     }
 }
@@ -76,7 +76,7 @@ require_once __DIR__ . '/../includes/header.php';
     <h2 style="font-size:1.3rem">Write a Review</h2>
     <?php foreach ($errors as $err): ?><div class="flash flash--error"><?= e($err) ?></div><?php endforeach; ?>
 
-    <form method="POST" action="/traveller/reviews.php" data-validate>
+    <form method="POST" action="<?= BASE_URL ?>/traveller/reviews.php" data-validate>
         <?= csrf_field() ?>
 
         <div class="form-group">

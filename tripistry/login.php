@@ -1,29 +1,32 @@
 <?php
-/**
- * login.php  –  Login for both travellers and agencies
- *
+/* login.php  –  Login for both travellers and agencies
+
  * SQL injection prevention: all DB queries use PDO prepared statements.
  * CSRF protection: every POST verified against session token.
  */
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/auth.php';
 
-if (is_logged_in()) {
-    header('Location: ' . (current_role() === 'agency' ? '/agency/dashboard.php' : '/traveller/dashboard.php'));
+if (is_logged_in()) 
+{
+    header('Location: ' . (current_role() === 'agency' ? BASE_URL . '/agency/dashboard.php' : BASE_URL . '/traveller/dashboard.php'));
     exit;
 }
 
 $errors = [];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+{
     // ── CSRF check
-    if (!verify_csrf()) {
+    if (!verify_csrf()) 
+    {
         $errors[] = 'Invalid request. Please try again.';
     } else {
         $email    = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
 
-        if (!$email || !$password) {
+        if (!$email || !$password) 
+        {
             $errors[] = 'Email and password are required.';
         } else {
             $db = get_db();
@@ -38,11 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $user = null;
             }
 
-            if ($user && empty($errors)) {
+            if ($user && empty($errors)) 
+            {
                 // Regenerate session ID to prevent fixation
                 session_regenerate_id(true);
                 $_SESSION['user_id'] = (int)$user['user_id'];
-                $_SESSION['role']    = $user['role'];
+                $_SESSION['role'] = $user['role'];
                 $_SESSION['email']   = $user['email'];
 
                 // Fetch display name
@@ -59,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['agency_id']    = (int)$user['user_id'];
                 }
 
-                $redirect = $_GET['redirect'] ?? ($user['role'] === 'agency' ? '/agency/dashboard.php' : '/traveller/dashboard.php');
+                $redirect = $_GET['redirect'] ?? ($user['role'] === 'agency' ? BASE_URL . '/agency/dashboard.php' : BASE_URL . '/traveller/dashboard.php');
                 header('Location: ' . $redirect); exit;
             }
         }
@@ -77,7 +81,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="flash flash--error"><?= e($err) ?></div>
     <?php endforeach; ?>
 
-    <form method="POST" action="/login.php" data-validate>
+    <form method="POST" action="<?= BASE_URL ?>/login.php" data-validate>
         <?= csrf_field() ?>
 
         <div class="form-group">
@@ -100,7 +104,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <hr class="divider">
     <p class="text-center text-muted" style="font-size:.9rem">
-        Don't have an account? <a href="/register.php">Register here</a>
+        Don't have an account? <a href="<?= BASE_URL ?>/register.php">Register here</a>
     </p>
 
     <!-- Dev hint – remove in production -->

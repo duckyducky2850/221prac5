@@ -7,7 +7,7 @@ require_once __DIR__ . '/includes/auth.php';
 
 // Redirect logged-in users to their dashboard
 if (is_logged_in()) {
-    $dest = current_role() === 'agency' ? '/agency/dashboard.php' : '/traveller/dashboard.php';
+    $dest = current_role() === 'agency' ? BASE_URL . '/agency/dashboard.php' : BASE_URL . '/traveller/dashboard.php';
     header("Location: $dest"); exit;
 }
 
@@ -51,8 +51,8 @@ require_once __DIR__ . '/includes/header.php';
     <h1>Your Adventure Starts Here</h1>
     <p>Compare travel packages from top agencies, discover amazing destinations, and book your dream holiday — all in one place.</p>
     <div class="hero-btns">
-        <a href="/traveller/packages.php" class="btn btn-accent btn-lg">Browse Packages</a>
-        <a href="/register.php" class="btn btn-outline btn-lg" style="color:#fff;border-color:#fff">Sign Up Free</a>
+        <a href="<?= BASE_URL ?>/traveller/packages.php" class="btn btn-accent btn-lg">Browse Packages</a>
+        <a href="<?= BASE_URL ?>/register.php" class="btn btn-outline btn-lg" style="color:#fff;border-color:#fff">Sign Up Free</a>
     </div>
 </section>
 
@@ -83,7 +83,7 @@ require_once __DIR__ . '/includes/header.php';
 <!-- ── Featured packages ── -->
 <div class="section-heading">
     <h2>Featured Packages</h2>
-    <a href="/traveller/packages.php" class="btn btn-outline btn-sm">View All →</a>
+    <a href="<?= BASE_URL ?>/traveller/packages.php" class="btn btn-outline btn-sm">View All →</a>
 </div>
 
 <?php if (empty($packages)): ?>
@@ -91,7 +91,7 @@ require_once __DIR__ . '/includes/header.php';
 <?php else: ?>
 <div class="grid-3 mb-3">
     <?php foreach ($packages as $p): ?>
-    <a href="/traveller/package_detail.php?id=<?= $p['package_id'] ?>" style="text-decoration:none;color:inherit">
+    <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
         <?php if ($p['image_url']): ?>
             <div class="card-img-placeholder" style="background-image:url('<?= e($p['image_url']) ?>');background-size:cover;background-position:center"></div>
@@ -123,11 +123,11 @@ require_once __DIR__ . '/includes/header.php';
 <!-- ── Popular destinations ── -->
 <div class="section-heading mt-3">
     <h2>Popular Destinations</h2>
-    <a href="/traveller/destinations.php" class="btn btn-outline btn-sm">All Destinations →</a>
+    <a href="<?= BASE_URL ?>/traveller/destinations.php" class="btn btn-outline btn-sm">All Destinations →</a>
 </div>
 <div class="grid-4">
     <?php foreach ($destinations as $d): ?>
-    <a href="/traveller/destinations.php?id=<?= $d['destination_id'] ?>" style="text-decoration:none;color:inherit">
+    <a href="<?= BASE_URL ?>/traveller/destinations.php?id=<?= $d['destination_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
         <div class="card-img-placeholder" style="height:130px">🌆</div>
         <div class="card-body" style="padding:.9rem">

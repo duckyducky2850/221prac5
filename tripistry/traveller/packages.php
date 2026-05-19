@@ -117,7 +117,7 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="card mb-3" style="overflow:hidden">
     <div style="padding:1rem 1.25rem;background:var(--clr-primary-light);border-bottom:1px solid var(--clr-border)">
         <strong>Package Comparison</strong>
-        <a href="/traveller/packages.php" class="btn btn-sm btn-outline" style="float:right">✕ Clear</a>
+        <a href="<?= BASE_URL ?>/traveller/packages.php" class="btn btn-sm btn-outline" style="float:right">✕ Clear</a>
     </div>
     <div class="table-wrap">
         <table class="data-table">
@@ -147,7 +147,7 @@ require_once __DIR__ . '/../includes/header.php';
             <tr>
                 <td><strong>Book</strong></td>
                 <?php foreach ($compare_packages as $cp): ?>
-                <td><a href="/traveller/book.php?package_id=<?= $cp['package_id'] ?>" class="btn btn-primary btn-sm">Book</a></td>
+                <td><a href="<?= BASE_URL ?>/traveller/book.php?package_id=<?= $cp['package_id'] ?>" class="btn btn-primary btn-sm">Book</a></td>
                 <?php endforeach; ?>
             </tr>
             </tbody>
@@ -157,7 +157,7 @@ require_once __DIR__ . '/../includes/header.php';
 <?php endif; ?>
 
 <!-- ── Filter bar ── -->
-<form id="package-filter-form" method="GET" action="/traveller/packages.php">
+<form id="package-filter-form" method="GET" action="<?= BASE_URL ?>/traveller/packages.php">
 <div class="filter-bar">
     <div class="form-group">
         <label for="search">Search</label>
@@ -274,11 +274,11 @@ require_once __DIR__ . '/../includes/header.php';
                 <p class="text-muted mt-1" style="font-size:.82rem">⏱ <?= (int)$p['duration_days'] ?> days</p>
             <?php endif; ?>
             <div style="margin-top:.9rem;display:flex;gap:.5rem">
-                <a href="/traveller/package_detail.php?id=<?= $p['package_id'] ?>" class="btn btn-outline btn-sm">Details</a>
+                <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>" class="btn btn-outline btn-sm">Details</a>
                 <?php if (is_logged_in()): ?>
-                <a href="/traveller/book.php?package_id=<?= $p['package_id'] ?>" class="btn btn-primary btn-sm">Book Now</a>
+                <a href="<?= BASE_URL ?>/traveller/book.php?package_id=<?= $p['package_id'] ?>" class="btn btn-primary btn-sm">Book Now</a>
                 <?php else: ?>
-                <a href="/login.php" class="btn btn-primary btn-sm">Login to Book</a>
+                <a href="<?= BASE_URL ?>/login.php" class="btn btn-primary btn-sm">Login to Book</a>
                 <?php endif; ?>
             </div>
         </div>
