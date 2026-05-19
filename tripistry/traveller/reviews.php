@@ -18,20 +18,29 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf()) { $errors[] = 'Invalid request.'; }
     else {
-        $rating     = (int)($_POST['rating']     ?? 0);
-        $comment    = trim($_POST['comment']     ?? '');
+        $rating = (int)($_POST['rating'] ?? 0);
+        $comment = trim($_POST['comment'] ?? '');
         $package_id = (int)($_POST['package_id'] ?? 0) ?: null;
-        $agency_id  = (int)($_POST['agency_id']  ?? 0) ?: null;
+        $agency_id = (int)($_POST['agency_id']  ?? 0) ?: null;
 
         if ($rating < 1 || $rating > 5) $errors[] = 'Please select a star rating (1–5).';
         if (!$package_id && !$agency_id) $errors[] = 'Select a package or agency to review.';
 
-        if (empty($errors)) {
-            $stmt = $db->prepare("INSERT INTO review (traveller_id, agency_id, package_id, rating, comment) VALUES (?,?,?,?,?)");
-            $stmt->execute([$uid, $agency_id, $package_id, $rating, $comment ?: null]);
-            set_flash('success', 'Review submitted. Thank you!');
-            header('Location: /traveller/reviews.php'); exit;
-        }
+        if (empty($errors)) 
+        {
+                $stmt = $db->prepare("INSERT INTO review (traveller_id, agency_id, package_id, rating, comment) VALUES (?,?,?,?,?)");
+                $stmt->execute([$uid, $agency_id, $package_id, $rating, $comment ?: null]);
+
+                // updates the avg_rating if a package was reviewed
+                if ($package_id) 
+                {
+                    $upd = $db->prepare("UPDATE travel_package SET avg_rating = (SELECT ROUND(AVG(rating), 2) FROM review WHERE package_id = ?) WHERE package_id = ?");
+                    $upd->execute([$package_id, $package_id]);
+                }
+
+                set_flash('success', 'Review submitted. Thank you!');
+                header('Location: /traveller/reviews.php'); exit;
+            }
     }
 }
 

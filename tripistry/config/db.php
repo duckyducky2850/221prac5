@@ -11,8 +11,8 @@
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'tripistry');
-define('DB_USER', 'root');        // TODO: change to your MariaDB username
-define('DB_PASS', '');            // TODO: change to your MariaDB password
+define('DB_USER', 'root');        
+define('DB_PASS', '');            
 define('DB_CHARSET', 'utf8mb4');
 
 function get_db(): PDO {

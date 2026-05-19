@@ -32,16 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$email]);
             $user = $stmt->fetch();
 
-            if (!$user || !password_verify($password, $user['password'])) {
-                // NOTE: During dev the dump has plain 'hashed_pwd_N' values.
-                // For demo, also allow a direct match so seeded data works.
-                // *** Remove the plain-text fallback before production ***
-                if ($user && $user['password'] === $password) {
-                    // dev fallback – plain text match
-                } else {
-                    $errors[] = 'Incorrect email or password.';
-                    $user = null;
-                }
+            if (!$user || !password_verify($password, $user['password'])) 
+            {
+                $errors[] = 'Incorrect email or password.';
+                $user = null;
             }
 
             if ($user && empty($errors)) {
