@@ -1,7 +1,5 @@
 <?php
-/**
- * register.php  –  Registration for travellers and agencies
- */
+/*Registration for travellers and agencies*/
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/auth.php';
 
@@ -10,41 +8,48 @@ if (is_logged_in()) {
 }
 
 $errors = [];
-$form   = [];
+$form = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf()) {
         $errors[] = 'Invalid request. Please try again.';
     } else {
         $form = [
-            'role'         => $_POST['role'] ?? '',
-            'email'        => trim($_POST['email'] ?? ''),
-            'password'     => $_POST['password'] ?? '',
-            'password2'    => $_POST['password_confirm'] ?? '',
+            'role' => $_POST['role'] ?? '',
+            'email' => trim($_POST['email'] ?? ''),
+            'password' => $_POST['password'] ?? '',
+            'password2' => $_POST['password_confirm'] ?? '',
             // traveller
-            'first_name'   => trim($_POST['first_name'] ?? ''),
-            'last_name'    => trim($_POST['last_name'] ?? ''),
+            'first_name' => trim($_POST['first_name'] ?? ''),
+            'last_name' => trim($_POST['last_name'] ?? ''),
             'phone_number' => trim($_POST['phone_number'] ?? ''),
             'home_address' => trim($_POST['home_address'] ?? ''),
             // agency
             'company_name' => trim($_POST['company_name'] ?? ''),
-            'contact_num'  => trim($_POST['contact_number'] ?? ''),
-            'website'      => trim($_POST['website'] ?? ''),
-            'address'      => trim($_POST['address'] ?? ''),
-            'country'      => trim($_POST['country'] ?? ''),
+            'contact_num' => trim($_POST['contact_number'] ?? ''),
+            'website' => trim($_POST['website'] ?? ''),
+            'address' => trim($_POST['address'] ?? ''),
+            'country' => trim($_POST['country'] ?? ''),
         ];
 
         // Validation
-        if (!in_array($form['role'], ['traveller', 'agency'])) $errors[] = 'Choose a role.';
-        if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL))  $errors[] = 'Enter a valid email.';
-        if (strlen($form['password']) < 6)                       $errors[] = 'Password must be at least 6 characters.';
-        if ($form['password'] !== $form['password2'])            $errors[] = 'Passwords do not match.';
+        if (!in_array($form['role'], ['traveller', 'agency']))
+            $errors[] = 'Choose a role.';
+        if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) 
+            $errors[] = 'Enter a valid email.';
+        if (strlen($form['password']) < 6)
+            $errors[] = 'Password must be at least 6 characters.';
+        if ($form['password'] !== $form['password2'])
+            $errors[] = 'Passwords do not match.';
 
         if ($form['role'] === 'traveller') {
-            if (!$form['first_name']) $errors[] = 'First name is required.';
-            if (!$form['last_name'])  $errors[] = 'Last name is required.';
+            if (!$form['first_name'])
+                $errors[] = 'First name is required.';
+            if (!$form['last_name'])
+                $errors[] = 'Last name is required.';
         } else {
-            if (!$form['company_name']) $errors[] = 'Company name is required.';
+            if (!$form['company_name'])
+                $errors[] = 'Company name is required.';
         }
 
         if (empty($errors)) {
@@ -80,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         VALUES (?, ?, ?, ?, ?, ?)");
                     $stmt2->execute([$uid, $form['company_name'],
                         $form['contact_num'] ?: null, $form['website'] ?: null,
-                        $form['address'] ?: null,     $form['country'] ?: null]);
+                        $form['address'] ?: null, $form['country'] ?: null]);
                 }
 
                 $db->commit();
@@ -203,7 +208,7 @@ const aFields = document.getElementById('agency-fields');
 function toggleFields() {
     const role = document.querySelector('input[name="role"]:checked')?.value;
     tFields.style.display = role === 'traveller' ? '' : 'none';
-    aFields.style.display = role === 'agency'    ? '' : 'none';
+    aFields.style.display = role === 'agency' ? '' : 'none';
 }
 radios.forEach(r => r.addEventListener('change', toggleFields));
 toggleFields();

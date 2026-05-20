@@ -1,7 +1,5 @@
 <?php
-/**
- * traveller/reviews.php  –  Write and view my reviews
- */
+/*Write and view my reviews*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('traveller');
@@ -9,9 +7,9 @@ require_role('traveller');
 $db  = get_db();
 $uid = current_user_id();
 
-// Pre-fill from URL param
+// Prefill from URL param
 $pre_package = (int)($_GET['package_id'] ?? 0);
-$pre_agency  = (int)($_GET['agency_id']  ?? 0);
+$pre_agency = (int)($_GET['agency_id'] ?? 0);
 
 $errors = [];
 
@@ -23,8 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $package_id = (int)($_POST['package_id'] ?? 0) ?: null;
         $agency_id = (int)($_POST['agency_id']  ?? 0) ?: null;
 
-        if ($rating < 1 || $rating > 5) $errors[] = 'Please select a star rating (1–5).';
-        if (!$package_id && !$agency_id) $errors[] = 'Select a package or agency to review.';
+        if ($rating < 1 || $rating > 5)
+            $errors[] = 'Please select a star rating (1–5).';
+        if (!$package_id && !$agency_id)
+            $errors[] = 'Select a package or agency to review.';
 
         if (empty($errors)) 
         {
@@ -58,7 +58,7 @@ $my_reviews = $stmt->fetchAll();
 
 // Dropdown data
 $packages = $db->query("SELECT tp.package_id, tp.name, ta.company_name FROM travel_package tp JOIN travel_agency ta ON ta.agency_id=tp.agency_id ORDER BY tp.name")->fetchAll();
-$agencies  = $db->query("SELECT agency_id, company_name FROM travel_agency ORDER BY company_name")->fetchAll();
+$agencies = $db->query("SELECT agency_id, company_name FROM travel_agency ORDER BY company_name")->fetchAll();
 
 $page_title = 'My Reviews';
 require_once __DIR__ . '/../includes/header.php';

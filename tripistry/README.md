@@ -48,28 +48,28 @@ tripistry/
 │   └── db.php               ← *** EDIT THIS: DB credentials ***
 ├── includes/
 │   ├── auth.php             ← Session management, CSRF, role guards
-│   ├── header.php           ← Shared HTML head + navbar
-│   └── footer.php           ← Shared footer + JS include
+│   ├── header.php           ← Shared HTML head and navbar
+│   └── footer.php           ← Shared footer and JS include
 ├── css/
 │   └── style.css            ← All styles (edit CSS variables at top to restyle)
 ├── js/
-│   └── main.js              ← Client-side validation, tabs, AJAX filter, compare
+│   └── main.js              ← Client side validation, tabs, AJAX filter, compare
 ├── index.php                ← Public landing page
-├── login.php                ← Login (traveller + agency)
-├── register.php             ← Register (traveller + agency)
+├── login.php                ← Login (traveller and agency)
+├── register.php             ← Register (traveller and agency)
 ├── logout.php               ← Destroy session
 ├── traveller/
-│   ├── dashboard.php        ← Traveller home + recent bookings + recommendations
+│   ├── dashboard.php        ← Traveller home and recent bookings and recommendations
 │   ├── destinations.php     ← Browse destinations, flights, stays, activities
-│   ├── packages.php         ← Browse + filter + sort + compare packages
+│   ├── packages.php         ← Browse and filter and sort and compare packages
 │   ├── package_detail.php   ← Full package view with itinerary, reviews, group trips
 │   ├── book.php             ← Booking confirmation form
-│   ├── bookings.php         ← My bookings + receipt detail + cancel
-│   └── reviews.php          ← Write + view my reviews
+│   ├── bookings.php         ← My bookings and receipt detail and cancel
+│   └── reviews.php          ← Write and view my reviews
 ├── agency/
-│   ├── dashboard.php        ← Agency stats + recent bookings + reviews
-│   ├── packages.php         ← List + delete packages
-│   ├── package_form.php     ← Create + edit packages + manage components
+│   ├── dashboard.php        ← Agency stats and recent bookings and reviews
+│   ├── packages.php         ← List and delete packages
+│   ├── package_form.php     ← Create and edit packages and manage components
 │   ├── group_trips.php      ← Create, update status, delete group trips
 │   └── manage_content.php   ← Add/delete flights, accommodation, transport, activities
 └── api/
@@ -84,11 +84,11 @@ All design tokens are CSS custom properties in `css/style.css` at the top:
 
 ```css
 :root {
-    --clr-primary:       #1a6b8a;   /* ← main brand colour */
-    --clr-accent:        #f5a623;   /* ← buttons, stars    */
-    --font-body:         'Inter';
-    --font-display:      'Playfair Display';
-    /* ... etc */
+    --clr-primary: #1a6b8a;   /* ← main brand colour */
+    --clr-accent: #f5a623;   /* ← buttons, stars    */
+    --font-body: 'Inter';
+    --font-display: 'Playfair Display';
+    /*etc*/
 }
 ```
 Change these values to completely restyle the site without touching any PHP.
@@ -104,9 +104,8 @@ Change these values to completely restyle the site without touching any PHP.
 | Agency    | wanderlust.travel@agency.com       | hashed_pwd_6  |
 | Agency    | safari.experts@agency.com          | hashed_pwd_7  |
 
-> **Note:** The seed data uses plain-text passwords for convenience during development.
-> New registrations use bcrypt (`password_hash`). Before submission, re-hash the
-> seed passwords or use the registration page to create fresh accounts.
+> **Note:** The seed data uses plain text passwords for convenience during development.
+> New registrations use bcrypt (`password_hash`)
 
 ---
 
@@ -114,7 +113,7 @@ Change these values to completely restyle the site without touching any PHP.
 
 | Mechanism          | Where                             |
 |--------------------|-----------------------------------|
-| SQL Injection      | PDO prepared statements everywhere – no string interpolation in SQL |
+| SQL Injection      | PDO prepared statements everywhere, no string interpolation in SQL |
 | XSS prevention     | `htmlspecialchars()` via `e()` helper on all output |
 | CSRF protection    | `csrf_token()` / `verify_csrf()` on every POST form |
 | Session fixation   | `session_regenerate_id(true)` on login |
@@ -128,7 +127,7 @@ Change these values to completely restyle the site without touching any PHP.
 The following functionality only works with a live MariaDB connection:
 - Login / Register
 - All traveller and agency pages
-- AJAX filter (falls back gracefully to full-page form submit)
+- AJAX filter (falls back gracefully to full page form submit)
 
 Static pages that work without DB: `index.php` layout (will show error on DB fetch), CSS/JS.
 
@@ -140,7 +139,7 @@ Static pages that work without DB: `index.php` layout (will show error on DB fet
 |---|---|
 | Two distinct user types | `login.php`, `register.php`, `includes/auth.php` |
 | Browse destinations, flights, accommodation, attractions, restaurants | `traveller/destinations.php` |
-| Compare travel packages | `traveller/packages.php` (compare bar + comparison table) |
+| Compare travel packages | `traveller/packages.php` (compare bar and comparison table) |
 | Book a package | `traveller/book.php`, `traveller/bookings.php` |
 | Leave reviews and ratings | `traveller/reviews.php`, `traveller/package_detail.php` |
 | Agency: create/edit/delete packages | `agency/packages.php`, `agency/package_form.php` |

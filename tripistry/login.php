@@ -1,9 +1,7 @@
 <?php
-/* login.php  –  Login for both travellers and agencies
-
- * SQL injection prevention: all DB queries use PDO prepared statements.
- * CSRF protection: every POST verified against session token.
- */
+/*Login for both travellers and agencies
+SQL injection prevention: all DB queries use PDO prepared statements.
+CSRF protection: every POST verified against session token.*/
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/auth.php';
 
@@ -17,7 +15,7 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
-    // ── CSRF check
+    //CSRF check
     if (!verify_csrf()) 
     {
         $errors[] = 'Invalid request. Please try again.';
@@ -30,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             $errors[] = 'Email and password are required.';
         } else {
             $db = get_db();
-            // Prepared statement – no SQL injection possible
+            // Prepared statement
             $stmt = $db->prepare("SELECT user_id, email, password, role FROM user WHERE email = ?");
             $stmt->execute([$email]);
             $user = $stmt->fetch();
@@ -47,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 session_regenerate_id(true);
                 $_SESSION['user_id'] = (int)$user['user_id'];
                 $_SESSION['role'] = $user['role'];
-                $_SESSION['email']   = $user['email'];
+                $_SESSION['email'] = $user['email'];
 
                 // Fetch display name
                 if ($user['role'] === 'traveller') {
@@ -60,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     $s->execute([$user['user_id']]);
                     $profile = $s->fetch();
                     $_SESSION['display_name'] = $profile['company_name'] ?? 'Agency';
-                    $_SESSION['agency_id']    = (int)$user['user_id'];
+                    $_SESSION['agency_id'] = (int)$user['user_id'];
                 }
 
                 $redirect = $_GET['redirect'] ?? ($user['role'] === 'agency' ? BASE_URL . '/agency/dashboard.php' : BASE_URL . '/traveller/dashboard.php');
@@ -107,7 +105,7 @@ require_once __DIR__ . '/includes/header.php';
         Don't have an account? <a href="<?= BASE_URL ?>/register.php">Register here</a>
     </p>
 
-    <!-- Dev hint – remove in production -->
+    <!--Dev hint-->
     <details style="margin-top:1.5rem;font-size:.8rem;color:var(--clr-text-muted)">
         <summary>Dev: Sample login credentials</summary>
         <p style="margin-top:.5rem"><strong>Traveller:</strong> john.doe@email.com / hashed_pwd_1</p>

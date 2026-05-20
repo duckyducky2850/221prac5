@@ -92,8 +92,7 @@ if (!empty($compare_ids)) {
         JOIN travel_agency ta ON ta.agency_id = tp.agency_id
         LEFT JOIN review r ON r.package_id = tp.package_id
         WHERE tp.package_id IN ($placeholders)
-        GROUP BY tp.package_id
-    ");
+        GROUP BY tp.package_id");
     $cstmt->execute($compare_ids);
     $compare_packages = $cstmt->fetchAll();
 }
@@ -151,7 +150,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 <?php endif; ?>
 
-<!-- ── Filter bar ── -->
+<!--Filter bar-->
 <form id="package-filter-form" method="GET" action="<?= BASE_URL ?>/traveller/packages.php">
 <div class="filter-bar">
     <div class="form-group">
@@ -215,7 +214,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 </form>
 
-<!-- ── Results ── -->
+<!--Results-->
 <div id="package-results">
 <div class="flex-between mb-2">
     <p class="text-muted"><?= count($packages) ?> package(s) found</p>
