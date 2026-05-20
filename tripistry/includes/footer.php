@@ -1,9 +1,5 @@
 <?php
-/**
- * includes/footer.php
- * --------------------
- * Shared page footer. Included at the bottom of every page.
- */
+/*Shared page footer*/
 ?>
 </main><!-- /.main-content -->
 

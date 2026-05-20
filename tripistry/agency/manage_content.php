@@ -1,25 +1,26 @@
 <?php
-/**
- * agency/manage_content.php
- * --------------------------
- * Agencies manage their flights, accommodation, transport and activities.
- * All CRUD in one tabbed page for convenience.
- */
+/* Agencies manage their flights, accommodation, transport and activities.
+ All CRUD in one tabbed page for convenience.*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('agency');
 
-$db        = get_db();
+$db = get_db();
 $agency_id = (int)$_SESSION['agency_id'];
 
 $errors = [];
 
 // ── Generic POST handler ──────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verify_csrf()) { set_flash('error','Invalid request.'); header('Location: ' . BASE_URL . '/agency/manage_content.php'); exit; }
+    if (!verify_csrf())
+    {
+        set_flash('error','Invalid request.');
+        header('Location: ' . BASE_URL . '/agency/manage_content.php');
+        exit;
+    }
 
     $action = $_POST['action'] ?? '';
-    $tab    = $_POST['tab']    ?? 'flights';
+    $tab = $_POST['tab'] ?? 'flights';
 
     // ── Flights ──
     if ($action === 'add_flight') {
@@ -100,10 +101,10 @@ $active_tab = $_GET['tab'] ?? 'flights';
 // Load data
 $destinations = $db->query("SELECT destination_id, city_name, country FROM destination ORDER BY city_name")->fetchAll();
 
-$flights       = $db->prepare("SELECT f.*,d1.city_name AS origin_city,d2.city_name AS dest_city FROM flight f JOIN destination d1 ON d1.destination_id=f.origin_destination_id JOIN destination d2 ON d2.destination_id=f.destination_id WHERE f.agency_id=? ORDER BY f.departure_time");
+$flights = $db->prepare("SELECT f.*,d1.city_name AS origin_city,d2.city_name AS dest_city FROM flight f JOIN destination d1 ON d1.destination_id=f.origin_destination_id JOIN destination d2 ON d2.destination_id=f.destination_id WHERE f.agency_id=? ORDER BY f.departure_time");
 $flights->execute([$agency_id]); $flights = $flights->fetchAll();
 
-$accoms  = $db->prepare("SELECT a.*,d.city_name FROM accommodation a JOIN destination d ON d.destination_id=a.destination_id WHERE a.agency_id=? ORDER BY a.name");
+$accoms = $db->prepare("SELECT a.*,d.city_name FROM accommodation a JOIN destination d ON d.destination_id=a.destination_id WHERE a.agency_id=? ORDER BY a.name");
 $accoms->execute([$agency_id]); $accoms = $accoms->fetchAll();
 
 $transports_q = $db->prepare("SELECT t.*,d1.city_name AS origin_city,d2.city_name AS dest_city FROM transport t JOIN destination d1 ON d1.destination_id=t.origin_destination_id JOIN destination d2 ON d2.destination_id=t.destination_id WHERE t.agency_id=? ORDER BY t.departure_time");
@@ -137,7 +138,7 @@ function dest_options(array $destinations, int $selected=0): string {
     <?php endforeach; ?>
 </div>
 
-<!-- ═══ FLIGHTS ═══ -->
+<!--FLIGHTS -->
 <div class="tab-panel <?= $active_tab==='flights'?'active':'' ?>" data-panel="flights">
 
     <div class="card mb-2"><div class="card-body">
@@ -177,7 +178,7 @@ function dest_options(array $destinations, int $selected=0): string {
     <?php endif; ?>
 </div>
 
-<!-- ═══ ACCOMMODATION ═══ -->
+<!--ACCOMMODATION-->
 <div class="tab-panel <?= $active_tab==='accommodation'?'active':'' ?>" data-panel="accommodation">
 
     <div class="card mb-2"><div class="card-body">
@@ -215,7 +216,7 @@ function dest_options(array $destinations, int $selected=0): string {
     <?php endif; ?>
 </div>
 
-<!-- ═══ TRANSPORT ═══ -->
+<!--TRANSPORT-->
 <div class="tab-panel <?= $active_tab==='transport'?'active':'' ?>" data-panel="transport">
 
     <div class="card mb-2"><div class="card-body">
@@ -260,7 +261,7 @@ function dest_options(array $destinations, int $selected=0): string {
     <?php endif; ?>
 </div>
 
-<!-- ═══ ACTIVITIES ═══ -->
+<!--ACTIVITIES-->
 <div class="tab-panel <?= $active_tab==='activities'?'active':'' ?>" data-panel="activities">
 
     <div class="card mb-2"><div class="card-body">

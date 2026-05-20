@@ -1,15 +1,15 @@
 <?php
-/**
- * traveller/package_detail.php
- * Shows full package info: components, reviews, group trips, agency info.
- */
+/*Shows full package info: components, reviews, group trips, agency info.*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 
-$db         = get_db();
+$db = get_db();
 $package_id = (int)($_GET['id'] ?? 0);
 
-if (!$package_id) { header('Location: ' . BASE_URL . '/traveller/packages.php'); exit; }
+if (!$package_id) {
+    header('Location: ' . BASE_URL . '/traveller/packages.php');
+    exit;
+}
 
 // Package + agency
 $stmt = $db->prepare("
@@ -24,9 +24,12 @@ $stmt = $db->prepare("
 ");
 $stmt->execute([$package_id]);
 $pkg = $stmt->fetch();
-if (!$pkg) { header('Location: ' . BASE_URL . '/traveller/packages.php'); exit; }
+if (!$pkg) {
+    header('Location: ' . BASE_URL . '/traveller/packages.php');
+    exit;
+}
 
-// Components – grouped by type
+// Components, grouped by type
 $comp_stmt = $db->prepare("
     SELECT pc.component_type, pc.component_id,
            CASE pc.component_type
@@ -47,8 +50,7 @@ $comp_stmt = $db->prepare("
     LEFT JOIN transport tr ON pc.component_type='transport' AND tr.transport_id=pc.component_id
     LEFT JOIN activity act ON pc.component_type='activity' AND act.activity_id=pc.component_id
     WHERE pc.package_id = ?
-    ORDER BY FIELD(pc.component_type,'flight','accommodation','transport','activity')
-");
+    ORDER BY FIELD(pc.component_type,'flight','accommodation','transport','activity')");
 $comp_stmt->execute([$package_id]);
 $components = $comp_stmt->fetchAll();
 $components_by_type = [];
@@ -60,8 +62,7 @@ $rev_stmt = $db->prepare("
     FROM review r
     JOIN traveller t ON t.traveller_id = r.traveller_id
     WHERE r.package_id = ?
-    ORDER BY r.created_date DESC
-");
+    ORDER BY r.created_date DESC");
 $rev_stmt->execute([$package_id]);
 $reviews = $rev_stmt->fetchAll();
 
@@ -70,8 +71,7 @@ $gt_stmt = $db->prepare("
     SELECT gt.*, (gt.max_members - gt.current_members) AS spots_left
     FROM group_trip gt
     WHERE gt.package_id = ? AND gt.status = 'open'
-    ORDER BY gt.start_date ASC
-");
+    ORDER BY gt.start_date ASC");
 $gt_stmt->execute([$package_id]);
 $group_trips = $gt_stmt->fetchAll();
 
@@ -85,7 +85,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <div class="package-detail">
 
-<!-- ── Left: Main content ── -->
+<!--Left: Main content-->
 <div>
     <div class="card-img-placeholder" style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;font-size:4rem">🌏</div>
 
@@ -103,7 +103,7 @@ require_once __DIR__ . '/../includes/header.php';
     <p style="margin-bottom:1.5rem"><?= nl2br(e($pkg['description'])) ?></p>
     <?php endif; ?>
 
-    <!-- ── Tabs: Itinerary | Group Trips | Reviews ── -->
+    <!--Tabs: Itinerary or Group Trips or Reviews-->
     <div class="tabs">
         <button class="tab-btn active" data-tab="itinerary">🗺 Itinerary</button>
         <button class="tab-btn" data-tab="group_trips">👥 Group Trips (<?= count($group_trips) ?>)</button>
@@ -207,10 +207,10 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 </div>
 
-<!-- ── Right: Sidebar ── -->
+<!--Right: Sidebar-->
 <div class="detail-sidebar">
 
-    <!-- Price + book -->
+    <!-- Price and book -->
     <div class="sidebar-card" style="border-color:var(--clr-primary)">
         <div style="font-size:1.8rem;font-weight:700;color:var(--clr-primary);margin-bottom:.25rem">
             R<?= number_format($pkg['base_price'], 2) ?>

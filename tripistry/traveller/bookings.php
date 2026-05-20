@@ -1,7 +1,5 @@
 <?php
-/**
- * traveller/bookings.php  –  View and manage my bookings
- */
+/*View and manage my bookings*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('traveller');
@@ -11,7 +9,9 @@ $uid = current_user_id();
 
 // Handle cancellation
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'cancel') {
-    if (!verify_csrf()) { set_flash('error', 'Invalid request.'); }
+    if (!verify_csrf()) {
+        set_flash('error', 'Invalid request.');
+    }
     else {
         $bid = (int)($_POST['booking_id'] ?? 0);
         $stmt = $db->prepare("UPDATE booking SET status='cancelled' WHERE booking_id=? AND traveller_id=? AND status='pending'");
@@ -30,21 +30,22 @@ $stmt = $db->prepare("
            gt.start_date, gt.end_date
     FROM booking b
     JOIN travel_package tp ON tp.package_id = b.package_id
-    JOIN travel_agency  ta ON ta.agency_id  = tp.agency_id
-    LEFT JOIN receipt   r  ON r.booking_id  = b.booking_id
+    JOIN travel_agency ta ON ta.agency_id = tp.agency_id
+    LEFT JOIN receipt r ON r.booking_id = b.booking_id
     LEFT JOIN group_trip gt ON gt.group_trip_id = b.group_trip_id
     WHERE b.traveller_id = ?
-    ORDER BY b.booking_date DESC
-");
+    ORDER BY b.booking_date DESC");
 $stmt->execute([$uid]);
 $bookings = $stmt->fetchAll();
 
 // Single booking detail view
 $detail_id = (int)($_GET['id'] ?? 0);
-$detail    = null;
+$detail = null;
 if ($detail_id) {
     foreach ($bookings as $b) {
-        if ((int)$b['booking_id'] === $detail_id) { $detail = $b; break; }
+        if ((int)$b['booking_id'] === $detail_id) {
+            $detail = $b; break;
+            }
     }
 }
 
@@ -58,7 +59,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <?php if ($detail): ?>
-<!-- ── Booking detail ── -->
+<!--Booking detail-->
 <div style="max-width:580px">
     <a href="<?= BASE_URL ?>/traveller/bookings.php" class="text-muted" style="font-size:.9rem">← All Bookings</a>
     <div class="card mt-2">
@@ -108,7 +109,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <?php else: ?>
-<!-- ── Bookings list ── -->
+<!--Bookings list-->
 <?php if (empty($bookings)): ?>
     <div class="empty-state">
         <div class="empty-icon">🗺️</div>

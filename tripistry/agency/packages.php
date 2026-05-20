@@ -1,11 +1,10 @@
 <?php
-/* agency/packages.php,  List + delete packages
- */
+/*List and delete packages*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('agency');
 
-$db        = get_db();
+$db = get_db();
 $agency_id = (int)$_SESSION['agency_id'];
 
 // Handle delete
@@ -24,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delet
     header('Location: ' . BASE_URL . '/agency/packages.php'); exit;
 }
 
-// Fetch packages with booking + review stats
+// Fetch packages with booking and review stats
 $stmt = $db->prepare("
     SELECT tp.*,
-           COUNT(DISTINCT b.booking_id)  AS booking_count,
-           ROUND(AVG(r.rating),1)        AS avg_rating,
-           COUNT(DISTINCT r.review_id)   AS review_count
+           COUNT(DISTINCT b.booking_id) AS booking_count,
+           ROUND(AVG(r.rating),1) AS avg_rating,
+           COUNT(DISTINCT r.review_id) AS review_count
     FROM travel_package tp
     LEFT JOIN booking b ON b.package_id = tp.package_id
     LEFT JOIN review  r ON r.package_id = tp.package_id

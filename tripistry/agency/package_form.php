@@ -1,6 +1,5 @@
 <?php
-/* agency/package_form.php  –  Create or edit a travel package. so it also manages the package_component relationships.
- */
+/*Create or edit a travel package. it also manages the package_component relationships.*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('agency');
@@ -143,7 +142,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </div>
             </div>
 
-            <!-- ── Components section ── -->
+            <!--Components section-->
             <hr class="divider">
             <div class="flex-between mb-2">
                 <h3 style="font-size:1rem">Package Components</h3>

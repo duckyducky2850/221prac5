@@ -1,17 +1,18 @@
 <?php
-/**
- * agency/group_trips.php  –  Manage group trips
- */
+/*manages group trips*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('agency');
 
-$db        = get_db();
+$db = get_db();
 $agency_id = (int)$_SESSION['agency_id'];
 
 // Handle delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delete') {
-    if (!verify_csrf()) { set_flash('error','Invalid request.'); }
+    if (!verify_csrf())
+    {
+        set_flash('error','Invalid request.');
+    }
     else {
         $gid = (int)$_POST['group_trip_id'];
         $db->prepare("DELETE FROM group_trip WHERE group_trip_id=? AND agency_id=?")->execute([$gid, $agency_id]);
@@ -22,7 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delet
 
 // Handle status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'update_status') {
-    if (!verify_csrf()) { set_flash('error','Invalid request.'); }
+    if (!verify_csrf())
+    {
+        set_flash('error','Invalid request.');
+    }
     else {
         $gid    = (int)$_POST['group_trip_id'];
         $status = $_POST['status'] ?? '';
@@ -37,12 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'updat
 
 // Handle create
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'create') {
-    if (!verify_csrf()) { $errors[] = 'Invalid request.'; }
+    if (!verify_csrf())
+    {
+        $errors[] = 'Invalid request.';
+    }
     else {
-        $pkg_id    = (int)($_POST['package_id']  ?? 0);
-        $max       = (int)($_POST['max_members'] ?? 0);
-        $start     = $_POST['start_date'] ?? '';
-        $end       = $_POST['end_date']   ?? '';
+        $pkg_id = (int)($_POST['package_id'] ?? 0);
+        $max = (int)($_POST['max_members'] ?? 0);
+        $start = $_POST['start_date'] ?? '';
+        $end = $_POST['end_date'] ?? '';
 
         if (!$pkg_id || !$max || !$start || !$end) {
             set_flash('error','All fields are required.');

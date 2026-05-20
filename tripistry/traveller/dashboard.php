@@ -1,7 +1,5 @@
 <?php
-/**
- * traveller/dashboard.php  –  Traveller home page
- */
+/*Traveller home page*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('traveller');
@@ -25,15 +23,14 @@ $stmt = $db->prepare("
            tp.name AS package_name, ta.company_name AS agency_name
     FROM booking b
     JOIN travel_package tp ON tp.package_id = b.package_id
-    JOIN travel_agency ta  ON ta.agency_id  = tp.agency_id
+    JOIN travel_agency ta ON ta.agency_id = tp.agency_id
     WHERE b.traveller_id = ?
     ORDER BY b.booking_date DESC
-    LIMIT 5
-");
+    LIMIT 5");
 $stmt->execute([$uid]);
 $recent_bookings = $stmt->fetchAll();
 
-// Recommended packages (simple: same destination as past bookings, or top-rated)
+// Recommended packages (simpleway of recommending, same destination as past bookings or top-rated)
 $stmt = $db->prepare("
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days,
            ta.company_name,
@@ -46,13 +43,12 @@ $stmt = $db->prepare("
     )
     GROUP BY tp.package_id
     ORDER BY avg_rating DESC, tp.base_price ASC
-    LIMIT 4
-");
+    LIMIT 4");
 $stmt->execute([$uid]);
 $recommended = $stmt->fetchAll();
 
 $display_name = $_SESSION['display_name'] ?? 'Traveller';
-$page_title   = 'My Dashboard';
+$page_title = 'My Dashboard';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 

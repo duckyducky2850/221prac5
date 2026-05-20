@@ -1,12 +1,10 @@
 <?php
-/**
- * agency/dashboard.php  –  Agency home page
- */
+/*agency/dashboard.php  –  Agency home page*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('agency');
 
-$db        = get_db();
+$db = get_db();
 $agency_id = (int)$_SESSION['agency_id'];
 
 // Stats
@@ -49,7 +47,7 @@ $stmt->execute([$agency_id, $agency_id]);
 $reviews = $stmt->fetchAll();
 
 $display_name = $_SESSION['display_name'] ?? 'Agency';
-$page_title   = 'Agency Dashboard';
+$page_title = 'Agency Dashboard';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 

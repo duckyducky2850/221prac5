@@ -115,7 +115,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `agency_staff`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `agency_staff` (
   `staff_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -155,7 +155,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `booking`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `booking` (
   `booking_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -199,7 +199,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `destination`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `destination` (
   `destination_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -238,7 +238,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `flight`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `flight` (
   `flight_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -286,7 +286,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `group_trip`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `group_trip` (
   `group_trip_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -326,7 +326,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `package_component`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `package_component` (
   `package_component_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -374,7 +374,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `receipt`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `receipt` (
   `receipt_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -417,7 +417,7 @@ DROP TABLE IF EXISTS `restaurant`;
 --
 
 DROP TABLE IF EXISTS `review`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `review` (
   `review_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -468,7 +468,7 @@ DROP TABLE IF EXISTS `tourist_attraction`;
 --
 
 DROP TABLE IF EXISTS `transport`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `transport` (
   `transport_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -514,7 +514,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `travel_agency`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `travel_agency` (
   `agency_id` int(11) NOT NULL,
@@ -551,7 +551,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `travel_package`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `travel_package` (
   `package_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -600,7 +600,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `traveller`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `traveller` (
   `traveller_id` int(11) NOT NULL,
@@ -638,7 +638,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 --
 
 DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,

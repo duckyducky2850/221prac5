@@ -4,7 +4,6 @@ USE `tripistry`;
 
 SET FOREIGN_KEY_CHECKS=0;
 
-
 --  populating the Users table
 
 INSERT INTO `user` (`user_id`, `email`, `password`, `role`, `created_at`) VALUES

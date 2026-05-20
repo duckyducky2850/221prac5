@@ -1,13 +1,9 @@
-/**
- * js/main.js  –  Tripistry
- * -------------------------
- * Client-side helpers:
- *   - Form validation (client-side layer; server-side is the real protection)
- *   - Tab switcher
- *   - Star rating widget
- *   - Package compare
- *   - AJAX package filter
- */
+/*Client-side helpers:
+ - Form validation (client side layer; server side is the real protection)
+ - Tab switcher
+ - Star rating widget
+ - Package compare
+ - AJAX package filter*/
 
 'use strict';
 
@@ -114,7 +110,7 @@ function initFilterForm() {
         // update URL without reload
         const url = window.location.pathname + '?' + params.toString();
         history.replaceState(null, '', url);
-        // if JS fetch fails, form still submits normally (progressive enhancement)
+        // if JS fetch fails, form still submits normally
         if (!resultsDiv) return;
         resultsDiv.style.opacity = '0.5';
         fetch('/api/ajax.php?' + params.toString())
@@ -122,7 +118,7 @@ function initFilterForm() {
             .then(html => {
                 resultsDiv.innerHTML = html;
                 resultsDiv.style.opacity = '1';
-                initCompare(); // re-init compare checkboxes on new content
+                initCompare(); // re init compare checkboxes on new content
             })
             .catch(() => { resultsDiv.style.opacity = '1'; });
     };

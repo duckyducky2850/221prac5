@@ -1,17 +1,18 @@
 <?php
-/**
- * traveller/book.php  –  Book a package
- */
+/*Book a package*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('traveller');
 
-$db         = get_db();
-$uid        = current_user_id();
+$db = get_db();
+$uid = current_user_id();
 $package_id = (int)($_GET['package_id'] ?? $_POST['package_id'] ?? 0);
-$gt_id      = (int)($_GET['group_trip_id'] ?? $_POST['group_trip_id'] ?? 0) ?: null;
+$gt_id = (int)($_GET['group_trip_id'] ?? $_POST['group_trip_id'] ?? 0) ?: null;
 
-if (!$package_id) { header('Location: ' . BASE_URL . '/traveller/packages.php'); exit; }
+if (!$package_id) {
+    header('Location: ' . BASE_URL . '/traveller/packages.php');
+    exit;
+    }
 
 // Load package
 $stmt = $db->prepare("SELECT tp.*, ta.company_name FROM travel_package tp JOIN travel_agency ta ON ta.agency_id=tp.agency_id WHERE tp.package_id=?");
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf()) { $errors[] = 'Invalid request.'; }
     else {
         $payment_method = $_POST['payment_method'] ?? '';
-        $valid_methods  = ['credit_card','debit_card','paypal','bank_transfer'];
+        $valid_methods = ['credit_card','debit_card','paypal','bank_transfer'];
         if (!in_array($payment_method, $valid_methods)) $errors[] = 'Select a payment method.';
 
         if (empty($errors)) {
@@ -52,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Increment group_trip members if applicable
                 if ($gt_id) {
                     $db->prepare("UPDATE group_trip SET current_members = current_members + 1 WHERE group_trip_id = ?")->execute([$gt_id]);
-                    // Auto-close if full
+                    // Auto close if full
                     $db->prepare("UPDATE group_trip SET status='full' WHERE group_trip_id=? AND current_members >= max_members")->execute([$gt_id]);
                 }
 
@@ -108,9 +109,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <div class="form-error">Please select a payment method.</div>
             </div>
 
-            <!-- NOTE: Actual payment processing is NOT implemented here.
-                 In production integrate a payment gateway (e.g. PayFast, Stripe).
-                 The booking is recorded as 'confirmed' for demo purposes. -->
+            <!-- NOTE: Actual payment processing is NOT implemented here-->
             <div class="flash flash--info" style="font-size:.85rem">
                 ℹ️ Payment processing is simulated for demo purposes. No real transaction occurs.
             </div>

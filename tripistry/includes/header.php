@@ -1,10 +1,6 @@
 <?php
-/**
- * includes/header.php
- * --------------------
- * Shared page header. Included at the top of every page.
- * $page_title should be set before including this file.
- */
+/*Shared page header
+$page_title should be set before including this file.*/
 require_once __DIR__ . '/../includes/auth.php';
 
 $page_title = $page_title ?? 'Tripistry';

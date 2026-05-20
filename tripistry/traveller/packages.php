@@ -1,31 +1,27 @@
 <?php
-/**
- * traveller/packages.php
- * -----------------------
- * Browse, filter, sort, and compare travel packages.
- * All inputs sanitised through PDO prepared statements / integer casting.
- */
+/*Browse, filter, sort, and compare travel packages.
+All inputs sanitised through PDO prepared statements / integer casting.*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 
 $db = get_db();
 
 // ── Filter inputs – sanitised ────────────────────────────────
-$search      = trim($_GET['search']      ?? '');
+$search = trim($_GET['search'] ?? '');
 $destination = (int)($_GET['destination'] ?? 0);
-$agency_id   = (int)($_GET['agency_id']  ?? 0);
-$min_price   = (float)($_GET['min_price'] ?? 0);
-$max_price   = (float)($_GET['max_price'] ?? 0);
-$duration    = (int)($_GET['duration']   ?? 0);
-$sort        = $_GET['sort'] ?? 'rating';
+$agency_id = (int)($_GET['agency_id'] ?? 0);
+$min_price = (float)($_GET['min_price'] ?? 0);
+$max_price = (float)($_GET['max_price'] ?? 0);
+$duration = (int)($_GET['duration'] ?? 0);
+$sort = $_GET['sort'] ?? 'rating';
 $compare_ids = array_filter(array_map('intval', explode(',', $_GET['compare'] ?? '')));
 
 // Allowed sort values (whitelist to prevent SQL injection in ORDER BY)
 $sort_map = [
-    'rating'    => 'avg_rating DESC',
+    'rating' => 'avg_rating DESC',
     'price_asc' => 'tp.base_price ASC',
     'price_desc'=> 'tp.base_price DESC',
-    'newest'    => 'tp.created_at DESC',
+    'newest' => 'tp.created_at DESC',
     'duration'  => 'tp.duration_days ASC',
 ];
 $order_by = $sort_map[$sort] ?? 'avg_rating DESC';
@@ -35,27 +31,27 @@ $where  = ['1=1'];
 $params = [];
 
 if ($search) {
-    $where[]  = "(tp.name LIKE ? OR tp.description LIKE ? OR ta.company_name LIKE ?)";
+    $where[] = "(tp.name LIKE ? OR tp.description LIKE ? OR ta.company_name LIKE ?)";
     $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%";
 }
 if ($destination) {
-    $where[]  = "d.destination_id = ?";
+    $where[] = "d.destination_id = ?";
     $params[] = $destination;
 }
 if ($agency_id) {
-    $where[]  = "tp.agency_id = ?";
+    $where[] = "tp.agency_id = ?";
     $params[] = $agency_id;
 }
 if ($min_price > 0) {
-    $where[]  = "tp.base_price >= ?";
+    $where[] = "tp.base_price >= ?";
     $params[] = $min_price;
 }
 if ($max_price > 0) {
-    $where[]  = "tp.base_price <= ?";
+    $where[] = "tp.base_price <= ?";
     $params[] = $max_price;
 }
 if ($duration > 0) {
-    $where[]  = "tp.duration_days <= ?";
+    $where[] = "tp.duration_days <= ?";
     $params[] = $duration;
 }
 
@@ -70,22 +66,21 @@ $sql = "
     FROM travel_package tp
     JOIN travel_agency ta ON ta.agency_id = tp.agency_id
     LEFT JOIN package_component pc ON pc.package_id = tp.package_id AND pc.component_type = 'accommodation'
-    LEFT JOIN accommodation a  ON a.accommodation_id = pc.component_id
-    LEFT JOIN destination d    ON d.destination_id = a.destination_id
-    LEFT JOIN review r         ON r.package_id = tp.package_id
+    LEFT JOIN accommodation a ON a.accommodation_id = pc.component_id
+    LEFT JOIN destination d ON d.destination_id = a.destination_id
+    LEFT JOIN review r ON r.package_id = tp.package_id
     WHERE $where_sql
     GROUP BY tp.package_id, d.destination_id
-    ORDER BY $order_by
-";
+    ORDER BY $order_by";
 $stmt = $db->prepare($sql);
 $stmt->execute($params);
 $packages = $stmt->fetchAll();
 
 // Dropdown data
 $destinations = $db->query("SELECT destination_id, city_name, country FROM destination ORDER BY city_name")->fetchAll();
-$agencies     = $db->query("SELECT agency_id, company_name FROM travel_agency ORDER BY company_name")->fetchAll();
+$agencies = $db->query("SELECT agency_id, company_name FROM travel_agency ORDER BY company_name")->fetchAll();
 
-// Compare mode – show side-by-side table
+// Compare mode, show side by side table
 $compare_packages = [];
 if (!empty($compare_ids)) {
     $placeholders = implode(',', array_fill(0, count($compare_ids), '?'));
@@ -112,7 +107,7 @@ require_once __DIR__ . '/../includes/header.php';
     <p>Browse and compare packages from our agency partners.</p>
 </div>
 
-<!-- ── Compare table ── -->
+<!--Compare table-->
 <?php if (!empty($compare_packages)): ?>
 <div class="card mb-3" style="overflow:hidden">
     <div style="padding:1rem 1.25rem;background:var(--clr-primary-light);border-bottom:1px solid var(--clr-border)">

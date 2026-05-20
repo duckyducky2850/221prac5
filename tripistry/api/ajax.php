@@ -1,11 +1,7 @@
 <?php
-/**
- * api/ajax.php
- * -------------
- * Returns the package cards HTML fragment for AJAX filtering.
- * Called by js/main.js when filter form changes.
- * All inputs sanitised via PDO prepared statements and integer casting.
- */
+/*Returns the package cards HTML fragment for AJAX filtering.
+Called by js/main.js when filter form changes.
+All inputs sanitised via PDO prepared statements and integer casting.*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 
@@ -22,21 +18,39 @@ $duration = (int)($_GET['duration']   ?? 0);
 $sort = $_GET['sort'] ?? 'rating';
 
 $sort_map = [
-    'rating'    => 'avg_rating DESC',
+    'rating' => 'avg_rating DESC',
     'price_asc' => 'tp.base_price ASC',
     'price_desc'=> 'tp.base_price DESC',
-    'newest'    => 'tp.created_at DESC',
-    'duration'  => 'tp.duration_days ASC',
+    'newest' => 'tp.created_at DESC',
+    'duration' => 'tp.duration_days ASC',
 ];
 $order_by = $sort_map[$sort] ?? 'avg_rating DESC';
 
 $where = ['1=1']; $params = [];
-if ($search) { $where[] = "(tp.name LIKE ? OR ta.company_name LIKE ?)"; $params[] = "%$search%"; $params[] = "%$search%"; }
-if ($destination) { $where[] = "d.destination_id = ?"; $params[] = $destination; }
-if ($agency_id) { $where[] = "tp.agency_id = ?"; $params[] = $agency_id; }
-if ($min_price) { $where[] = "tp.base_price >= ?"; $params[] = $min_price; }
-if ($max_price) { $where[] = "tp.base_price <= ?"; $params[] = $max_price; }
-if ($duration) { $where[] = "tp.duration_days <= ?"; $params[] = $duration; }
+if ($search)
+{
+    $where[] = "(tp.name LIKE ? OR ta.company_name LIKE ?)"; $params[] = "%$search%"; $params[] = "%$search%";
+}
+if ($destination)
+{
+    $where[] = "d.destination_id = ?"; $params[] = $destination;
+}
+if ($agency_id)
+{
+    $where[] = "tp.agency_id = ?"; $params[] = $agency_id;
+}
+if ($min_price)
+{
+    $where[] = "tp.base_price >= ?"; $params[] = $min_price;
+}
+if ($max_price)
+{
+    $where[] = "tp.base_price <= ?"; $params[] = $max_price;
+}
+if ($duration)
+{
+    $where[] = "tp.duration_days <= ?"; $params[] = $duration;
+}
 
 $where_sql = implode(' AND ', $where);
 

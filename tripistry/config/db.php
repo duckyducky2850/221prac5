@@ -1,13 +1,7 @@
 <?php
-/**
- * config/db.php
- * -------------
- * Central database connection file.
- * *** EDIT ONLY THIS FILE to change DB credentials ***
- *
- * Uses PDO with prepared statements throughout the app
- * so SQL injection is prevented at the driver level.
- */
+/*Central database connection file.
+Uses PDO with prepared statements throughout the app
+so SQL injection is prevented*/
 
 define('BASE_URL', '/tripistry'); // so everyone in team can run locally
 define('DB_HOST', '127.0.0.1');

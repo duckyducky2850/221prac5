@@ -1,7 +1,5 @@
 <?php
-/**
- * traveller/destinations.php  –  Browse destinations, flights, accommodation, attractions, restaurants
- */
+/*Browse destinations, flights, accommodation, attractions, restaurants*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 
@@ -48,7 +46,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <?php if (!$dest): ?>
-<!-- ── Destinations grid ── -->
+<!--Destinations grid-->
 <div class="grid-3">
     <?php foreach ($destinations as $d): ?>
     <a href="<?= BASE_URL ?>/traveller/destinations.php?id=<?= $d['destination_id'] ?>" style="text-decoration:none;color:inherit">
@@ -70,7 +68,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <?php else: ?>
-<!-- ── Destination detail ── -->
+<!--Destination detail-->
 <a href="<?= BASE_URL ?>/traveller/destinations.php" class="text-muted" style="font-size:.9rem">← All Destinations</a>
 
 <?php if ($dest['description']): ?>
