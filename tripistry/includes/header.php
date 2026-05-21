@@ -18,6 +18,15 @@ $flash = get_flash();
 </head>
 <body>
 
+<!-- Apply dark mode BEFORE anything renders to prevent flash -->
+<script>
+(function() {
+    if (localStorage.getItem('darkMode') === '1') {
+        document.body.classList.add('dark-mode');
+    }
+})();
+</script>
+
 <nav class="navbar">
     <div class="nav-inner">
         <a href="<?= BASE_URL ?>/index.php" class="nav-brand">✈ Tripistry</a>
@@ -45,9 +54,9 @@ $flash = get_flash();
             <?php endif; ?>
 
             <!-- Dark mode toggle -->
-        <li>
-            <button class="dark-toggle" onclick="toggleDarkMode()" id="dark-btn">🌙 Dark</button>
-        </li>
+            <li>
+                <button class="dark-toggle" onclick="toggleDarkMode()" id="dark-btn">🌙 Dark</button>
+            </li>
         </ul>
     </div>
 </nav>
@@ -60,8 +69,64 @@ $flash = get_flash();
     </div>
 <?php endif; ?>
 
+<!-- ── AI Chatbot Widget ── -->
+<div id="chat-bubble" onclick="toggleChat()"
+     style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;
+            width:56px;height:56px;border-radius:50%;
+            background:var(--clr-primary);color:#fff;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.5rem;cursor:pointer;box-shadow:var(--shadow-lg);
+            transition:transform 0.2s;">
+    💬
+</div>
+
+<div id="chat-window"
+     style="display:none;position:fixed;bottom:5rem;right:1.5rem;
+            z-index:998;width:320px;height:420px;
+            background:var(--clr-surface);border:1px solid var(--clr-border);
+            border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);
+            flex-direction:column;overflow:hidden;">
+
+    <div style="background:var(--clr-primary);color:#fff;
+                padding:.75rem 1rem;font-weight:600;font-size:.95rem;
+                display:flex;justify-content:space-between;align-items:center;">
+        <span>✈ Tripistry Assistant</span>
+        <button onclick="toggleChat()"
+                style="background:none;border:none;color:#fff;
+                       font-size:1.2rem;cursor:pointer">✕</button>
+    </div>
+
+    <div id="chat-messages"
+         style="flex:1;overflow-y:auto;padding:.75rem;
+                display:flex;flex-direction:column;gap:.5rem;font-size:.88rem;">
+        <div style="background:var(--clr-primary-light);
+                    padding:.6rem .85rem;border-radius:12px;
+                    border-bottom-left-radius:2px;max-width:85%">
+            Hi! I'm your Tripistry travel assistant. Ask me about packages, destinations, or pricing! 🌍
+        </div>
+    </div>
+
+    <div style="padding:.6rem;border-top:1px solid var(--clr-border);
+                display:flex;gap:.4rem;">
+        <input type="text" id="chat-input" placeholder="Ask about packages..."
+               style="flex:1;padding:.5rem .75rem;border:1.5px solid var(--clr-border);
+                      border-radius:var(--radius-sm);font-size:.88rem;
+                      font-family:var(--font-body);background:var(--clr-bg);
+                      color:var(--clr-text);"
+               onkeydown="if(event.key==='Enter') sendChat()">
+        <button onclick="sendChat()"
+                style="background:var(--clr-primary);color:#fff;border:none;
+                       border-radius:var(--radius-sm);padding:.5rem .85rem;
+                       cursor:pointer;font-size:.88rem;font-weight:600;">
+            Send
+        </button>
+    </div>
+</div>
+
 <script>
-// Dark mode — persists across pages via localStorage
+const CSRF_TOKEN = '<?= csrf_token() ?>';
+
+// ── Dark mode ────────────────────────────────────────────────
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
@@ -69,14 +134,66 @@ function toggleDarkMode() {
     document.getElementById('dark-btn').textContent = isDark ? '☀️ Light' : '🌙 Dark';
 }
 
-// Apply on every page load before render to avoid flash
-(function() {
+// Set button label to match current state on load
+document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('darkMode') === '1') {
-        document.body.classList.add('dark-mode');
-        document.addEventListener('DOMContentLoaded', function() {
-            const btn = document.getElementById('dark-btn');
-            if (btn) btn.textContent = '☀️ Light';
-        });
+        const btn = document.getElementById('dark-btn');
+        if (btn) btn.textContent = '☀️ Light';
     }
-})();
+});
+
+// ── Chatbot ──────────────────────────────────────────────────
+function toggleChat() {
+    const win = document.getElementById('chat-window');
+    const isHidden = win.style.display === 'none' || win.style.display === '';
+    win.style.display = isHidden ? 'flex' : 'none';
+    if (isHidden) document.getElementById('chat-input').focus();
+}
+
+async function sendChat() {
+    const input    = document.getElementById('chat-input');
+    const messages = document.getElementById('chat-messages');
+    const text     = input.value.trim();
+    if (!text) return;
+
+    // Show user message
+    messages.innerHTML += `
+        <div style="background:var(--clr-primary);color:#fff;
+                    padding:.6rem .85rem;border-radius:12px;
+                    border-bottom-right-radius:2px;
+                    max-width:85%;align-self:flex-end;">
+            ${text.replace(/</g,'&lt;')}
+        </div>`;
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    // Typing indicator
+    const typing = document.createElement('div');
+    typing.id = 'typing';
+    typing.style.cssText = 'background:var(--clr-bg);padding:.6rem .85rem;border-radius:12px;max-width:85%;color:var(--clr-text-muted)';
+    typing.textContent = 'Typing…';
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+
+    try {
+        const res = await fetch('<?= BASE_URL ?>/api/chatbot.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text, csrf_token: CSRF_TOKEN })
+        });
+        const data = await res.json();
+        typing.remove();
+
+        messages.innerHTML += `
+            <div style="background:var(--clr-primary-light);
+                        padding:.6rem .85rem;border-radius:12px;
+                        border-bottom-left-radius:2px;max-width:85%;">
+                ${(data.reply || data.error || 'No response').replace(/</g,'&lt;')}
+            </div>`;
+    } catch {
+        typing.remove();
+        messages.innerHTML += `<div style="color:var(--clr-danger);font-size:.82rem;">Connection error.</div>`;
+    }
+    messages.scrollTop = messages.scrollHeight;
+}
 </script>
