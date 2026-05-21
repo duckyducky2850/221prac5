@@ -101,6 +101,14 @@ if (empty($packages)): ?>
                 <a href="<?= BASE_URL ?>/login.php" class="btn btn-primary btn-sm">Login to Book</a>
                 <?php endif; ?>
             </div>
+            <!-- added to work with the main.js -->
+             <div style="margin-top:.5rem">
+                <label style="font-size:.8rem;color:var(--clr-text-muted);cursor:pointer">
+                    <input type="checkbox" class="compare-check" value="<?= $p['package_id'] ?>"
+                        <?= compareList.has($p['package_id']) ? 'checked' : '' // (PHP can't do this — see fix below) ?>>
+                Compare
+            </label>
+            </div>
         </div>
     </div>
     <?php endforeach; ?>
