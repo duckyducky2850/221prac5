@@ -2,6 +2,8 @@
 /*Write and view my reviews*/
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../review_functions.php';
+
 require_role('traveller');
 
 $db  = get_db();
@@ -20,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $comment = trim($_POST['comment'] ?? '');
         $package_id = (int)($_POST['package_id'] ?? 0) ?: null;
         $agency_id = (int)($_POST['agency_id']  ?? 0) ?: null;
+        $sentiment = analyseSentiment($comment);
 
         if ($rating < 1 || $rating > 5)
             $errors[] = 'Please select a star rating (1–5).';
@@ -28,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($errors)) 
         {
-                $stmt = $db->prepare("INSERT INTO review (traveller_id, agency_id, package_id, rating, comment) VALUES (?,?,?,?,?)");
-                $stmt->execute([$uid, $agency_id, $package_id, $rating, $comment ?: null]);
+                $stmt = $db->prepare("INSERT INTO review (traveller_id, agency_id, package_id, rating, comment, sentiment) VALUES (?,?,?,?,?,?)");
+                $stmt->execute([$uid, $agency_id, $package_id, $rating, $comment ?: null, $sentiment]);
 
                 // updates the avg_rating if a package was reviewed
                 if ($package_id) 
@@ -141,6 +144,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <div>
                     <span class="stars"><?= str_repeat('★', $rev['rating']) ?><?= str_repeat('☆', 5-$rev['rating']) ?></span>
                     <span class="review-date"><?= date('d M Y', strtotime($rev['created_date'])) ?></span>
+                    <?= getSentimentBadge($rev['sentiment'] ?? null) ?>
                 </div>
             </div>
             <?php if ($rev['comment']): ?><p class="review-body"><?= e($rev['comment']) ?></p><?php endif; ?>
