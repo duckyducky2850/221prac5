@@ -1,0 +1,124 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "fa37afe575fcd19507eedffe58212298",
+    "packages": [
+        {
+            "name": "nategood/httpful",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nategood/httpful.git",
+                "reference": "ea02c8aedef70b9a453ce97978d9d7c413972f15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nategood/httpful/zipball/ea02c8aedef70b9a453ce97978d9d7c413972f15",
+                "reference": "ea02c8aedef70b9a453ce97978d9d7c413972f15",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Httpful": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nate Good",
+                    "email": "me@nategood.com",
+                    "homepage": "http://nategood.com"
+                }
+            ],
+            "description": "A Readable, Chainable, REST friendly, PHP HTTP Client",
+            "homepage": "http://github.com/nategood/httpful",
+            "keywords": [
+                "api",
+                "curl",
+                "http",
+                "requests",
+                "rest",
+                "restful"
+            ],
+            "support": {
+                "issues": "https://github.com/nategood/httpful/issues",
+                "source": "https://github.com/nategood/httpful/tree/v1.0.0"
+            },
+            "time": "2024-05-01T11:33:16+00:00"
+        },
+        {
+            "name": "nlpcloud/nlpcloud-client",
+            "version": "v1.0.41",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nlpcloud/nlpcloud-php.git",
+                "reference": "725229664dfa2da6c240372ca1dd9b1118554d3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nlpcloud/nlpcloud-php/zipball/725229664dfa2da6c240372ca1dd9b1118554d3d",
+                "reference": "725229664dfa2da6c240372ca1dd9b1118554d3d",
+                "shasum": ""
+            },
+            "require": {
+                "nategood/httpful": "*",
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NLPCloud\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Julien Salinas",
+                    "email": "all@juliensalinas.com"
+                }
+            ],
+            "description": "NLP Cloud serves high performance pre-trained or custom models for NER, sentiment-analysis, classification, summarization, paraphrasing, grammar and spelling correction, keywords and keyphrases extraction, chatbot, product description and ad generation, intent classification, text generation, image generation, code generation, question answering, automatic speech recognition, machine translation, language detection, semantic search, semantic similarity, tokenization, POS tagging, speech synthesis, embeddings, and dependency parsing. It is ready for production, served through a REST API. This is the PHP client for the API. More details here: https://nlpcloud.com. Documentation: https://docs.nlpcloud.com. Github: https://github.com/nlpcloud/nlpcloud-php",
+            "homepage": "http://github.com/nlpcloud/nlpcloud-php",
+            "keywords": [
+                "Deep learning",
+                "ai",
+                "api",
+                "data science",
+                "machine learning",
+                "nlp",
+                "nlpcloud"
+            ],
+            "support": {
+                "issues": "https://github.com/nlpcloud/nlpcloud-php/issues",
+                "source": "https://github.com/nlpcloud/nlpcloud-php/tree/v1.0.41"
+            },
+            "time": "2024-11-27T09:12:31+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
+}
