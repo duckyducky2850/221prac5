@@ -1,10 +1,10 @@
 <?php
-/*Central database connection file.
-Uses PDO with prepared statements throughout the app
-so SQL injection is prevented*/
+/**
+ * config/db.php
 
-define('BASE_URL', '/tripistry'); // so everyone in team can run locally
-define('DB_HOST', '127.0.0.1');
+ */
+
+define('DB_HOST', 'localhost');
 define('DB_NAME', 'tripistry');
 define('DB_USER', 'root');        
 define('DB_PASS', '');            
