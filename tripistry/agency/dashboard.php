@@ -52,28 +52,28 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="page-header">
-    <h1>Welcome, <?= e($display_name) ?> 🏢</h1>
+    <h1>Welcome, <?= e($display_name) ?> <img src="../assets/building.PNG" width = "40" height="40" alt="destinations"></h1>
     <p>Manage your packages, group trips and monitor bookings.</p>
 </div>
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-icon">📦</div>
+        <div class="stat-icon"> <img src="../assets/box.PNG" width = "40" height="40" alt="destinations"></div>
         <div class="stat-value"><?= $s['pkg_count'] ?></div>
         <div class="stat-label">Packages</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon">👥</div>
+        <div class="stat-icon"> <img src="../assets/group.PNG" width = "40" height="40" alt="destinations"></div>
         <div class="stat-value"><?= $s['open_trips'] ?></div>
         <div class="stat-label">Open Group Trips</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon">🎫</div>
+        <div class="stat-icon"> <img src="../assets/ticket.PNG" width = "40" height="40"></div>
         <div class="stat-value"><?= $s['total_bookings'] ?></div>
         <div class="stat-label">Total Bookings</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon">⭐</div>
+        <div class="stat-icon"> <img src="../assets/star.PNG" width = "40" height="40" alt="destinations"></div>
         <div class="stat-value"><?= $s['avg_rating'] ?? '–' ?></div>
         <div class="stat-label">Avg Rating</div>
     </div>
