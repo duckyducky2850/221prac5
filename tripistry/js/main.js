@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCompare();
     initConfirmDelete();
     autoCloseFlash();
+    initPasswordStrength(); //added to show password strength on client side
 });
 
 /* ── Tabs ───────────────────────────────────────────────────── */
@@ -138,6 +139,8 @@ const compareList = new Set();
 
 function initCompare() {
     document.querySelectorAll('.compare-check').forEach(cb => {
+        if (compareList.has(cb.value)) cb.checked = true;
+
         cb.addEventListener('change', () => {
             const id = cb.value;
             if (cb.checked) {
@@ -211,5 +214,47 @@ function showToast(msg, type = 'info') {
 function autoCloseFlash() {
     document.querySelectorAll('.flash').forEach(f => {
         setTimeout(() => { f.style.transition = 'opacity .5s'; f.style.opacity = '0'; setTimeout(() => f.remove(), 500); }, 4000);
+    });
+}
+
+/* ── Display password strength to user ────────────────────────────── */
+function initPasswordStrength()
+{
+    const pw = document.getElementById('password');
+    if (!pw) return;
+
+    const wrapper = pw.parentElement;
+    const bar = document.createElement('div');
+    bar.id = 'pw-strength-bar';
+    bar.style.cssText = 'height:4px;border-radius:2px;margin-top:6px;transition:width .3s,background .3s;width:0';
+    const label = document.createElement('div');
+    label.id = 'pw-strength-label';
+    label.style.cssText = 'font-size:.75rem;margin-top:3px;color:var(--clr-text-muted)';
+    wrapper.appendChild(bar);
+    wrapper.appendChild(label);
+
+    pw.addEventListener('input', () => {
+        const val = pw.value;
+        let score = 0;
+        if (val.length >= 8) score++;
+        if (val.length >= 12) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val))  score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+
+        const levels = [
+            { label: '', color: 'transparent', width: '0%'   },
+            { label: 'Weak', color: '#e74c3c', width: '25%'  },
+            { label: 'Fair', color: '#e67e22', width: '50%'  },
+            { label: 'Good', color: '#f1c40f', width: '75%'  },
+            { label: 'Strong', color: '#2ecc71', width: '90%'  },
+            { label: 'Very strong', color: '#27ae60', width: '100%' },
+        ];
+
+        const lvl = levels[Math.min(score, 5)];
+        bar.style.width = val.length ? lvl.width : '0%';
+        bar.style.background = lvl.color;
+        label.textContent = val.length ? lvl.label : '';
+        label.style.color = lvl.color;
     });
 }
