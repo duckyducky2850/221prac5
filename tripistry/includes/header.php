@@ -1,7 +1,8 @@
 <?php
 /*Shared page header
 $page_title should be set before including this file.*/
-require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../config/db.php'; // added bsc BASE_URL is only defined in db.php
+require_once __DIR__ . '/auth.php';
 
 $page_title = $page_title ?? 'Tripistry';
 $flash = get_flash();

@@ -48,6 +48,7 @@ if ($min_price > 0) {
 }
 if ($max_price > 0) {
     $where[] = "tp.base_price <= ?";
+    
     $params[] = $max_price;
 }
 if ($duration > 0) {
