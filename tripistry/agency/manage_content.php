@@ -133,8 +133,16 @@ function dest_options(array $destinations, int $selected=0): string {
 </div>
 
 <div class="tabs">
-    <?php foreach (['flights'=>'✈️ Flights','accommodation'=>'🏨 Stays','transport'=>'🚌 Transport','activities'=>'🎯 Activities'] as $t => $l): ?>
-    <button class="tab-btn <?= $active_tab===$t?'active':'' ?>" data-tab="<?= $t ?>"><?= $l ?></button>
+    <?php foreach ([
+        'flights'       => ['label' => 'Flights',   'icon' => '../assets/plane.png'],
+        'accommodation' => ['label' => 'Stays',      'icon' => '../assets/map.png'],
+        'transport'     => ['label' => 'Transport',  'icon' => '../assets/transport.png'],
+        'activities'    => ['label' => 'Activities', 'icon' => '../assets/img/attractions.png'],
+    ] as $t => $item): ?>
+    <button class="tab-btn <?= $active_tab === $t ? 'active' : '' ?>" data-tab="<?= $t ?>">
+        <img src="<?= $item['icon'] ?>" alt="<?= $item['label'] ?>">
+        <?= $item['label'] ?>
+    </button>
     <?php endforeach; ?>
 </div>
 
