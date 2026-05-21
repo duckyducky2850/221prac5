@@ -4,7 +4,8 @@
 
  */
 
-define('DB_HOST', 'localhost');
+define('BASE_URL', '/tripistry');
+define('DB_HOST', '127.0.0.1');
 define('DB_NAME', 'tripistry');
 define('DB_USER', 'root');        
 define('DB_PASS', '');            
