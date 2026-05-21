@@ -53,7 +53,7 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="page-header">
-    <h1>Welcome back, <?= e($display_name) ?> 👋</h1>
+    <h1>Welcome back, <?= e($display_name) ?></h1>
     <p>Here's an overview of your travel activity.</p>
 </div>
 

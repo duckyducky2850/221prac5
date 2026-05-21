@@ -45,13 +45,21 @@ html { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font-body);
-    background: var(--clr-bg);
+    background-image: linear-gradient(
+        to bottom right, 
+        rgba(215, 234, 244, 0.5),
+        rgba(247, 249, 252, 0.7)
+    ), url('../assets/bg.png');
+    background-size: cover, 100% auto;
+    background-repeat: no-repeat, repeat-y;
+    background-attachment: fixed;
     color: var(--clr-text);
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
+
 
 a { color: var(--clr-primary); text-decoration: none; }
 a:hover { text-decoration: underline; }
