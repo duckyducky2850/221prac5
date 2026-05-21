@@ -217,7 +217,7 @@ function autoCloseFlash() {
     });
 }
 
-/* ── Display password strength to user ────────────────────────────── */
+/* ── Display password strength to user - new function ────────────────────────────── */
 function initPasswordStrength()
 {
     const pw = document.getElementById('password');
