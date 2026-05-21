@@ -43,6 +43,11 @@ $flash = get_flash();
                 <li><a href="<?= BASE_URL ?>/agency/manage_content.php">Manage Content</a></li>
                 <li><a href="<?= BASE_URL ?>/logout.php" class="btn btn-outline">Log Out</a></li>
             <?php endif; ?>
+
+            <!-- Dark mode toggle -->
+        <li>
+            <button class="dark-toggle" onclick="toggleDarkMode()" id="dark-btn">🌙 Dark</button>
+        </li>
         </ul>
     </div>
 </nav>
@@ -54,3 +59,24 @@ $flash = get_flash();
         <?= e($flash['msg']) ?>
     </div>
 <?php endif; ?>
+
+<script>
+// Dark mode — persists across pages via localStorage
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark ? '1' : '0');
+    document.getElementById('dark-btn').textContent = isDark ? '☀️ Light' : '🌙 Dark';
+}
+
+// Apply on every page load before render to avoid flash
+(function() {
+    if (localStorage.getItem('darkMode') === '1') {
+        document.body.classList.add('dark-mode');
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('dark-btn');
+            if (btn) btn.textContent = '☀️ Light';
+        });
+    }
+})();
+</script>

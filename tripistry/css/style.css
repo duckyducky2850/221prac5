@@ -1,5 +1,6 @@
 /* ── Design tokens ─────────────────────────────────────────── */
 :root {
+
     /* Brand colours */
     --clr-primary:       #1a6b8a;
     --clr-primary-dark:  #134f67;
@@ -36,6 +37,62 @@
     --shadow-sm:         0 1px 3px rgba(0,0,0,.08);
     --shadow-md:         0 4px 16px rgba(0,0,0,.10);
     --shadow-lg:         0 8px 32px rgba(0,0,0,.14);
+}
+
+/* ── Dark mode ────────────────────────────────────────────── */
+body.dark-mode {
+    --clr-bg:          #0f1117;
+    --clr-surface:     #1a1d27;
+    --clr-border:      #2e3347;
+    --clr-text:        #e2e8f0;
+    --clr-text-muted:  #94a3b8;
+    --clr-primary-light: #1e3a4a;
+}
+
+body.dark-mode .navbar {
+    background: var(--clr-surface);
+    border-bottom-color: var(--clr-border);
+}
+
+body.dark-mode .site-footer {
+    background: #080a10;
+}
+
+body.dark-mode .card-img-placeholder {
+    background: linear-gradient(135deg, #1e3a4a, #1a2535);
+}
+
+body.dark-mode .data-table tr:hover td {
+    background: #1e2535;
+}
+
+body.dark-mode .form-control {
+    background: #1a1d27;
+    color: var(--clr-text);
+    border-color: var(--clr-border);
+}
+
+body.dark-mode .filter-bar,
+body.dark-mode .sidebar-card,
+body.dark-mode .review-card,
+body.dark-mode .stat-card {
+    background: var(--clr-surface);
+    border-color: var(--clr-border);
+}
+
+/* Toggle button */
+.dark-toggle {
+    background: none;
+    border: 1.5px solid var(--clr-border);
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--clr-text);
+    transition: all 0.15s;
+}
+.dark-toggle:hover {
+    background: var(--clr-primary-light);
 }
 
 /* ── Reset and base ───────────────────────────────────────────── */
