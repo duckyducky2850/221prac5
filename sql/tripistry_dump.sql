@@ -426,6 +426,7 @@ CREATE TABLE `review` (
   `package_id` int(11) DEFAULT NULL,
   `rating` int(11) NOT NULL CHECK (`rating` >= 1 and `rating` <= 5),
   `comment` text DEFAULT NULL,
+  `sentiment` varchar(20) DEFAULT NULL,
   `created_date` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`review_id`),
   KEY `traveller_id` (`traveller_id`),

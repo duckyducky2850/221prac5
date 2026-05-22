@@ -10,7 +10,7 @@ Database -> add sentiments to all users so it works from now on
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/config/db.php';
 
-use nlpcloud\NlpCloudClient;
+use NLPCloud\NLPCloud; // fixed the class name
 
 $NLP_CLOUD_API_KEY = '804149c76719205c1e48abc933a75a9affc96a82';
 
@@ -26,15 +26,16 @@ function analyseSentiment($reviewText) {
     }
     
     try {
-        $client = new NlpCloudClient(
-            $NLP_CLOUD_API_KEY,
-            'distilbert-base-uncased-finetuned-sst-2-english'
+        $client = new NLPCloud(// reordered the arguments for the constructor
+            'distilbert-base-uncased-finetuned-sst-2-english',
+            $NLP_CLOUD_API_KEY
+            
         );
         
         $result = $client->sentiment($reviewText);
         
         // The API returns labels like 'POSITIVE' or 'NEGATIVE'
-        $label = $result['scored_labels'][0]['label'];
+        $label = $result->scored_labels[0]->label; // should not be treated as an array
         
         if ($label == 'POSITIVE') {
             return 'positive';
