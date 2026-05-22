@@ -83,11 +83,11 @@ require_once __DIR__ . '/../includes/header.php';
         <!-- Summary -->
         <div style="background:var(--clr-bg);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1.5rem">
             <h4 style="margin-bottom:.5rem"><?= e($pkg['name']) ?></h4>
-            <p class="text-muted" style="font-size:.88rem">🏢 <?= e($pkg['company_name']) ?></p>
+            <p class="text-muted" style="font-size:.88rem"><img src="../assets/building.PNG" width = "40" height="40"> <?= e($pkg['company_name']) ?></p>
             <?php if ($gt): ?>
-                <p style="font-size:.88rem">👥 Group trip: <?= date('d M Y', strtotime($gt['start_date'])) ?> – <?= date('d M Y', strtotime($gt['end_date'])) ?></p>
+                <p style="font-size:.88rem"><img src="../assets/group.PNG" width = "40" height="40"> Group trip: <?= date('d M Y', strtotime($gt['start_date'])) ?> – <?= date('d M Y', strtotime($gt['end_date'])) ?></p>
             <?php endif; ?>
-            <?php if ($pkg['duration_days']): ?><p style="font-size:.88rem">⏱ <?= $pkg['duration_days'] ?> days</p><?php endif; ?>
+            <?php if ($pkg['duration_days']): ?><p style="font-size:.88rem"><img src="../assets/clock.PNG" width = "40" height="40"> <?= $pkg['duration_days'] ?> days</p><?php endif; ?>
             <hr class="divider">
             <div class="flex-between"><strong>Total</strong><strong class="price-badge">R<?= number_format($pkg['base_price'], 2) ?></strong></div>
         </div>
@@ -101,17 +101,17 @@ require_once __DIR__ . '/../includes/header.php';
                 <label for="payment_method">Payment Method</label>
                 <select id="payment_method" name="payment_method" class="form-control" data-required>
                     <option value="">— Select —</option>
-                    <option value="credit_card">💳 Credit Card</option>
-                    <option value="debit_card">💳 Debit Card</option>
+                    <option value="credit_card"><img src="../assets/card.PNG" width = "40" height="40"> Credit Card</option>
+                    <option value="debit_card"><img src="../assets/card.PNG" width = "40" height="40"> Debit Card</option>
                     <option value="paypal">🅿 PayPal</option>
-                    <option value="bank_transfer">🏦 Bank Transfer</option>
+                    <option value="bank_transfer"><img src="../assets/bank.PNG" width = "40" height="40"> Bank Transfer</option>
                 </select>
                 <div class="form-error">Please select a payment method.</div>
             </div>
 
             <!-- NOTE: Actual payment processing is NOT implemented here-->
             <div class="flash flash--info" style="font-size:.85rem">
-                ℹ️ Payment processing is simulated for demo purposes. No real transaction occurs.
+                <img src="../assets/info.PNG" width = "40" height="40">Payment processing is simulated for demo purposes. No real transaction occurs.
             </div>
 
             <button type="submit" class="btn btn-primary btn-block mt-2">Confirm & Pay R<?= number_format($pkg['base_price'], 2) ?></button>
