@@ -15,14 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') // we allow only post request
     exit;
 }
 
-// our CSRF check, that will prevent malic requests from other sites
-if (!verify_csrf()) 
-{
-    http_response_code(403);
-    echo json_encode(['error' => 'Invalid request.']);
-    exit;
-}
-
+// our OG code tried to verify the CSRF token before reading the request body. But the CSRF token is inside the JSON body,
+//  so we cant check it before you've read it.
+// so I fixed it by moving the 'json_decode' above the CSRF check so its available to be verified
 // getting the API key and the user's mssg
 require_once __DIR__ . '/../config/secrets.php';
 $api_key = GEMINI_API_KEY;
@@ -30,6 +25,15 @@ $api_key = GEMINI_API_KEY;
 // reads raw Json input from the request body
 $input = json_decode(file_get_contents('php://input'), true);
 $message = trim($input['message'] ?? '');
+
+// our CSRF check, the token comes in Json body for AJAX requests
+$csrf = $input['csrf_token'] ?? '';
+if (!hash_equals($_SESSION['csrf_token'] ?? '', $csrf)) {
+    http_response_code(403);
+    echo json_encode(['error' => 'Invalid request.']);
+    exit;
+}// we used 'hash_equals' instead of == to prevent timing attacks,
+//   so it compares strings in constant time so an attacker cant guess the token char by char
 
 if (!$message) // it should reject empty messages early
 {
