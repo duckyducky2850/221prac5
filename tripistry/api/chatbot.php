@@ -1,12 +1,7 @@
 <?php
-/**
- * api/chatbot.php
- * ---------------
- * AI travel assistant powered by Google Gemini (free tier).
- * Get your free API key at: https://aistudio.google.com/apikey
- *
- * Receives a user message, fetches relevant DB context,
- * sends to Gemini API, returns the response as JSON.
+/* This is our AI travel assistant powered by Google Gemini, the free tier
+ we got our free API key at: https://aistudio.google.com/apikey
+ it receives a user message, fetches relevant DB context, sends it to the to Gemini API, and returns the response as Json
  */
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
@@ -94,7 +89,7 @@ $full_prompt = $system_context . "\n\nUser question: " . $message;
 
 // ── Call Google Gemini API ───────────────────────────────────
 // Using gemini-1.5-flash — fast and free tier available
-$gemini_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" . urlencode($api_key);
+$gemini_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=" . urlencode($api_key);
 
 $payload = json_encode([
     'contents' => [
@@ -113,38 +108,39 @@ $payload = json_encode([
 $ch = curl_init($gemini_url);
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST           => true,
-    CURLOPT_POSTFIELDS     => $payload,
-    CURLOPT_HTTPHEADER     => [
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => $payload,
+    CURLOPT_HTTPHEADER => [
         'Content-Type: application/json',
     ],
     CURLOPT_TIMEOUT => 15,
 ]);
 
-$response  = curl_exec($ch);
+$response = curl_exec($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$curl_err  = curl_error($ch);
+$curl_err = curl_error($ch);
 curl_close($ch);
 
-// ── Handle errors ─────────────────────────────────────────────
-if ($curl_err) {
+// ------------------------- Handling possible errors 
+if ($curl_err) 
+    {
     echo json_encode(['error' => 'Connection failed. Is curl enabled in php.ini?']);
     exit;
 }
 
-if ($http_code !== 200) {
+if ($http_code !== 200) 
+{
     $err_data = json_decode($response, true);
     $err_msg  = $err_data['error']['message'] ?? 'AI service unavailable. Check your API key.';
     echo json_encode(['error' => $err_msg]);
     exit;
 }
 
-// ── Extract reply ─────────────────────────────────────────────
-$data  = json_decode($response, true);
-$reply = $data['candidates'][0]['content']['parts'][0]['text']
-      ?? 'Sorry, I could not generate a response. Please try again.';
+// -------------------- Extracting a reply mssg
+$data = json_decode($response, true);
+$reply = $data['candidates'][0]['content']['parts'][0]['text'] ?? 'Sorry, I could not generate a response. Please try again.';
 
-// Clean up any markdown formatting Gemini might add
+// Cleaning up any markdown formatting Gemini might add
 $reply = str_replace(['**', '*', '##', '#'], '', $reply);
 $reply = trim($reply);
 
