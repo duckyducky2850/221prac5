@@ -51,15 +51,15 @@ require_once __DIR__ . '/../includes/header.php';
     <?php foreach ($destinations as $d): ?>
     <a href="<?= BASE_URL ?>/traveller/destinations.php?id=<?= $d['destination_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
-        <div class="card-img-placeholder">🌆</div>
+        <div class="card-img-placeholder"><img src="../assets/HolidayPlaceholder.PNG" height="130"></div>
         <div class="card-body">
             <div class="card-title"><?= e($d['city_name']) ?></div>
-            <div class="card-meta">📍 <?= e($d['country']) ?></div>
+            <div class="card-meta"><img src="../assets/pin.PNG" width = "40" height="40"> <?= e($d['country']) ?></div>
             <?php if ($d['description']): ?>
                 <p style="font-size:.87rem;color:var(--clr-text-muted)"><?= e(mb_strimwidth($d['description'],0,80,'…')) ?></p>
             <?php endif; ?>
             <?php if ($d['popular_season']): ?>
-                <p class="text-muted mt-1" style="font-size:.82rem">🌤 Best: <?= e($d['popular_season']) ?></p>
+                <p class="text-muted mt-1" style="font-size:.82rem"><img src="../assets/globe.PNG" width = "40" height="40"> Best: <?= e($d['popular_season']) ?></p>
             <?php endif; ?>
         </div>
     </div>
@@ -76,11 +76,11 @@ require_once __DIR__ . '/../includes/header.php';
 <?php endif; ?>
 
 <div class="tabs mt-2">
-    <button class="tab-btn active" data-tab="flights">✈️ Flights (<?= count($flights) ?>)</button>
-    <button class="tab-btn" data-tab="accommodation">🏨 Stays (<?= count($accommodations) ?>)</button>
-    <button class="tab-btn" data-tab="transport">🚌 Transport (<?= count($transports) ?>)</button>
-    <button class="tab-btn" data-tab="attractions">🎯 Attractions (<?= count($attractions) ?>)</button>
-    <button class="tab-btn" data-tab="restaurants">🍽 Restaurants (<?= count($restaurants) ?>)</button>
+    <button class="tab-btn active" data-tab="flights"><img src="../assets/plane.PNG" width = "40" height="40"> Flights (<?= count($flights) ?>)</button>
+    <button class="tab-btn" data-tab="accommodation"><img src="../assets/stays.PNG" width = "40" height="40"> Stays (<?= count($accommodations) ?>)</button>
+    <button class="tab-btn" data-tab="transport"><img src="../assets/transport.PNG" width = "40" height="40"> Transport (<?= count($transports) ?>)</button>
+    <button class="tab-btn" data-tab="attractions"><img src="../assets/attractions.PNG" width = "40" height="40"> Attractions (<?= count($attractions) ?>)</button>
+    <button class="tab-btn" data-tab="restaurants"><img src="../assets/restaurant.PNG" width = "40" height="40"> Restaurants (<?= count($restaurants) ?>)</button>
 </div>
 
 <!-- Flights -->
@@ -112,10 +112,10 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="grid-3">
         <?php foreach ($accommodations as $a): ?>
         <div class="card">
-            <div class="card-img-placeholder" style="height:130px">🏨</div>
+            <div class="card-img-placeholder" style="height:130px"><img src="../assets/building.PNG"></div>
             <div class="card-body">
                 <div class="card-title"><?= e($a['name']) ?></div>
-                <?php if ($a['address']): ?><div class="card-meta">📍 <?= e($a['address']) ?></div><?php endif; ?>
+                <?php if ($a['address']): ?><div class="card-meta"><img src="../assets/pin.PNG" width = "40" height="40"> <?= e($a['address']) ?></div><?php endif; ?>
                 <div class="flex-between mt-1">
                     <span class="price-badge">R<?= number_format($a['price_per_night'], 2) ?>/night</span>
                     <span class="text-muted" style="font-size:.82rem"><?= $a['no_bedrooms'] ?>🛏 <?= $a['no_bathrooms'] ?>🚿</span>
@@ -155,14 +155,14 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="grid-3">
         <?php foreach ($attractions as $a): ?>
         <div class="card">
-            <div class="card-img-placeholder" style="height:120px">🎯</div>
+            <div class="card-img-placeholder" style="height:120px"><img src="../assets/attractions.PNG" width = "40" height="40"></div>
             <div class="card-body">
                 <div class="card-title"><?= e($a['name']) ?></div>
                 <?php if ($a['category']): ?><span class="badge badge-open" style="margin-bottom:.5rem"><?= e($a['category']) ?></span><?php endif; ?>
                 <?php if ($a['description']): ?><p style="font-size:.85rem;color:var(--clr-text-muted)"><?= e(mb_strimwidth($a['description'],0,80,'…')) ?></p><?php endif; ?>
                 <div class="flex-between mt-1">
                     <?php if ($a['entry_fee']): ?><span class="price-badge" style="font-size:.85rem">R<?= number_format($a['entry_fee'], 2) ?></span><?php endif; ?>
-                    <?php if ($a['opening_hours']): ?><span class="text-muted" style="font-size:.8rem">🕐 <?= e($a['opening_hours']) ?></span><?php endif; ?>
+                    <?php if ($a['opening_hours']): ?><span class="text-muted" style="font-size:.8rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/clock.PNG" width = "40" height="40"></div> <?= e($a['opening_hours']) ?></span><?php endif; ?>
                 </div>
             </div>
         </div>
@@ -178,7 +178,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="grid-3">
         <?php foreach ($restaurants as $r): ?>
         <div class="card">
-            <div class="card-img-placeholder" style="height:120px">🍽</div>
+            <div class="card-img-placeholder" style="height:120px"><div class="card-img-placeholder" style="height:120px"><img src="../assets/restaurant.PNG" width = "40" height="40"></div></div>
             <div class="card-body">
                 <div class="card-title"><?= e($r['name']) ?></div>
                 <?php if ($r['cuisine_type']): ?><div class="card-meta"><?= e($r['cuisine_type']) ?></div><?php endif; ?>
