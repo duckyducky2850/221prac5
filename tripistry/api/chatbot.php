@@ -120,7 +120,7 @@ $ch = curl_init($gemini_url);
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true, // this will return a restponse as a string
     CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $payload,
+    CURLOPT_POSTFIELDS => $payload, 
     CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
     CURLOPT_TIMEOUT => 15, // this will fail if there is no response whitin 15 secs
 ]);
