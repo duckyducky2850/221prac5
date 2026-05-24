@@ -53,7 +53,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <?php if (empty($packages)): ?>
     <div class="empty-state">
-        <div class="empty-icon"><img src="../assets/box.PNG" width = "40" height="40"></div>
+        <div class="empty-icon"><img src="<?= BASE_URL ?>/assets/box.PNG" width = "40" height="40"></div>
         <p>You haven't created any packages yet.</p>
         <a href="<?= BASE_URL ?>/agency/package_form.php" class="btn btn-primary mt-2">Create Your First Package</a>
     </div>

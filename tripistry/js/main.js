@@ -1,13 +1,13 @@
-/*Client-side helpers:
- - Form validation (client side layer; server side is the real protection)
- - Tab switcher
- - Star rating widget
- - Package compare
- - AJAX package filter*/
+/*Client-side helpers we are using:
+Form validation (client side layer; server side is the real protection)
+a Tab switcher
+a Star rating widget
+a Package compare
+ the AJAX package filter*/
 
 'use strict';
 
-/* ── DOM ready ─────────────────────────────────────────────── */
+/* the DOM ready  */
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     initStarRatings();
@@ -19,16 +19,49 @@ document.addEventListener('DOMContentLoaded', () => {
     initPasswordStrength(); //added to show password strength on client side
 });
 
-/* ── Tabs ───────────────────────────────────────────────────── */
-function initTabs() {
+// by adding this we attach one listener to our whole doc so that it handles all checkboxes
+document.addEventListener('change', (e) => {
+
+    if (!e.target.classList.contains('compare-check')) {
+
+        return;
+    }
+
+    const cb = e.target;
+    const id = cb.value;
+
+    if (cb.checked) 
+    {
+        if (compareList.size >= 3) 
+        {
+            cb.checked = false;
+            showToast('You can compare at most 3 packages at a time.', 'warning');
+            return;
+        }
+
+        compareList.add(id);
+
+    } else 
+    {
+        compareList.delete(id);
+    }
+
+    updateCompareBar();
+});
+
+/* the Tabs we made */
+function initTabs() 
+{
     document.querySelectorAll('.tabs').forEach(tabGroup => {
         tabGroup.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const target = btn.dataset.tab;
                 tabGroup.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                // panels sit as siblings after the .tabs element
+
+                // our panels sit as siblings after the .tabs elem
                 const container = tabGroup.parentElement;
+
                 container.querySelectorAll('.tab-panel').forEach(p => {
                     p.classList.toggle('active', p.dataset.panel === target);
                 });
@@ -134,27 +167,13 @@ function initFilterForm() {
     form.addEventListener('submit', e => { e.preventDefault(); doFilter(); });
 }
 
-/* ── Package comparison ─────────────────────────────────────── */
+/* the Package comparison ---------------------------------------------- */
 const compareList = new Set();
 
-function initCompare() {
+function initCompare() // fixed to avoid any possible duplicate event listeners
+{
     document.querySelectorAll('.compare-check').forEach(cb => {
-        if (compareList.has(cb.value)) cb.checked = true;
-
-        cb.addEventListener('change', () => {
-            const id = cb.value;
-            if (cb.checked) {
-                if (compareList.size >= 3) {
-                    cb.checked = false;
-                    showToast('You can compare at most 3 packages at a time.', 'warning');
-                    return;
-                }
-                compareList.add(id);
-            } else {
-                compareList.delete(id);
-            }
-            updateCompareBar();
-        });
+        cb.checked = compareList.has(cb.value);
     });
 }
 

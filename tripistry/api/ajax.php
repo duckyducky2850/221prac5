@@ -74,17 +74,17 @@ $stmt->execute($params);
 $packages = $stmt->fetchAll();
 
 if (empty($packages)): ?>
-    <div class="empty-state"><div class="empty-icon"><img src="../assets/search.PNG" width = "40" height="40"></div></div><p>No packages match your filters.</p></div>
+    <div class="empty-state"><div class="empty-icon"><img src="<?= BASE_URL ?>/assets/search.PNG" width = "40" height="40"></div></div><p>No packages match your filters.</p></div>
 <?php else: ?>
 <div class="grid-3">
     <?php foreach ($packages as $p): ?>
     <div class="card">
-        <div class="card-img-placeholder"><img src="../assets/globe.PNG" width = "40" height="40"></div></div>
+        <div class="card-img-placeholder"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40"></div></div>
         <div class="card-body">
             <div class="card-title"><?= e($p['name']) ?></div>
             <div class="card-meta">
-                <?php if ($p['city_name']): ?><img src="../assets/pin.PNG" width = "40" height="40"></div> <?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
-                <img src="../assets/building.PNG" width = "40" height="40"></div> <?= e($p['company_name']) ?>
+                <?php if ($p['city_name']): ?><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"></div> <?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
+                <img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div> <?= e($p['company_name']) ?>
             </div>
             <div class="flex-between">
                 <span class="price-badge">R<?= number_format($p['base_price'], 2) ?></span>
@@ -92,7 +92,7 @@ if (empty($packages)): ?>
                     <span class="stars"><?= str_repeat('★', round($p['avg_rating'])) ?></span>
                 <?php endif; ?>
             </div>
-            <?php if ($p['duration_days']): ?><p class="text-muted mt-1" style="font-size:.82rem"><img src="../assets/clock.PNG" width = "40" height="40"></div><?= $p['duration_days'] ?> days</p><?php endif; ?>
+            <?php if ($p['duration_days']): ?><p class="text-muted mt-1" style="font-size:.82rem"><img src="<?= BASE_URL ?>/assets/clock.PNG" width = "40" height="40"></div><?= $p['duration_days'] ?> days</p><?php endif; ?>
             <div style="margin-top:.9rem;display:flex;gap:.5rem">
                 <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>" class="btn btn-outline btn-sm">Details</a>
                 <?php if (is_logged_in()): ?>
@@ -104,8 +104,7 @@ if (empty($packages)): ?>
             <!-- added to work with the main.js -->
              <div style="margin-top:.5rem">
                 <label style="font-size:.8rem;color:var(--clr-text-muted);cursor:pointer">
-                    <input type="checkbox" class="compare-check" value="<?= $p['package_id'] ?>"
-                        <?= compareList.has($p['package_id']) ? 'checked' : '' // (PHP can't do this — see fix below) ?>>
+                    <input type="checkbox" class="compare-check" value="<?= $p['package_id'] ?>"> <!-- compareList is a JS var  -->
                 Compare
             </label>
             </div>

@@ -105,14 +105,6 @@ require_once __DIR__ . '/includes/header.php';
         Don't have an account? <a href="<?= BASE_URL ?>/register.php">Register here</a>
     </p>
 
-    <!--Dev hint-->
-
-    <!--This is a big security issue (plain text credentials in html), should either be removed later with the final product or we should use .env loader-->
-    <details style="margin-top:1.5rem;font-size:.8rem;color:var(--clr-text-muted)">
-        <summary>Dev: Sample login credentials</summary>
-        <p style="margin-top:.5rem"><strong>Traveller:</strong> john.doe@email.com / hashed_pwd_1</p>
-        <p><strong>Agency:</strong> wanderlust.travel@agency.com / hashed_pwd_6</p>
-    </details>
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

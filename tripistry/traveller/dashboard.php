@@ -64,12 +64,12 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="stat-label">Total Bookings</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><img src="../assets/tick.PNG" width = "40" height="40"></div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/tick.PNG" width = "40" height="40"></div>
         <div class="stat-value"><?= $confirmed ?></div>
         <div class="stat-label">Confirmed</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><img src="../assets/star.PNG" width = "40" height="40"></div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/star.PNG" width = "40" height="40"></div>
         <div class="stat-value"><?= $review_count ?></div>
         <div class="stat-label">Reviews Written</div>
     </div>
@@ -83,7 +83,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <?php if (empty($recent_bookings)): ?>
     <div class="empty-state">
-        <div class="empty-icon"><img src="../assets/map.PNG" width = "40" height="40"></div>
+        <div class="empty-icon"><img src="<?= BASE_URL ?>/assets/map.PNG" width = "40" height="40"></div>
         <p>You haven't made any bookings yet.</p>
         <a href="<?= BASE_URL ?>/traveller/packages.php" class="btn btn-primary mt-2">Browse Packages</a>
     </div>
@@ -119,7 +119,7 @@ require_once __DIR__ . '/../includes/header.php';
     <?php foreach ($recommended as $p): ?>
     <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
-        <div class="card-img-placeholder" style="height:120px"><img src="../assets/globe.PNG" width = "40" height="40"></div>
+        <div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40"></div>
         <div class="card-body" style="padding:.9rem">
             <div class="card-title" style="font-size:.95rem"><?= e($p['name']) ?></div>
             <div class="card-meta"><?= e($p['company_name']) ?></div>

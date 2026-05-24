@@ -1,12 +1,12 @@
 <?php
-/*Browse, filter, sort, and compare travel packages.
-All inputs sanitised through PDO prepared statements / integer casting.*/
+/* here we browse, filter, sort, and compare travel packages
+all inputs sanitised through PDO prepared statements, with integer casting */
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 
 $db = get_db();
 
-// ── Filter inputs – sanitised ────────────────────────────────
+// the Filter inputs, we sanitise it
 $search = trim($_GET['search'] ?? '');
 $destination = (int)($_GET['destination'] ?? 0);
 $agency_id = (int)($_GET['agency_id'] ?? 0);
@@ -16,7 +16,7 @@ $duration = (int)($_GET['duration'] ?? 0);
 $sort = $_GET['sort'] ?? 'rating';
 $compare_ids = array_filter(array_map('intval', explode(',', $_GET['compare'] ?? '')));
 
-// Allowed sort values (whitelist to prevent SQL injection in ORDER BY)
+// Allowed sort values, and whitelist to prevent any SQL injection in the ORDER BY
 $sort_map = [
     'rating' => 'avg_rating DESC',
     'price_asc' => 'tp.base_price ASC',
@@ -26,7 +26,7 @@ $sort_map = [
 ];
 $order_by = $sort_map[$sort] ?? 'avg_rating DESC';
 
-// ── Build dynamic WHERE clause ────────────────────────────────
+// Building a dynamic WHERE clause that we will use
 $where  = ['1=1'];
 $params = [];
 
@@ -77,12 +77,12 @@ $where_sql = implode(' AND ', $where);
 //Optimized query
 $sql = "
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days,
-       ta.company_name,
+       tp.description, ta.company_name, ta.agency_id
        d.city_name, d.country, d.image_url,
        ROUND(AVG(r.rating), 1) AS avg_rating,
        COUNT(DISTINCT r.review_id) AS review_count
     FROM (
-        SELECT package_id, name, base_price, duration_days, agency_id
+        SELECT package_id, name, base_price, duration_days, description, agency_id
         FROM travel_package
         WHERE base_price BETWEEN 10000 AND 30000
     ) tp
@@ -103,6 +103,8 @@ $sql = "
     LEFT JOIN review r ON r.package_id = tp.package_id
     GROUP BY tp.package_id, d.destination_id
     ORDER BY avg_rating DESC;";
+
+  
 $stmt = $db->prepare($sql);
 $stmt->execute($params);
 $packages = $stmt->fetchAll();
@@ -113,8 +115,10 @@ $agencies = $db->query("SELECT agency_id, company_name FROM travel_agency ORDER 
 
 // Compare mode, show side by side table
 $compare_packages = [];
-if (!empty($compare_ids)) {
+if (!empty($compare_ids)) 
+{
     $placeholders = implode(',', array_fill(0, count($compare_ids), '?'));
+
     $cstmt = $db->prepare("
         SELECT tp.*, ta.company_name,
                ROUND(AVG(r.rating),1) AS avg_rating,
@@ -255,7 +259,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <?php if (empty($packages)): ?>
-    <div class="empty-state"><div class="empty-icon"><img src="../assets/search.PNG" width = "40" height="40"></div></div><p>No packages match your filters.</p></div>
+    <div class="empty-state"><div class="empty-icon"><img src="<?= BASE_URL ?>/assets/search.PNG" width = "40" height="40"></div></div><p>No packages match your filters.</p></div>
 <?php else: ?>
 <div class="grid-3">
     <?php foreach ($packages as $p): ?>
@@ -278,8 +282,8 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="card-body">
             <div class="card-title"><?= e($p['name']) ?></div>
             <div class="card-meta">
-                <?php if ($p['city_name']): ?><img src="../assets/pin.PNG" width = "40" height="40"></div><?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
-                <img src="../assets/building.PNG" width = "40" height="40"></div> <?= e($p['company_name']) ?>
+                <?php if ($p['city_name']): ?><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"></div><?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
+                <img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div> <?= e($p['company_name']) ?>
             </div>
             <?php if ($p['description']): ?>
                 <p style="font-size:.87rem;color:var(--clr-text-muted);margin-bottom:.75rem">
@@ -296,7 +300,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </div>
             </div>
             <?php if ($p['duration_days']): ?>
-                <p class="text-muted mt-1" style="font-size:.82rem"><img src="../assets/clock.PNG" width = "40" height="40"></div> <?= (int)$p['duration_days'] ?> days</p>
+                <p class="text-muted mt-1" style="font-size:.82rem"><img src="<?= BASE_URL ?>/assets/clock.PNG" width = "40" height="40"></div> <?= (int)$p['duration_days'] ?> days</p>
             <?php endif; ?>
             <div style="margin-top:.9rem;display:flex;gap:.5rem">
                 <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>" class="btn btn-outline btn-sm">Details</a>

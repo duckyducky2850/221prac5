@@ -87,7 +87,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <!--Left: Main content-->
 <div>
-    <div class="card-img-placeholder" style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;font-size:4rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/globe.PNG" width = "40" height="40"></div></div>
+    <div class="card-img-placeholder" style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;font-size:4rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40"></div></div>
 
     <h1 style="font-family:var(--font-display);font-size:2rem;color:var(--clr-primary);margin-bottom:.4rem"><?= e($pkg['name']) ?></h1>
     <p class="text-muted mb-2">By <?= e($pkg['company_name']) ?></p>
@@ -105,18 +105,18 @@ require_once __DIR__ . '/../includes/header.php';
 
     <!--Tabs: Itinerary or Group Trips or Reviews-->
     <div class="tabs">
-        <button class="tab-btn active" data-tab="itinerary"><div class="card-img-placeholder" style="height:120px"><img src="../assets/map.PNG" width = "40" height="40"></div> Itinerary</button>
-        <button class="tab-btn" data-tab="group_trips"><div class="card-img-placeholder" style="height:120px"><img src="../assets/group.PNG" width = "40" height="40"></div> Group Trips (<?= count($group_trips) ?>)</button>
-        <button class="tab-btn" data-tab="reviews"><div class="card-img-placeholder" style="height:120px"><img src="../assets/star.PNG" width = "40" height="40"></div> Reviews (<?= count($reviews) ?>)</button>
+        <button class="tab-btn active" data-tab="itinerary"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/map.PNG" width = "40" height="40"></div> Itinerary</button>
+        <button class="tab-btn" data-tab="group_trips"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/group.PNG" width = "40" height="40"></div> Group Trips (<?= count($group_trips) ?>)</button>
+        <button class="tab-btn" data-tab="reviews"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/star.PNG" width = "40" height="40"></div> Reviews (<?= count($reviews) ?>)</button>
     </div>
 
     <!-- Itinerary panel -->
 <div class="tab-panel active" data-panel="itinerary">
     <?php $icons = [
-        'flight' => '../assets/plane.PNG',
-        'accommodation' =>'../assets/stays.PNG',
-        'transport'=> '../assets/transport.PNG',
-        'activity'=> '../assets/attractions.PNG',
+        'flight' => '<?= BASE_URL ?>/assets/plane.PNG',
+        'accommodation' =>'<?= BASE_URL ?>/assets/stays.PNG',
+        'transport'=> '<?= BASE_URL ?>/assets/transport.PNG',
+        'activity'=> '<?= BASE_URL ?>/assets/attractions.PNG',
     ];
     $labels = ['flight'=>'Flights','accommodation'=>'Accommodation','transport'=>'Transport','activity'=>'Activities'];
     foreach ($icons as $type => $icon): ?>
@@ -233,17 +233,17 @@ require_once __DIR__ . '/../includes/header.php';
 
     <!-- Agency info -->
     <div class="sidebar-card">
-        <h4 style="margin-bottom:.75rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/building.PNG" width = "40" height="40"></div>Agency</h4>
+        <h4 style="margin-bottom:.75rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div>Agency</h4>
         <p><strong><?= e($pkg['company_name']) ?></strong></p>
-        <?php if ($pkg['contact_number']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/phone.PNG" width = "40" height="40"></div> <?= e($pkg['contact_number']) ?></p><?php endif; ?>
+        <?php if ($pkg['contact_number']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/phone.PNG" width = "40" height="40"></div> <?= e($pkg['contact_number']) ?></p><?php endif; ?>
         <?php if ($pkg['website']): ?><p style="font-size:.88rem"><a href="<?= e($pkg['website']) ?>" target="_blank"><div class="card-img-placeholder" style="height:120px"><img src="../website/map.PNG" width = "40" height="40"></div> Website</a></p><?php endif; ?>
-        <?php if ($pkg['country']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/pin.PNG" width = "40" height="40"></div> <?= e($pkg['country']) ?></p><?php endif; ?>
+        <?php if ($pkg['country']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"></div> <?= e($pkg['country']) ?></p><?php endif; ?>
         <a href="<?= BASE_URL ?>/traveller/packages.php?agency_id=<?= $pkg['agency_id'] ?>" class="btn btn-outline btn-sm mt-2">More from this agency</a>
     </div>
 
     <!-- Quick stats -->
     <div class="sidebar-card">
-        <h4 style="margin-bottom:.75rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/map.PNG" width = "40" height="40"></div> Package Info</h4>
+        <h4 style="margin-bottom:.75rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/map.PNG" width = "40" height="40"></div> Package Info</h4>
         <div style="font-size:.9rem;display:flex;flex-direction:column;gap:.4rem">
             <div class="flex-between"><span>Components</span><strong><?= count($components) ?></strong></div>
             <div class="flex-between"><span>Group trips</span><strong><?= count($group_trips) ?></strong></div>

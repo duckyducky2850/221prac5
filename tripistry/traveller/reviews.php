@@ -131,15 +131,15 @@ require_once __DIR__ . '/../includes/header.php';
 <div>
     <h2 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:1rem">My Reviews</h2>
     <?php if (empty($my_reviews)): ?>
-        <div class="empty-state"><div class="empty-icon"><img src="../assets/star.PNG" width = "40" height="40"></div></div><p>You haven't written any reviews yet.</p></div>
+        <div class="empty-state"><div class="empty-icon"><img src="<?= BASE_URL ?>/assets/star.PNG" width = "40" height="40"></div></div><p>You haven't written any reviews yet.</p></div>
     <?php else: ?>
         <?php foreach ($my_reviews as $rev): ?>
         <div class="review-card">
             <div class="review-card-header">
                 <div>
-                    <?php if ($rev['package_name']): ?><img src="../assets/box.PNG" width = "40" height="40"></div> <strong><?= e($rev['package_name']) ?></strong><?php endif; ?>
+                    <?php if ($rev['package_name']): ?><img src="<?= BASE_URL ?>/assets/box.PNG" width = "40" height="40"></div> <strong><?= e($rev['package_name']) ?></strong><?php endif; ?>
                     <?php if ($rev['package_name'] && $rev['agency_name']): ?> &nbsp;·&nbsp; <?php endif; ?>
-                    <?php if ($rev['agency_name']): ?><img src="../assets/building.PNG" width = "40" height="40"></div> <?= e($rev['agency_name']) ?><?php endif; ?>
+                    <?php if ($rev['agency_name']): ?><img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div> <?= e($rev['agency_name']) ?><?php endif; ?>
                 </div>
                 <div>
                     <span class="stars"><?= str_repeat('★', $rev['rating']) ?><?= str_repeat('☆', 5-$rev['rating']) ?></span>
