@@ -58,7 +58,7 @@ if ($duration > 0) {
 
 $where_sql = implode(' AND ', $where);
 
-$sql = "
+/*$sql = "
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days, tp.description,
            ta.company_name, ta.agency_id,
            d.city_name, d.country, d.image_url,
@@ -72,7 +72,37 @@ $sql = "
     LEFT JOIN review r ON r.package_id = tp.package_id
     WHERE $where_sql
     GROUP BY tp.package_id, d.destination_id
-    ORDER BY $order_by";
+    ORDER BY $order_by";*/
+
+//Optimized query
+$sql = "
+    SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days,
+       ta.company_name,
+       d.city_name, d.country, d.image_url,
+       ROUND(AVG(r.rating), 1) AS avg_rating,
+       COUNT(DISTINCT r.review_id) AS review_count
+    FROM (
+        SELECT package_id, name, base_price, duration_days, agency_id
+        FROM travel_package
+        WHERE base_price BETWEEN 10000 AND 30000
+    ) tp
+    JOIN travel_agency ta ON ta.agency_id = tp.agency_id
+    LEFT JOIN (
+        SELECT package_id, component_id
+        FROM package_component
+        WHERE component_type = 'accommodation'
+    ) pc ON pc.package_id = tp.package_id
+    LEFT JOIN (
+        SELECT accommodation_id, destination_id
+        FROM accommodation
+    ) a ON a.accommodation_id = pc.component_id
+    LEFT JOIN (
+        SELECT destination_id, city_name, country, image_url
+        FROM destination
+    ) d ON d.destination_id = a.destination_id
+    LEFT JOIN review r ON r.package_id = tp.package_id
+    GROUP BY tp.package_id, d.destination_id
+    ORDER BY avg_rating DESC;";
 $stmt = $db->prepare($sql);
 $stmt->execute($params);
 $packages = $stmt->fetchAll();
