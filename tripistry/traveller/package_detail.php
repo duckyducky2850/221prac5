@@ -87,7 +87,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <!--Left: Main content-->
 <div>
-    <div class="card-img-placeholder" style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;font-size:4rem">🌏</div>
+    <div class="card-img-placeholder" style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;font-size:4rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/globe.PNG" width = "40" height="40"></div></div>
 
     <h1 style="font-family:var(--font-display);font-size:2rem;color:var(--clr-primary);margin-bottom:.4rem"><?= e($pkg['name']) ?></h1>
     <p class="text-muted mb-2">By <?= e($pkg['company_name']) ?></p>
@@ -105,30 +105,38 @@ require_once __DIR__ . '/../includes/header.php';
 
     <!--Tabs: Itinerary or Group Trips or Reviews-->
     <div class="tabs">
-        <button class="tab-btn active" data-tab="itinerary">🗺 Itinerary</button>
-        <button class="tab-btn" data-tab="group_trips">👥 Group Trips (<?= count($group_trips) ?>)</button>
-        <button class="tab-btn" data-tab="reviews">⭐ Reviews (<?= count($reviews) ?>)</button>
+        <button class="tab-btn active" data-tab="itinerary"><div class="card-img-placeholder" style="height:120px"><img src="../assets/map.PNG" width = "40" height="40"></div> Itinerary</button>
+        <button class="tab-btn" data-tab="group_trips"><div class="card-img-placeholder" style="height:120px"><img src="../assets/group.PNG" width = "40" height="40"></div> Group Trips (<?= count($group_trips) ?>)</button>
+        <button class="tab-btn" data-tab="reviews"><div class="card-img-placeholder" style="height:120px"><img src="../assets/star.PNG" width = "40" height="40"></div> Reviews (<?= count($reviews) ?>)</button>
     </div>
 
     <!-- Itinerary panel -->
-    <div class="tab-panel active" data-panel="itinerary">
-        <?php $icons = ['flight'=>'✈️','accommodation'=>'🏨','transport'=>'🚌','activity'=>'🎯'];
-        $labels = ['flight'=>'Flights','accommodation'=>'Accommodation','transport'=>'Transport','activity'=>'Activities'];
-        foreach ($icons as $type => $icon): ?>
-            <?php if (!empty($components_by_type[$type])): ?>
-            <div style="margin-bottom:1.25rem">
-                <h3 style="font-size:1rem;margin-bottom:.6rem"><?= $icon ?> <?= $labels[$type] ?></h3>
-                <?php foreach ($components_by_type[$type] as $c): ?>
-                <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:var(--clr-bg);border-radius:var(--radius-sm);margin-bottom:.4rem;font-size:.9rem">
-                    <span><?= e($c['component_name'] ?? '—') ?></span>
-                    <?php if ($c['price']): ?><span class="text-muted">R<?= number_format($c['price'], 2) ?></span><?php endif; ?>
-                </div>
-                <?php endforeach; ?>
+<div class="tab-panel active" data-panel="itinerary">
+    <?php $icons = [
+        'flight' => '../assets/plane.PNG',
+        'accommodation' =>'../assets/stays.PNG',
+        'transport'=> '../assets/transport.PNG',
+        'activity'=> '../assets/attractions.PNG',
+    ];
+    $labels = ['flight'=>'Flights','accommodation'=>'Accommodation','transport'=>'Transport','activity'=>'Activities'];
+    foreach ($icons as $type => $icon): ?>
+        <?php if (!empty($components_by_type[$type])): ?>
+        <div style="margin-bottom:1.25rem">
+            <h3 style="font-size:1rem;margin-bottom:.6rem">
+                <img src="<?= $icon ?>" alt="<?= $labels[$type] ?>" width="20" height="20" style="vertical-align:middle;margin-right:.35rem">
+                <?= $labels[$type] ?>
+            </h3>
+            <?php foreach ($components_by_type[$type] as $c): ?>
+            <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:var(--clr-bg);border-radius:var(--radius-sm);margin-bottom:.4rem;font-size:.9rem">
+                <span><?= e($c['component_name'] ?? '—') ?></span>
+                <?php if ($c['price']): ?><span class="text-muted">R<?= number_format($c['price'], 2) ?></span><?php endif; ?>
             </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        <?php if (empty($components)): ?><p class="text-muted">No itinerary details available yet.</p><?php endif; ?>
-    </div>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    <?php if (empty($components)): ?><p class="text-muted">No itinerary details available yet.</p><?php endif; ?>
+</div>
 
     <!-- Group Trips panel -->
     <div class="tab-panel" data-panel="group_trips">
@@ -225,17 +233,17 @@ require_once __DIR__ . '/../includes/header.php';
 
     <!-- Agency info -->
     <div class="sidebar-card">
-        <h4 style="margin-bottom:.75rem">🏢 Agency</h4>
+        <h4 style="margin-bottom:.75rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/building.PNG" width = "40" height="40"></div>Agency</h4>
         <p><strong><?= e($pkg['company_name']) ?></strong></p>
-        <?php if ($pkg['contact_number']): ?><p class="text-muted" style="font-size:.88rem">📞 <?= e($pkg['contact_number']) ?></p><?php endif; ?>
-        <?php if ($pkg['website']): ?><p style="font-size:.88rem"><a href="<?= e($pkg['website']) ?>" target="_blank">🌐 Website</a></p><?php endif; ?>
-        <?php if ($pkg['country']): ?><p class="text-muted" style="font-size:.88rem">📍 <?= e($pkg['country']) ?></p><?php endif; ?>
+        <?php if ($pkg['contact_number']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/phone.PNG" width = "40" height="40"></div> <?= e($pkg['contact_number']) ?></p><?php endif; ?>
+        <?php if ($pkg['website']): ?><p style="font-size:.88rem"><a href="<?= e($pkg['website']) ?>" target="_blank"><div class="card-img-placeholder" style="height:120px"><img src="../website/map.PNG" width = "40" height="40"></div> Website</a></p><?php endif; ?>
+        <?php if ($pkg['country']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/pin.PNG" width = "40" height="40"></div> <?= e($pkg['country']) ?></p><?php endif; ?>
         <a href="<?= BASE_URL ?>/traveller/packages.php?agency_id=<?= $pkg['agency_id'] ?>" class="btn btn-outline btn-sm mt-2">More from this agency</a>
     </div>
 
     <!-- Quick stats -->
     <div class="sidebar-card">
-        <h4 style="margin-bottom:.75rem">📋 Package Info</h4>
+        <h4 style="margin-bottom:.75rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/map.PNG" width = "40" height="40"></div> Package Info</h4>
         <div style="font-size:.9rem;display:flex;flex-direction:column;gap:.4rem">
             <div class="flex-between"><span>Components</span><strong><?= count($components) ?></strong></div>
             <div class="flex-between"><span>Group trips</span><strong><?= count($group_trips) ?></strong></div>

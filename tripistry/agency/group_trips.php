@@ -129,7 +129,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <!-- List -->
 <?php if (empty($trips)): ?>
-    <div class="empty-state"><div class="empty-icon">👥</div><p>No group trips yet.</p></div>
+    <div class="empty-state"><div class="empty-icon"><img src="../assets/group.PNG" width = "40" height="40"></div></div><p>No group trips yet.</p></div>
 <?php else: ?>
 <div class="table-wrap card">
 <table class="data-table">
