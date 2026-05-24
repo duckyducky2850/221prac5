@@ -184,7 +184,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <?php if ($r['cuisine_type']): ?><div class="card-meta"><?= e($r['cuisine_type']) ?></div><?php endif; ?>
                 <div class="flex-between mt-1">
                     <?php if ($r['price_range']): ?><span class="price-range-badge"><?= e($r['price_range']) ?></span><?php endif; ?>
-                    <?php if ($r['opening_hours']): ?><span class="text-muted" style="font-size:.8rem">🕐 <?= e($r['opening_hours']) ?></span><?php endif; ?>
+                    <?php if ($r['opening_hours']): ?><span class="text-muted" style="font-size:.8rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/clock.PNG" width = "40" height="40"></div> <?= e($r['opening_hours']) ?></span><?php endif; ?>
                 </div>
                 <?php if ($r['price']): ?><p class="text-muted mt-1" style="font-size:.82rem">Avg spend: R<?= number_format($r['price'],2) ?></p><?php endif; ?>
             </div>

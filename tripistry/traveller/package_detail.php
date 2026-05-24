@@ -87,7 +87,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <!--Left: Main content-->
 <div>
-    <div class="card-img-placeholder" style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;font-size:4rem">🌏</div>
+    <div class="card-img-placeholder" style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;font-size:4rem"><div class="card-img-placeholder" style="height:120px"><img src="../assets/globe.PNG" width = "40" height="40"></div></div>
 
     <h1 style="font-family:var(--font-display);font-size:2rem;color:var(--clr-primary);margin-bottom:.4rem"><?= e($pkg['name']) ?></h1>
     <p class="text-muted mb-2">By <?= e($pkg['company_name']) ?></p>
@@ -105,30 +105,38 @@ require_once __DIR__ . '/../includes/header.php';
 
     <!--Tabs: Itinerary or Group Trips or Reviews-->
     <div class="tabs">
-        <button class="tab-btn active" data-tab="itinerary">🗺 Itinerary</button>
-        <button class="tab-btn" data-tab="group_trips">👥 Group Trips (<?= count($group_trips) ?>)</button>
-        <button class="tab-btn" data-tab="reviews">⭐ Reviews (<?= count($reviews) ?>)</button>
+        <button class="tab-btn active" data-tab="itinerary"><div class="card-img-placeholder" style="height:120px"><img src="../assets/map.PNG" width = "40" height="40"></div> Itinerary</button>
+        <button class="tab-btn" data-tab="group_trips"><div class="card-img-placeholder" style="height:120px"><img src="../assets/group.PNG" width = "40" height="40"></div> Group Trips (<?= count($group_trips) ?>)</button>
+        <button class="tab-btn" data-tab="reviews"><div class="card-img-placeholder" style="height:120px"><img src="../assets/star.PNG" width = "40" height="40"></div> Reviews (<?= count($reviews) ?>)</button>
     </div>
 
     <!-- Itinerary panel -->
-    <div class="tab-panel active" data-panel="itinerary">
-        <?php $icons = ['flight'=>'✈️','accommodation'=>'🏨','transport'=>'🚌','activity'=>'🎯'];
-        $labels = ['flight'=>'Flights','accommodation'=>'Accommodation','transport'=>'Transport','activity'=>'Activities'];
-        foreach ($icons as $type => $icon): ?>
-            <?php if (!empty($components_by_type[$type])): ?>
-            <div style="margin-bottom:1.25rem">
-                <h3 style="font-size:1rem;margin-bottom:.6rem"><?= $icon ?> <?= $labels[$type] ?></h3>
-                <?php foreach ($components_by_type[$type] as $c): ?>
-                <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:var(--clr-bg);border-radius:var(--radius-sm);margin-bottom:.4rem;font-size:.9rem">
-                    <span><?= e($c['component_name'] ?? '—') ?></span>
-                    <?php if ($c['price']): ?><span class="text-muted">R<?= number_format($c['price'], 2) ?></span><?php endif; ?>
-                </div>
-                <?php endforeach; ?>
+<div class="tab-panel active" data-panel="itinerary">
+    <?php $icons = [
+        'flight' => '../assets/plane.PNG',
+        'accommodation' =>'../assets/stays.PNG',
+        'transport'=> '../assets/transport.PNG',
+        'activity'=> '../assets/attractions.PNG',
+    ];
+    $labels = ['flight'=>'Flights','accommodation'=>'Accommodation','transport'=>'Transport','activity'=>'Activities'];
+    foreach ($icons as $type => $icon): ?>
+        <?php if (!empty($components_by_type[$type])): ?>
+        <div style="margin-bottom:1.25rem">
+            <h3 style="font-size:1rem;margin-bottom:.6rem">
+                <img src="<?= $icon ?>" alt="<?= $labels[$type] ?>" width="20" height="20" style="vertical-align:middle;margin-right:.35rem">
+                <?= $labels[$type] ?>
+            </h3>
+            <?php foreach ($components_by_type[$type] as $c): ?>
+            <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:var(--clr-bg);border-radius:var(--radius-sm);margin-bottom:.4rem;font-size:.9rem">
+                <span><?= e($c['component_name'] ?? '—') ?></span>
+                <?php if ($c['price']): ?><span class="text-muted">R<?= number_format($c['price'], 2) ?></span><?php endif; ?>
             </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        <?php if (empty($components)): ?><p class="text-muted">No itinerary details available yet.</p><?php endif; ?>
-    </div>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    <?php if (empty($components)): ?><p class="text-muted">No itinerary details available yet.</p><?php endif; ?>
+</div>
 
     <!-- Group Trips panel -->
     <div class="tab-panel" data-panel="group_trips">
