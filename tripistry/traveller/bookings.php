@@ -65,7 +65,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="card mt-2">
         <div class="card-body">
             <h2 style="margin-bottom:.25rem"><?= e($detail['package_name']) ?></h2>
-            <p class="text-muted mb-2">🏢 <?= e($detail['company_name']) ?></p>
+            <p class="text-muted mb-2"><img src="../assets/building.PNG" width = "40" height="40"> <?= e($detail['company_name']) ?></p>
             <span class="badge badge-<?= e($detail['status']) ?>"><?= e($detail['status']) ?></span>
 
             <hr class="divider">
@@ -112,7 +112,7 @@ require_once __DIR__ . '/../includes/header.php';
 <!--Bookings list-->
 <?php if (empty($bookings)): ?>
     <div class="empty-state">
-        <div class="empty-icon">🗺️</div>
+        <div class="empty-icon"><img src="../assets/map.PNG" width = "40" height="40"></div>
         <p>No bookings yet.</p>
         <a href="<?= BASE_URL ?>/traveller/packages.php" class="btn btn-primary mt-2">Browse Packages</a>
     </div>
