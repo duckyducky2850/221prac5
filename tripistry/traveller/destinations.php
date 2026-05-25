@@ -51,7 +51,11 @@ require_once __DIR__ . '/../includes/header.php';
     <?php foreach ($destinations as $d): ?>
     <a href="<?= BASE_URL ?>/traveller/destinations.php?id=<?= $d['destination_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
-        <div class="card-img-placeholder"><img src="<?= BASE_URL ?>/assets/HolidayPlaceholder.PNG" height="130"></div>
+        php<?php if (!empty($d['image_url'])): ?>
+        <div class="card-img-placeholder" style="background-image:url('<?= e($d['image_url']) ?>');background-size:cover;background-position:center;height:130px"></div>
+        <?php else: ?>
+            <div class="card-img-placeholder"><img src="<?= BASE_URL ?>/assets/HolidayPlaceholder.PNG" height="130"></div>
+        <?php endif; ?>
         <div class="card-body">
             <div class="card-title"><?= e($d['city_name']) ?></div>
             <div class="card-meta"><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"> <?= e($d['country']) ?></div>
