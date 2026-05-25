@@ -1,11 +1,4 @@
 <?php
-/*
-ACTION ITEMS
-
-Database -> ALTER TABLE 'review' ADD COLUMN 'sentiment' VARCHAR(20) DEFAULT NULL;
-Database -> add sentiments to all users so it works from now on
-
-*/
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/config/db.php';
