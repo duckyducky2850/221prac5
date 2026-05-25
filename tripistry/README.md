@@ -97,9 +97,9 @@ email: bingbong@gmail.com
 password: BingTestPass1
 
 - **Agency:**
-name:
-email:
-password:
+name:Demo
+email:demo.agency@tripistry.com
+password:Password123!
 
 note: these are plain text passwords but our db uses bcrypt hashing
 
