@@ -89,6 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     }
 }
 
+// Destination dropdown
+$dest_options = $db->query("SELECT destination_id, city_name, country FROM destination ORDER BY city_name")->fetchAll();
+
 // Component options for our dropdowns
 $flights = $db->prepare("SELECT flight_id AS id, CONCAT(flight_number,' – ',airline) AS label FROM flight WHERE agency_id=?"); $flights->execute([$agency_id]);
 $accommodations = $db->prepare("SELECT accommodation_id AS id, name AS label FROM accommodation WHERE agency_id=?"); $accommodations->execute([$agency_id]);
