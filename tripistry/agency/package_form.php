@@ -130,6 +130,19 @@ require_once __DIR__ . '/../includes/header.php';
                 <label for="description">Description</label>
                 <textarea id="description" name="description" class="form-control" rows="3"><?= e($_POST['description'] ?? $pkg['description'] ?? '') ?></textarea>
             </div>
+            <div class="form-group">
+    <label for="destination_id">Destination *</label>
+    <select id="destination_id" name="destination_id" class="form-control" required>
+        <option value="">— Select Destination —</option>
+        <?php foreach ($dest_options as $dest): ?>
+            <option value="<?= $dest['destination_id'] ?>"
+                <?= (($_POST['destination_id'] ?? $pkg['destination_id'] ?? '') == $dest['destination_id']) ? 'selected' : '' ?>>
+                <?= e($dest['city_name']) ?>, <?= e($dest['country']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
                 <div class="form-group">
                     <label for="base_price">Base Price (R) *</label>
