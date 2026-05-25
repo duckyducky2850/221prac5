@@ -175,6 +175,9 @@ Gemini API key stored in `config/secrets.php` which is listed in `.gitignore` an
 
 -----
 
+### Package Filtering (Task 7 Optimised Query)
+if you want to do proper filtering you just use the unoptimised query.The optimised query in `traveller/packages.php` (used for Task 7 demonstration) has a hardcoded `WHERE base_price BETWEEN 10000 AND 30000` clause. As a result, the search and filter inputs on the packages page will not dynamically filter results
+
 ## Git Workflow
 Includes branches merged onto main and explanatory commit messages.
 
