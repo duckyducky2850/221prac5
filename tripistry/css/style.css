@@ -212,6 +212,11 @@ img { max-width: 100%; display: block; }
     font-weight: 600;
 }
 
+body.dark-mode .nav-links a.active {
+    background: #1e3a4a;
+    color: #7ec8e3;
+}
+
 /* to make tye text inside the tab lighter */
 body.dark-mode .nav-links a.active {
     background: #1e3a4a;
