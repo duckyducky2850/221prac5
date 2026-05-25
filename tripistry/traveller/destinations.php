@@ -116,7 +116,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="grid-3">
         <?php foreach ($accommodations as $a): ?>
         <div class="card">
-            <div class="card-img-placeholder" style="height:130px"><img src="<?= BASE_URL ?>/assets/building.PNG"></div>
+            <div class="card-img-placeholder" style="height:130px;background-image:url('<?= BASE_URL ?>/assets/building.PNG');background-size:contain;background-repeat:no-repeat;background-position:center;background-color:var(--clr-primary-light)"></div>
             <div class="card-body">
                 <div class="card-title"><?= e($a['name']) ?></div>
                 <?php if ($a['address']): ?><div class="card-meta"><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"> <?= e($a['address']) ?></div><?php endif; ?>
