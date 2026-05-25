@@ -51,14 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             {
                 if ($edit_id) 
                 {
-                    $stmt = $db->prepare("UPDATE travel_package SET name=?,description=?,base_price=?,duration_days=? WHERE package_id=? AND agency_id=?");
-                    $stmt->execute([$name, $description ?: null, $base_price, $duration ?: null, $edit_id, $agency_id]);
+                    $stmt = $db->prepare("UPDATE travel_package SET destination_id=?,name=?,description=?,base_price=?,duration_days=? WHERE package_id=? AND agency_id=?");
+                    $stmt->execute([(int)($_POST['destination_id'] ?? 0), $name, $description ?: null, $base_price, $duration ?: null, $edit_id, $agency_id]);
                     $pid = $edit_id;
                     // Clearing and re inserting components
                     $db->prepare("DELETE FROM package_component WHERE package_id=?")->execute([$pid]);
                 } else {
-                    $stmt = $db->prepare("INSERT INTO travel_package (agency_id,name,description,base_price,duration_days) VALUES (?,?,?,?,?)");
-                    $stmt->execute([$agency_id, $name, $description ?: null, $base_price, $duration ?: null]);
+                    $stmt = $db->prepare("INSERT INTO travel_package (agency_id,destination_id,name,description,base_price,duration_days) VALUES (?,?,?,?,?,?)");
+                    $stmt->execute([$agency_id, (int)($_POST['destination_id'] ?? 0), $name, $description ?: null, $base_price, $duration ?: null]);
                     $pid = (int)$db->lastInsertId();
                 }
 
