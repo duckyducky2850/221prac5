@@ -77,7 +77,7 @@ $where_sql = implode(' AND ', $where);
 //Optimized query
 $sql = "
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days,
-       tp.description, ta.company_name, ta.agency_id
+       tp.description, ta.company_name, ta.agency_id,
        d.city_name, d.country, d.image_url,
        ROUND(AVG(r.rating), 1) AS avg_rating,
        COUNT(DISTINCT r.review_id) AS review_count

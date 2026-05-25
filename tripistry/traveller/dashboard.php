@@ -59,7 +59,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-icon"><img src="../box/building.PNG" width = "40" height="40"></div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div>
         <div class="stat-value"><?= $booking_count ?></div>
         <div class="stat-label">Total Bookings</div>
     </div>
