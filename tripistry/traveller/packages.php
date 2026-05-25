@@ -265,9 +265,9 @@ require_once __DIR__ . '/../includes/header.php';
     <?php foreach ($packages as $p): ?>
     <div class="card">
         <?php if ($p['image_url']): ?>
-            <div class="card-img-placeholder" style="background-image:url('<?= e($p['image_url']) ?>');background-size:cover">
+            <div class="card-img-placeholder" style="background-image:url('<?= e($p['image_url']) ?>');background-size:cover;background-position:center;position:relative">
         <?php else: ?>
-            <div class="card-img-placeholder">
+            <div class="card-img-placeholder" style="position:relative">
         <?php endif; ?>
             <!-- Compare checkbox overlay -->
             <div style="position:absolute;top:8px;right:8px" onclick="event.stopPropagation()">
