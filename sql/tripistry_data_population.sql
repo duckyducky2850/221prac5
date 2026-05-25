@@ -7,22 +7,22 @@ SET FOREIGN_KEY_CHECKS=0;
 --  populating the Users table
 
 INSERT INTO `user` (`user_id`, `email`, `password`, `role`, `created_at`) VALUES
-(11,'amahle.dlamini@email.com','hashed_pwd_11','traveller','2026-01-15 08:30:00'),
-(12,'pieter.vanzyl@email.com','hashed_pwd_12','traveller','2026-01-20 09:15:00'),
-(13,'fatima.hassan@email.com','hashed_pwd_13','traveller','2026-02-01 10:00:00'),
-(14,'james.okonkwo@email.com','hashed_pwd_14','traveller','2026-02-10 11:30:00'),
-(15,'chen.wei@email.com','hashed_pwd_15','traveller','2026-02-14 14:00:00'),
-(16,'priya.naidoo@email.com','hashed_pwd_16','traveller','2026-02-20 08:00:00'),
-(17,'marco.rossini@email.com','hashed_pwd_17','traveller','2026-03-01 09:45:00'),
-(18,'anna.kowalski@email.com','hashed_pwd_18','traveller','2026-03-05 13:00:00'),
-(19,'david.mensah@email.com','hashed_pwd_19','traveller','2026-03-10 15:30:00'),
-(20,'yuki.tanaka@email.com','hashed_pwd_20','traveller','2026-03-15 07:00:00'),
-(21,'sofia.rodrigues@email.com','hashed_pwd_21','traveller','2026-03-20 10:30:00'),
-(22,'global.adventures@agency.com','hashed_pwd_22','agency','2026-01-05 08:00:00'),
-(23,'alpine.escapes@agency.com','hashed_pwd_23','agency','2026-01-10 09:00:00'),
-(24,'africa.unlimited@agency.com','hashed_pwd_24','agency','2026-01-15 10:00:00'),
-(25,'pacific.voyages@agency.com','hashed_pwd_25','agency','2026-01-20 11:00:00'),
-(26,'mediterranean.dreams@agency.com','hashed_pwd_26','agency','2026-01-25 12:00:00');
+(11,'amahle.dlamini@email.com','BCRYPT_HASH_HERE','traveller','2026-01-15 08:30:00'),
+(12,'pieter.vanzyl@email.com','BCRYPT_HASH_HERE','traveller','2026-01-20 09:15:00'),
+(13,'fatima.hassan@email.com','BCRYPT_HASH_HERE','traveller','2026-02-01 10:00:00'),
+(14,'james.okonkwo@email.com','BCRYPT_HASH_HERE','traveller','2026-02-10 11:30:00'),
+(15,'chen.wei@email.com','BCRYPT_HASH_HERE','traveller','2026-02-14 14:00:00'),
+(16,'priya.naidoo@email.com','BCRYPT_HASH_HERE','traveller','2026-02-20 08:00:00'),
+(17,'marco.rossini@email.com','BCRYPT_HASH_HERE','traveller','2026-03-01 09:45:00'),
+(18,'anna.kowalski@email.com','BCRYPT_HASH_HERE','traveller','2026-03-05 13:00:00'),
+(19,'david.mensah@email.com','BCRYPT_HASH_HERE','traveller','2026-03-10 15:30:00'),
+(20,'yuki.tanaka@email.com','BCRYPT_HASH_HERE','traveller','2026-03-15 07:00:00'),
+(21,'sofia.rodrigues@email.com','BCRYPT_HASH_HERE','traveller','2026-03-20 10:30:00'),
+(22,'global.adventures@agency.com','BCRYPT_HASH_HERE','agency','2026-01-05 08:00:00'),
+(23,'alpine.escapes@agency.com','BCRYPT_HASH_HERE','agency','2026-01-10 09:00:00'),
+(24,'africa.unlimited@agency.com','BCRYPT_HASH_HERE','agency','2026-01-15 10:00:00'),
+(25,'pacific.voyages@agency.com','BCRYPT_HASH_HERE','agency','2026-01-20 11:00:00'),
+(26,'mediterranean.dreams@agency.com','BCRYPT_HASH_HERE','agency','2026-01-25 12:00:00');
 
 --  populating the Travelers table
 
@@ -51,18 +51,18 @@ INSERT INTO `travel_agency` (`agency_id`, `company_name`, `contact_number`, `web
 --  populating the Destination table
 
 INSERT INTO `destination` (`destination_id`, `city_name`, `country`, `description`, `popular_season`, `image_url`) VALUES
-(9,'Rome','Italy','Eternal City with ancient history, art and world-class cuisine','Apr-Jun, Sep-Oct','/images/rome.jpg'),
-(10,'Sydney','Australia','Iconic harbour city with beaches, culture and outdoor lifestyle','Sep-Feb','/images/sydney.jpg'),
-(11,'New York','USA','The city that never sleeps, iconic skyline and diverse culture','Apr-Jun, Sep-Nov','/images/newyork.jpg'),
-(12,'Bali','Indonesia','Tropical paradise with temples, rice terraces and surf beaches','Apr-Oct','/images/bali.jpg'),
-(13,'Zanzibar','Tanzania','Spice island with white sand beaches and Swahili culture','Jun-Oct','/images/zanzibar.jpg'),
-(14,'Zurich','Switzerland','Alpine city with stunning lake views and chocolate culture','Dec-Mar, Jun-Aug','/images/zurich.jpg'),
-(15,'Marrakech','Morocco','Imperial city with vibrant souks, palaces and desert adventures','Mar-May, Sep-Nov','/images/marrakech.jpg'),
-(16,'Dubai','UAE','Futuristic desert city with luxury shopping and iconic architecture','Nov-Mar','/images/dubai.jpg'),
-(17,'Buenos Aires','Argentina','Paris of South America with tango, steak and vibrant nightlife','Mar-May, Sep-Nov','/images/buenosaires.jpg'),
-(18,'Santorini','Greece','Stunning volcanic island with white-washed villages and sunsets','May-Oct','/images/santorini.jpg'),
-(19,'Nairobi','Kenya','Gateway to East Africa safaris and vibrant urban culture','Jan-Feb, Jul-Oct','/images/nairobi.jpg'),
-(20,'Amsterdam','Netherlands','Canal city with world-class museums, cycling and tulip fields','Apr-Aug','/images/amsterdam.jpg');
+(9,'Rome','Italy','Eternal City with ancient history, art and world-class cuisine','Apr-Jun, Sep-Oct','https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800'),
+(10,'Sydney','Australia','Iconic harbour city with beaches, culture and outdoor lifestyle','Sep-Feb','https://images.unsplash.com/photo-1523428096881-5bd79d043006?w=800'),
+(11,'New York','USA','The city that never sleeps, iconic skyline and diverse culture','Apr-Jun, Sep-Nov','https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=800'),
+(12,'Bali','Indonesia','Tropical paradise with temples, rice terraces and surf beaches','Apr-Oct','https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800'),
+(13,'Zanzibar','Tanzania','Spice island with white sand beaches and Swahili culture','Jun-Oct','https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800'),
+(14,'Zurich','Switzerland','Alpine city with stunning lake views and chocolate culture','Dec-Mar, Jun-Aug','https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'),
+(15,'Marrakech','Morocco','Imperial city with vibrant souks, palaces and desert adventures','Mar-May, Sep-Nov','https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800'),
+(16,'Dubai','UAE','Futuristic desert city with luxury shopping and iconic architecture','Nov-Mar','https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800'),
+(17,'Buenos Aires','Argentina','Paris of South America with tango, steak and vibrant nightlife','Mar-May, Sep-Nov','https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800'),
+(18,'Santorini','Greece','Stunning volcanic island with white-washed villages and sunsets','May-Oct','https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800'),
+(19,'Nairobi','Kenya','Gateway to East Africa safaris and vibrant urban culture','Jan-Feb, Jul-Oct','https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=800'),
+(20,'Amsterdam','Netherlands','Canal city with world-class museums, cycling and tulip fields','Apr-Aug','https://images.unsplash.com/photo-1583416750470-965b2707b355?w=800');
 
 --  populating the Agency Staff table
 
@@ -74,7 +74,7 @@ INSERT INTO `agency_staff` (`agency_id`, `first_name`, `last_name`, `phone_numbe
 (25,'Claire','Thompson','+61 411 567 5432','claire@pacificvoyages.com.au','Pacific Routes Manager'),
 (26,'Giovanni','Ferrari','+39 335 678 4321','giovanni@meddreams.it','Mediterranean Specialist');
 
---  populating the Accomodation table
+--  populating the Accommodation table
 
 INSERT INTO `accommodation` (`accommodation_id`, `name`, `address`, `no_bedrooms`, `no_bathrooms`, `price_per_night`, `destination_id`, `agency_id`) VALUES
 (9,'Colosseum View Hotel','Via Sacra 12, Rome',85,85,5200.00,9,26),
@@ -93,7 +93,6 @@ INSERT INTO `accommodation` (`accommodation_id`, `name`, `address`, `no_bedrooms
 (22,'Alvear Palace Hotel','Av. Alvear 1891, Buenos Aires',210,210,4200.00,17,25),
 (23,'Katikies Hotel','Oia, Santorini',27,27,8900.00,18,26),
 (24,'Hemingways Nairobi','Mbagathi Ridge, Karen, Nairobi',45,45,5500.00,19,24);
-
 
 --  populating the Flight table
 
@@ -115,7 +114,6 @@ INSERT INTO `flight` (`flight_id`, `flight_number`, `airline`, `origin_destinati
 (23,'SA789','South African Airways',2,16,'2026-08-10 09:00:00','2026-08-10 19:30:00',9200.00,22),
 (24,'EK772','Emirates',16,8,'2026-09-11 02:30:00','2026-09-11 15:00:00',7800.00,22);
 
-
 --  populating the Transport table
 
 INSERT INTO `transport` (`transport_id`, `type`, `provider`, `origin_destination_id`, `destination_id`, `departure_time`, `price`, `agency_id`) VALUES
@@ -129,7 +127,6 @@ INSERT INTO `transport` (`transport_id`, `type`, `provider`, `origin_destination
 (15,'bus','Marrakech Express',15,15,'2026-06-20 18:00:00',200.00,26),
 (16,'boat','Zanzibar Ferry',13,13,'2026-07-07 09:00:00',180.00,24),
 (17,'train','Thalys',20,20,'2026-08-15 10:00:00',320.00,23);
-
 
 --  populating the Activity table
 
@@ -155,28 +152,27 @@ INSERT INTO `activity` (`activity_id`, `name`, `address`, `city`, `price`, `desc
 (28,'Santorini Wine Tasting','Santo Wines, Pyrgos','Santorini',850.00,'Volcanic wine tasting with caldera views','2026-07-27 16:00:00','2026-07-27 19:00:00',18,26,'Restaurant'),
 (29,'Rijksmuseum Tour','Museumstraat 1','Amsterdam',220.00,'Dutch Golden Age art and history','2026-08-16 10:00:00','2026-08-16 14:00:00',20,23,'Museum');
 
-
 --  populating the Travel Package table
 
 INSERT INTO `travel_package` (`package_id`, `agency_id`, `destination_id`, `name`, `description`, `base_price`, `duration_days`, `start_date`, `end_date`, `image_url`, `avg_rating`, `created_at`) VALUES
-(9,26,9,'Rome & Vatican Explorer','5 days exploring ancient Rome, Vatican City and authentic Italian cuisine',16500.00,5,'2026-06-10','2026-06-15','/images/packages/rome_explorer.jpg',0.00,'2026-05-01 10:00:00'),
-(10,25,10,'Sydney Harbour Experience','6 days discovering Sydney Opera House, Bondi Beach and Blue Mountains',19800.00,6,'2026-06-15','2026-06-21','/images/packages/sydney_harbour.jpg',0.00,'2026-05-01 10:00:00'),
-(11,22,11,'New York City Highlights','5 days in the Big Apple including Broadway show and iconic landmarks',24500.00,5,'2026-08-12','2026-08-17','/images/packages/nyc_highlights.jpg',0.00,'2026-05-01 10:00:00'),
-(12,25,12,'Bali Spiritual Retreat','7 days of temples, rice terraces and wellness in Bali',15200.00,7,'2026-08-01','2026-08-08','/images/packages/bali_retreat.jpg',0.00,'2026-05-01 10:00:00'),
-(13,24,13,'Zanzibar Beach Paradise','6 days on pristine beaches with spice tours and Swahili culture',18900.00,6,'2026-07-06','2026-07-12','/images/packages/zanzibar_paradise.jpg',0.00,'2026-05-01 10:00:00'),
-(14,23,14,'Swiss Alps Adventure','5 days of alpine scenery, chocolate tasting and mountain trains',28000.00,5,'2026-07-08','2026-07-13','/images/packages/swiss_alps.jpg',0.00,'2026-05-01 10:00:00'),
-(15,26,15,'Marrakech Magic','4 days of souks, palaces, hammams and Sahara desert sunsets',11500.00,4,'2026-06-20','2026-06-24','/images/packages/marrakech_magic.jpg',0.00,'2026-05-01 10:00:00'),
-(16,22,16,'Dubai Luxury Escape','5 days of desert luxury, Burj Khalifa and world-class shopping',32000.00,5,'2026-07-20','2026-07-25','/images/packages/dubai_luxury.jpg',0.00,'2026-05-01 10:00:00'),
-(17,25,17,'Buenos Aires & Tango','6 days of Argentine steak, tango shows and Patagonian wine',21000.00,6,'2026-10-01','2026-10-07','/images/packages/buenosaires_tango.jpg',0.00,'2026-05-01 10:00:00'),
-(18,26,18,'Santorini Sunset Romance','5 days of Aegean sunsets, volcanic beaches and Greek wine',23500.00,5,'2026-07-25','2026-07-30','/images/packages/santorini_romance.jpg',0.00,'2026-05-01 10:00:00'),
-(19,24,19,'Kenya Safari & Nairobi','7 days Maasai Mara game drives and Nairobi city experience',26500.00,7,'2026-07-05','2026-07-12','/images/packages/kenya_safari.jpg',0.00,'2026-05-01 10:00:00'),
-(20,23,20,'Amsterdam Canal Escape','4 days of museums, cycling, tulips and Dutch cuisine',13200.00,4,'2026-08-15','2026-08-19','/images/packages/amsterdam_canals.jpg',0.00,'2026-05-01 10:00:00'),
-(21,24,3,'Kruger & Panorama Route','6 days combining Big Five safari with Blyde River Canyon',22000.00,6,'2026-08-01','2026-08-07','/images/packages/kruger_panorama.jpg',0.00,'2026-05-01 10:00:00'),
-(22,22,16,'Dubai Desert & City','7 days combining desert adventures with Dubai city highlights',28500.00,7,'2026-11-01','2026-11-08','/images/packages/dubai_desert_city.jpg',0.00,'2026-05-01 10:00:00'),
-(23,26,9,'Rome to Santorini Mediterranean','8 days island hopping from Rome through the Mediterranean',38000.00,8,'2026-07-10','2026-07-18','/images/packages/rome_santorini.jpg',0.00,'2026-05-01 10:00:00'),
-(24,25,12,'Bali & Sydney Twin Centre','10 days combining tropical Bali with cosmopolitan Sydney',34500.00,10,'2026-09-15','2026-09-25','/images/packages/bali_sydney.jpg',0.00,'2026-05-01 10:00:00');
+(9,26,9,'Rome & Vatican Explorer','5 days exploring ancient Rome, Vatican City and authentic Italian cuisine',16500.00,5,'2026-06-10','2026-06-15','https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800',0.00,'2026-05-01 10:00:00'),
+(10,25,10,'Sydney Harbour Experience','6 days discovering Sydney Opera House, Bondi Beach and Blue Mountains',19800.00,6,'2026-06-15','2026-06-21','https://images.unsplash.com/photo-1523428096881-5bd79d043006?w=800',0.00,'2026-05-01 10:00:00'),
+(11,22,11,'New York City Highlights','5 days in the Big Apple including Broadway show and iconic landmarks',24500.00,5,'2026-08-12','2026-08-17','https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=800',0.00,'2026-05-01 10:00:00'),
+(12,25,12,'Bali Spiritual Retreat','7 days of temples, rice terraces and wellness in Bali',15200.00,7,'2026-08-01','2026-08-08','https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800',0.00,'2026-05-01 10:00:00'),
+(13,24,13,'Zanzibar Beach Paradise','6 days on pristine beaches with spice tours and Swahili culture',18900.00,6,'2026-07-06','2026-07-12','https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800',0.00,'2026-05-01 10:00:00'),
+(14,23,14,'Swiss Alps Adventure','5 days of alpine scenery, chocolate tasting and mountain trains',28000.00,5,'2026-07-08','2026-07-13','https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800',0.00,'2026-05-01 10:00:00'),
+(15,26,15,'Marrakech Magic','4 days of souks, palaces, hammams and Sahara desert sunsets',11500.00,4,'2026-06-20','2026-06-24','https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800',0.00,'2026-05-01 10:00:00'),
+(16,22,16,'Dubai Luxury Escape','5 days of desert luxury, Burj Khalifa and world-class shopping',32000.00,5,'2026-07-20','2026-07-25','https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',0.00,'2026-05-01 10:00:00'),
+(17,25,17,'Buenos Aires & Tango','6 days of Argentine steak, tango shows and Patagonian wine',21000.00,6,'2026-10-01','2026-10-07','https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800',0.00,'2026-05-01 10:00:00'),
+(18,26,18,'Santorini Sunset Romance','5 days of Aegean sunsets, volcanic beaches and Greek wine',23500.00,5,'2026-07-25','2026-07-30','https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800',0.00,'2026-05-01 10:00:00'),
+(19,24,19,'Kenya Safari & Nairobi','7 days Maasai Mara game drives and Nairobi city experience',26500.00,7,'2026-07-05','2026-07-12','https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=800',0.00,'2026-05-01 10:00:00'),
+(20,23,20,'Amsterdam Canal Escape','4 days of museums, cycling, tulips and Dutch cuisine',13200.00,4,'2026-08-15','2026-08-19','https://images.unsplash.com/photo-1583416750470-965b2707b355?w=800',0.00,'2026-05-01 10:00:00'),
+(21,24,3,'Kruger & Panorama Route','6 days combining Big Five safari with Blyde River Canyon',22000.00,6,'2026-08-01','2026-08-07','https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800',0.00,'2026-05-01 10:00:00'),
+(22,22,16,'Dubai Desert & City','7 days combining desert adventures with Dubai city highlights',28500.00,7,'2026-11-01','2026-11-08','https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',0.00,'2026-05-01 10:00:00'),
+(23,26,9,'Rome to Santorini Mediterranean','8 days island hopping from Rome through the Mediterranean',38000.00,8,'2026-07-10','2026-07-18','https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800',0.00,'2026-05-01 10:00:00'),
+(24,25,12,'Bali & Sydney Twin Centre','10 days combining tropical Bali with cosmopolitan Sydney',34500.00,10,'2026-09-15','2026-09-25','https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800',0.00,'2026-05-01 10:00:00');
 
---  populating the Travel Package table
+--  populating the Package Component table
 
 INSERT INTO `package_component` (`package_id`, `component_type`, `component_id`) VALUES
 (9,'flight',13),(9,'accommodation',9),(9,'activity',10),(9,'activity',11),(9,'activity',12),(9,'transport',8),
@@ -196,7 +192,6 @@ INSERT INTO `package_component` (`package_id`, `component_type`, `component_id`)
 (23,'flight',13),(23,'accommodation',9),(23,'accommodation',23),(23,'activity',10),(23,'activity',27),
 (24,'flight',17),(24,'accommodation',15),(24,'accommodation',12),(24,'activity',14),(24,'activity',19);
 
-
 --  populating the Group Trip table
 
 INSERT INTO `group_trip` (`group_trip_id`, `package_id`, `agency_id`, `max_members`, `current_members`, `start_date`, `end_date`, `status`) VALUES
@@ -205,7 +200,6 @@ INSERT INTO `group_trip` (`group_trip_id`, `package_id`, `agency_id`, `max_membe
 (6,15,26,12,7,'2026-06-20','2026-06-24','open'),
 (7,14,23,6,2,'2026-07-08','2026-07-13','open'),
 (8,16,22,10,6,'2026-07-20','2026-07-25','open');
-
 
 --  populating the Booking table
 
@@ -225,7 +219,6 @@ INSERT INTO `booking` (`booking_id`, `traveller_id`, `package_id`, `group_trip_i
 (19,13,19,5,'2026-05-03 11:00:00',26500.00,'confirmed'),
 (20,15,15,6,'2026-05-04 12:00:00',11500.00,'confirmed');
 
-
 --  populating the Receipt table
 
 INSERT INTO `receipt` (`booking_id`, `amount`, `payment_date`, `payment_method`, `receipt_number`) VALUES
@@ -241,7 +234,6 @@ INSERT INTO `receipt` (`booking_id`, `amount`, `payment_date`, `payment_method`,
 (18,32000.00,'2026-05-02 10:05:00','credit_card','RCP-2026-00018'),
 (19,26500.00,'2026-05-03 11:05:00','bank_transfer','RCP-2026-00019'),
 (20,11500.00,'2026-05-04 12:05:00','paypal','RCP-2026-00020');
-
 
 --  populating the Review table
 
@@ -266,7 +258,6 @@ INSERT INTO `review` (`traveller_id`, `agency_id`, `package_id`, `rating`, `comm
 (15,NULL,12,5,'Bali retreat was transformative. Every activity was thoughtfully selected.','2026-05-16 11:00:00'),
 (19,NULL,13,5,'Zanzibar beach paradise is the perfect description. Absolutely loved it.','2026-05-17 09:00:00'),
 (20,NULL,8,4,'Tokyo Discovery gave us a perfect mix of modern and traditional Japan.','2026-05-18 10:00:00');
-
 
 -- updating the avg_rating based on reviews
 
