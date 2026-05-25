@@ -56,7 +56,7 @@ $flash = get_flash();
 
             <!-- Dark mode toggle -->
             <li>
-                <button class="dark-toggle" onclick="toggleDarkMode()" id="dark-btn">🌙 Dark</button>
+                <button class="dark-toggle" onclick="toggleDarkMode()" id="dark-btn"><img src="../assets/moon.PNG" width = "40" height="40"></div> Dark</button>
             </li>
         </ul>
     </div>
@@ -78,8 +78,9 @@ $flash = get_flash();
             display:flex;align-items:center;justify-content:center;
             font-size:1.5rem;cursor:pointer;box-shadow:var(--shadow-lg);
             transition:transform 0.2s;">
-    💬
+    <img src="../assets/chat.PNG" width="30" height="30">
 </div>
+
 
 <div id="chat-window"
      style="display:none;position:fixed;bottom:5rem;right:1.5rem;
@@ -103,8 +104,8 @@ $flash = get_flash();
         <div style="background:var(--clr-primary-light);
                     padding:.6rem .85rem;border-radius:12px;
                     border-bottom-left-radius:2px;max-width:85%">
-            Hi! I'm your Tripistry travel assistant. Ask me about packages, destinations, or pricing! 🌍
-        </div>
+            Hi! I'm your Tripistry travel assistant. Ask me about packages, destinations, or pricing! <img src="../assets/globe.PNG" width="40" height="40">
+ </div>
     </div>
 
     <div style="padding:.6rem;border-top:1px solid var(--clr-border);
@@ -132,16 +133,25 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
     localStorage.setItem('darkMode', isDark ? '1' : '0');
-    document.getElementById('dark-btn').textContent = isDark ? '☀️ Light' : '🌙 Dark';
+    
+    const btn = document.getElementById('dark-btn');
+    if (isDark) {
+        btn.innerHTML = '<img src="../assets/sun.PNG" width="40" height="40"> Light';
+    } else {
+        btn.innerHTML = '<img src="../assets/moon.PNG" width="40" height="40"> Dark';
+    }
 }
 
 // Set button label to match current state on load
 document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('dark-btn');
     if (localStorage.getItem('darkMode') === '1') {
-        const btn = document.getElementById('dark-btn');
-        if (btn) btn.textContent = '☀️ Light';
+        btn.innerHTML = '<img src="../assets/sun.PNG" width="40" height="40"> Light';
+    } else {
+        btn.innerHTML = '<img src="../assets/moon.PNG" width="40" height="40"> Dark';
     }
 });
+
 
 // ── Chatbot ──────────────────────────────────────────────────
 function toggleChat() {

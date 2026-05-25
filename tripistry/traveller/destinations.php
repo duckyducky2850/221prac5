@@ -118,7 +118,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <?php if ($a['address']): ?><div class="card-meta"><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"> <?= e($a['address']) ?></div><?php endif; ?>
                 <div class="flex-between mt-1">
                     <span class="price-badge">R<?= number_format($a['price_per_night'], 2) ?>/night</span>
-                    <span class="text-muted" style="font-size:.82rem"><?= $a['no_bedrooms'] ?>🛏 <?= $a['no_bathrooms'] ?>🚿</span>
+                    <span class="text-muted" style="font-size:.82rem"><?= $a['no_bedrooms'] ?><img src="../assets/bed.PNG" width = "40" height="40"><?= $a['no_bathrooms'] ?><img src="../assets/shower.PNG" width = "40" height="40"></span>
                 </div>
             </div>
         </div>
