@@ -1,150 +1,181 @@
-# Tripistry – COS221 Practical 5
+# Tripistry - COS221 Practical 5
+**Team32**
 
-**Team32** | Lillian Muller | Stephen Molife | Dian le Roux | Jay Macaskill | Marko de Swardt
+## Members
+Lillian Muller u25253990
+Stephen Molife u25368037
+Dian le Roux u25147065
+Jay Macaskill u25198387
+Marko de Swardt u24658562
+-----
 
----
+## Overview
+Tripistry is a  travel booking web application built with PHP, MariaDB, HTML5, CSS3 and JavaScript. It allows travellers to browse destinations, compare and book travel packages, and leave reviews, Travel agencies can manage packages, group trips, flights, accommodation, transport and activities through a dedicated portal. The application also features a dark mode toggle and an AI chatbot (Sir Jarvis the First) using the Google Gemini API.
+-----
 
-## Quick Setup
+## Prerequisites
+- PHP 8.0+ with PDO, PDO_MySQL, and cURL extensions enabled
+- MariaDB 10.x or MySQL 8.x
+- XAMPP, WAMP, Laragon, or the PHP built-in server
+-----
 
-### 1. Prerequisites
-- PHP 8.0+ with PDO and PDO_MySQL enabled
-- MariaDB 10.x / MySQL 8.x
-- A local server (XAMPP, WAMP, Laragon, or built-in `php -S`)
+## Setup
 
-### 2. Database
+### 1. Clone the repository
+```
+git clone https://github.com/duckyducky2850/221prac5.git
+cd 221prac5
+```
+
+### 2. Create the database
+Open phpMyAdmin or a MariaDB terminal and run:
+
 ```sql
 CREATE DATABASE tripistry CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
+
 Then import the provided dump:
-```bash
-mysql -u root -p tripistry < tripistry_dump.sql
+
+```
+mysql -u root -p tripistry < sql/tripistry_dump.sql
 ```
 
-### 3. Configure DB credentials
-Open **`config/db.php`** and set your credentials:
+or use phpMyAdmin: select the `tripistry` database, then Import, then choose `tripistry_dump.sql` then Go.
+
+### 3. Configure database credentials
+Open `tripistry/config/db.php`,
+edit the following:
+
 ```php
-define('DB_USER', 'root');
-define('DB_PASS', 'your_password');
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'tripistry');
+define('DB_USER', 'root'); // your MariaDB username here
+define('DB_PASS', ''); // your MariaDB password here 
 ```
 
-### 4. Serve the app
-**Option A – PHP built-in server (easiest):**
+### 4. Configure the AI chatbot (optional)
+The chatbot requires a free Google Gemini API key. Get one [here](https://aistudio.google.com/apikey)
+
+Create the file `tripistry/config/secrets.php` (this file is gitignored and must be created manually on each machine):
+
+```php
+<?php
+define('GEMINI_API_KEY', 'your_api_key_here');
+```
+
+### 5. Enable cURL in XAMPP
+Open `C:/xampp/php/php.ini` **(Windows)** or `/Applications/XAMPP/xamppfiles/etc/php.ini` **(Mac)**
+
+Find and uncomment:
+
+```
+extension=curl
+```
+
+Restart Apache in the XAMPP Control Panel.
+
+### 6. Serve the application
+**XAMPP/WAMP:** Place the `tripistry/` folder inside `htdocs/` and visit `http://localhost/tripistry/`
+
+**PHP built-in server:**
+
 ```bash
 cd tripistry/
 php -S localhost:8000
 ```
+
 Then visit `http://localhost:8000`
 
-**Option B – XAMPP/WAMP:**
-Place the `tripistry/` folder in `htdocs/` and visit `http://localhost/tripistry/`
+-----
 
----
+## Sample Login Credentials - for testing/defaults 
 
-## File Structure
+These credentials come from the seed data in `tripistry_dump.sql`.
+- **Traveller:**
+name: Biggy Smith
+email: bingbong@gmail.com
+password: BingTestPass1
 
-```
-tripistry/
-├── config/
-│   └── db.php               ← *** EDIT THIS: DB credentials ***
-├── includes/
-│   ├── auth.php             ← Session management, CSRF, role guards
-│   ├── header.php           ← Shared HTML head and navbar
-│   └── footer.php           ← Shared footer and JS include
-├── css/
-│   └── style.css            ← All styles (edit CSS variables at top to restyle)
-├── js/
-│   └── main.js              ← Client side validation, tabs, AJAX filter, compare
-├── index.php                ← Public landing page
-├── login.php                ← Login (traveller and agency)
-├── register.php             ← Register (traveller and agency)
-├── logout.php               ← Destroy session
-├── traveller/
-│   ├── dashboard.php        ← Traveller home and recent bookings and recommendations
-│   ├── destinations.php     ← Browse destinations, flights, stays, activities
-│   ├── packages.php         ← Browse and filter and sort and compare packages
-│   ├── package_detail.php   ← Full package view with itinerary, reviews, group trips
-│   ├── book.php             ← Booking confirmation form
-│   ├── bookings.php         ← My bookings and receipt detail and cancel
-│   └── reviews.php          ← Write and view my reviews
-├── agency/
-│   ├── dashboard.php        ← Agency stats and recent bookings and reviews
-│   ├── packages.php         ← List and delete packages
-│   ├── package_form.php     ← Create and edit packages and manage components
-│   ├── group_trips.php      ← Create, update status, delete group trips
-│   └── manage_content.php   ← Add/delete flights, accommodation, transport, activities
-└── api/
-    └── ajax.php             ← JSON/HTML endpoint for live package filtering
-```
+- **Agency:**
+name:
+email:
+password:
 
----
+note: these are plain text passwords but our db uses bcrypt hashing
 
-## Customising the Style
+-----
 
-All design tokens are CSS custom properties in `css/style.css` at the top:
+## Customising the Styling
+
+All of our colours, fonts and spacing are defined as CSS custom properties at the top of `css/style.css`. Edit only the `:root` block if you want to restyle the site. Note that if you change these colours it may clash with our custom icons that adhere to the current palette. Here is our current root block:
 
 ```css
 :root {
-    --clr-primary: #1a6b8a;   /* ← main brand colour */
-    --clr-accent: #f5a623;   /* ← buttons, stars    */
-    --font-body: 'Inter';
-    --font-display: 'Playfair Display';
-    /*etc*/
+    --clr-primary:       #1a6b8a;   /* main brand colour */
+    --clr-accent:        #f5a623;   /* buttons, star ratings */
+    --clr-bg:            #f7f9fc;   /* page background */
+    --font-body:         'Inter', system-ui, sans-serif;
+    --font-display:      'Playfair Display', Georgia, serif;
 }
 ```
-Change these values to completely restyle the site without touching any PHP.
 
----
+Dark mode colours are in the `body.dark-mode` block directly below.
 
-## Sample Login Credentials (from seed data)
+-----
 
-| Role      | Email                              | Password      |
-|-----------|------------------------------------|---------------|
-| Traveller | john.doe@email.com                 | hashed_pwd_1  |
-| Traveller | sarah.wilson@email.com             | hashed_pwd_2  |
-| Agency    | wanderlust.travel@agency.com       | hashed_pwd_6  |
-| Agency    | safari.experts@agency.com          | hashed_pwd_7  |
+## Features
 
-> **Note:** The seed data uses plain text passwords for convenience during development.
-> New registrations use bcrypt (`password_hash`)
+### Traveller
 
----
+- Register and log in with a dedicated traveller interface
+- Browse destinations with tabbed views for flights, stays, transport, attractions and restaurants
+- Filter and sort packages by price, destination, duration, rating and agency
+- Compare up to 3 packages side-by-side
+- Book packages with simulated payment and automatic receipt generation
+- Join agency-organised group trips
+- Write star ratings and text reviews for packages and agencies
+- View booking history and receipts
 
-## Security Implementation
+### Agency
 
-| Mechanism          | Where                             |
-|--------------------|-----------------------------------|
-| SQL Injection      | PDO prepared statements everywhere, no string interpolation in SQL |
-| XSS prevention     | `htmlspecialchars()` via `e()` helper on all output |
-| CSRF protection    | `csrf_token()` / `verify_csrf()` on every POST form |
-| Session fixation   | `session_regenerate_id(true)` on login |
-| Password hashing   | `password_hash(…, PASSWORD_BCRYPT)` on registration |
-| Role-based access  | `require_role('traveller'/'agency')` guard at top of each protected page |
+- Register and log in with a dedicated agency interface
+- Create, edit and delete travel packages with a dynamic component builder
+- Organise and manage group trips with live member tracking
+- Add and remove flights, accommodation, transport and activities
+- View booking statistics and customer reviews
 
----
+### General and Extra Functionality
 
-## What Requires a Running DB
+- Dark mode toggle with localStorage persistence across pages + custom dark and light mode backgrounds
+- AI travel assistant chatbot (powered by Google Gemini) grounded in live database data
+- AJAX live package filtering without page reloads
+- Fully responsive layout
 
-The following functionality only works with a live MariaDB connection:
-- Login / Register
-- All traveller and agency pages
-- AJAX filter (falls back gracefully to full page form submit)
+-----
 
-Static pages that work without DB: `index.php` layout (will show error on DB fetch), CSS/JS.
+## Security
 
----
+### SQL injection prevention
+PDO prepared statements with `?` placeholders on every query. ORDER BY uses a server-side whitelist map. User input never reaches SQL directly. `PDO::ATTR_EMULATE_PREPARES => false` forces native prepared statements.
 
-## Task 5 Checklist
+### XSS prevention
+`e()` helper wraps `htmlspecialchars(ENT_QUOTES)`. Applied to every echoed variable throughout the application.  
 
-| Requirement | File(s) |
-|---|---|
-| Two distinct user types | `login.php`, `register.php`, `includes/auth.php` |
-| Browse destinations, flights, accommodation, attractions, restaurants | `traveller/destinations.php` |
-| Compare travel packages | `traveller/packages.php` (compare bar and comparison table) |
-| Book a package | `traveller/book.php`, `traveller/bookings.php` |
-| Leave reviews and ratings | `traveller/reviews.php`, `traveller/package_detail.php` |
-| Agency: create/edit/delete packages | `agency/packages.php`, `agency/package_form.php` |
-| Agency: manage group trips | `agency/group_trips.php` |
-| Agency: manage content (flights/accommodation/transport/activities) | `agency/manage_content.php` |
-| Sort and filter packages | `traveller/packages.php` filter bar |
-| Detailed package view | `traveller/package_detail.php` |
-| SQL injection prevention | PDO prepared statements in all DB queries |
+### CSRF protection
+`csrf_token()` generates a 64-character random session token. `csrf_field()` embeds it in every form. `verify_csrf()` validates it on every POST using `hash_equals()`
+
+### Session fixation
+`session_regenerate_id(true)` called on every successful login. 
+
+### Password hashing and verification
+`password_hash($password, PASSWORD_BCRYPT)` on registration. `password_verify()` on login.
+
+### API key protection
+Gemini API key stored in `config/secrets.php` which is listed in `.gitignore` and never committed to version control.
+
+-----
+
+## Git Workflow
+Includes branches merged onto main and explanatory commit messages.
+
+*COS221 Practical 5 - Team32 - 2026 - :)*
