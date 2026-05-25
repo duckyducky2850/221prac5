@@ -33,7 +33,7 @@ $recent_bookings = $stmt->fetchAll();
 // Recommended packages (simpleway of recommending, same destination as past bookings or top-rated)
 $stmt = $db->prepare("
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days,
-           ta.company_name,
+           ta.company_name, tp.image_url,
            ROUND(AVG(r.rating),1) AS avg_rating
     FROM travel_package tp
     JOIN travel_agency ta ON ta.agency_id = tp.agency_id
