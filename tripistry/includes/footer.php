@@ -6,7 +6,7 @@
 <footer class="site-footer">
     <div class="footer-inner">
         <p class="footer-brand">✈ Tripistry</p>
-        <p class="footer-copy">&copy; <?= date('Y') ?> Team32 – COS221 Practical 5</p>
+        <p class="footer-copy">&copy; <?= date('Y') ?> Team32 – COS221 Practical V</p>
         <nav class="footer-nav">
             <a href="<?= BASE_URL ?>/index.php">Home</a>
             <a href="<?= BASE_URL ?>/traveller/packages.php">Browse Packages</a>
