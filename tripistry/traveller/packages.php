@@ -74,7 +74,7 @@ $where_sql = implode(' AND ', $where);
     GROUP BY tp.package_id, d.destination_id
     ORDER BY $order_by";*/
 
-//Optimized query
+//Optimized query, use unoptimised query when we want to do propper filtering because of hardcoded WHERE clause
 $sql = "
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days,
        tp.description, ta.company_name, ta.agency_id,
@@ -106,7 +106,7 @@ $sql = "
 
   
 $stmt = $db->prepare($sql);
-$stmt->execute($params);
+$stmt->execute([]);
 $packages = $stmt->fetchAll();
 
 // Dropdown data
