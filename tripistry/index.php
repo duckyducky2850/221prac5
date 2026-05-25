@@ -56,22 +56,22 @@ require_once __DIR__ . '/includes/header.php';
 <!--Stats strip-->
 <div class="stats-grid mb-3" style="max-width:800px;margin-left:auto;margin-right:auto">
     <div class="stat-card">
-        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/plane.PNG" width = "40" height="40"></div>️</div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/plane.PNG" width = "40" height="40"></div>️
         <div class="stat-value"><?= $db->query("SELECT COUNT(*) FROM travel_package")->fetchColumn() ?></div>
         <div class="stat-label">Travel Packages</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40"></div></div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40"></div>
         <div class="stat-value"><?= $db->query("SELECT COUNT(*) FROM destination")->fetchColumn() ?></div>
         <div class="stat-label">Destinations</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div></div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div>
         <div class="stat-value"><?= $db->query("SELECT COUNT(*) FROM travel_agency")->fetchColumn() ?></div>
         <div class="stat-label">Travel Agencies</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/star.PNG" width = "40" height="40"></div></div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/star.PNG" width = "40" height="40"></div>
         <div class="stat-value"><?= $db->query("SELECT COUNT(*) FROM review")->fetchColumn() ?></div>
         <div class="stat-label">Reviews</div>
     </div>
@@ -84,7 +84,13 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <?php if (empty($packages)): ?>
-    <div class="empty-state"><div class="empty-icon"><img src="<?= BASE_URL ?>/assets/box.PNG" width = "40" height="40"></div></div><p>No packages yet.</p></div>
+    <div class="empty-state">
+        <div class="empty-icon">
+            <img src="<?= BASE_URL ?>/assets/box.PNG" width = "40" height="40">
+        </div>
+        <p>No packages yet.</p>
+    </div>
+
 <?php else: ?>
 <div class="grid-3 mb-3">
     <?php foreach ($packages as $p): ?>
@@ -93,13 +99,13 @@ require_once __DIR__ . '/includes/header.php';
         <?php if ($p['image_url']): ?>
             <div class="card-img-placeholder" style="background-image:url('<?= e($p['image_url']) ?>');background-size:cover;background-position:center"></div>
         <?php else: ?>
-            <div class="card-img-placeholder"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40"></div></div>
+            <div class="card-img-placeholder"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40"></div>
         <?php endif; ?>
         <div class="card-body">
             <div class="card-title"><?= e($p['name']) ?></div>
             <div class="card-meta">
-                <?php if ($p['city_name']): ?><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"></div> <?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
-                <img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div> <?= e($p['agency_name']) ?>
+                <?php if ($p['city_name']): ?><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"> <?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
+                <img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"> <?= e($p['agency_name']) ?>
             </div>
             <div class="flex-between">
                 <span class="price-badge">R<?= number_format($p['base_price'], 2) ?></span>
@@ -108,7 +114,7 @@ require_once __DIR__ . '/includes/header.php';
                 <?php endif; ?>
             </div>
             <?php if ($p['duration_days']): ?>
-                <p class="text-muted mt-1" style="font-size:.82rem"><img src="<?= BASE_URL ?>/assets/clock.PNG" width = "40" height="40"></div> <?= (int)$p['duration_days'] ?> days</p>
+                <p class="text-muted mt-1" style="font-size:.82rem"><img src="<?= BASE_URL ?>/assets/clock.PNG" width = "40" height="40"> <?= (int)$p['duration_days'] ?> days</p>
             <?php endif; ?>
         </div>
     </div>
@@ -126,10 +132,10 @@ require_once __DIR__ . '/includes/header.php';
     <?php foreach ($destinations as $d): ?>
     <a href="<?= BASE_URL ?>/traveller/destinations.php?id=<?= $d['destination_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
-        <div class="card-img-placeholder" style="height:130px"><img src="<?= BASE_URL ?>/assets/HolidayPlaceholder.PNG" width = "130"></div></div>
+        <div class="card-img-placeholder" style="height:130px"><img src="<?= BASE_URL ?>/assets/HolidayPlaceholder.PNG" width = "130"></div>
         <div class="card-body" style="padding:.9rem">
             <div class="card-title" style="font-size:1rem"><?= e($d['city_name']) ?></div>
-            <div class="card-meta"><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"></div><?= e($d['country']) ?></div>
+            <div class="card-meta"><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"><?= e($d['country']) ?></div>
             <?php if ($d['popular_season']): ?>
                 <small class="text-muted">Best: <?= e($d['popular_season']) ?></small>
             <?php endif; ?>
