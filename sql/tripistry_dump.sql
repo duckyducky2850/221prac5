@@ -220,14 +220,14 @@ SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `destination` WRITE;
 /*!40000 ALTER TABLE `destination` DISABLE KEYS */;
 INSERT INTO `destination` VALUES
-(1,'Cape Town','South Africa','Mother City with Table Mountain and beautiful beaches','Oct-Mar','/images/capetown.jpg'),
-(2,'Johannesburg','South Africa','City of Gold, vibrant culture and history','Sep-Nov','/images/johannesburg.jpg'),
-(3,'Kruger National Park','South Africa','Famous safari destination with Big Five','May-Sep','/images/kruger.jpg'),
-(4,'Paris','France','City of Love, Eiffel Tower and gourmet cuisine','Apr-Oct','/images/paris.jpg'),
-(5,'Bangkok','Thailand','Street food paradise with ornate temples','Nov-Feb','/images/bangkok.jpg'),
-(6,'Miami','USA','Sunny beaches and vibrant nightlife','Dec-Apr','/images/miami.jpg'),
-(7,'London','United Kingdom','Historic landmarks and royal palaces','May-Sep','/images/london.jpg'),
-(8,'Tokyo','Japan','Futuristic city with traditional temples','Mar-May, Sep-Nov','/images/tokyo.jpg');
+(1,'Cape Town','South Africa','Mother City with Table Mountain and beautiful beaches','Oct-Mar','https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800'),
+(2,'Johannesburg','South Africa','City of Gold, vibrant culture and history','Sep-Nov','https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800'),
+(3,'Kruger National Park','South Africa','Famous safari destination with Big Five','May-Sep','https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800'),
+(4,'Paris','France','City of Love, Eiffel Tower and gourmet cuisine','Apr-Oct','https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800'),
+(5,'Bangkok','Thailand','Street food paradise with ornate temples','Nov-Feb','https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800'),
+(6,'Miami','USA','Sunny beaches and vibrant nightlife','Dec-Apr','https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800'),
+(7,'London','United Kingdom','Historic landmarks and royal palaces','May-Sep','https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800'),
+(8,'Tokyo','Japan','Futuristic city with traditional temples','Mar-May, Sep-Nov','https://images.unsplash.com/photo-1534430480872-3498386e7856?w=800');
 /*!40000 ALTER TABLE `destination` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -447,12 +447,12 @@ SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
 INSERT INTO `review` VALUES
-(1,1,6,NULL,5,'Great experience with Wanderlust! Very organized.','2026-05-12 16:15:41'),
-(2,2,7,3,5,'Best safari ever! Saw all Big Five.','2026-05-12 16:15:41'),
-(3,3,8,4,4,'Paris was lovely, hotel was excellent.','2026-05-12 16:15:41'),
-(4,4,9,5,5,'Amazing food tour in Bangkok!','2026-05-12 16:15:41'),
-(5,5,6,1,3,'Decent but overpriced for what we got.','2026-05-12 16:15:41'),
-(6,1,NULL,4,5,'The Paris package was a dream come true!','2026-05-12 16:15:41');
+(1,1,6,NULL,5,'Great experience with Wanderlust! Very organized.',NULL,'2026-05-12 16:15:41'),
+(2,2,7,3,5,'Best safari ever! Saw all Big Five.',NULL,'2026-05-12 16:15:41'),
+(3,3,8,4,4,'Paris was lovely, hotel was excellent.',NULL,'2026-05-12 16:15:41'),
+(4,4,9,5,5,'Amazing food tour in Bangkok!',NULL,'2026-05-12 16:15:41'),
+(5,5,6,1,3,'Decent but overpriced for what we got.',NULL,'2026-05-12 16:15:41'),
+(6,1,NULL,4,5,'The Paris package was a dream come true!',NULL,'2026-05-12 16:15:41');
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -583,15 +583,14 @@ SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `travel_package` WRITE;
 /*!40000 ALTER TABLE `travel_package` DISABLE KEYS */;
 INSERT INTO `travel_package` VALUES
-(1,6,1,'Cape Town Explorer','5 days in beautiful Cape Town including Table Mountain',8500.00,5,'2026-06-01','2026-06-05','/images/packages/capetown_explorer.jpg',3.00,'2026-05-12 16:12:32'),
-(2,6,1,'Garden Route Adventure','7 day road trip along South Africa\'s stunning coastline',12500.00,7,'2026-07-01','2026-07-07','/images/packages/garden_route.jpg',0.00,'2026-05-12 16:12:32'),
-(3,7,3,'Kruger Big 5 Safari','4 day safari in Kruger National Park',18500.00,4,'2026-07-15','2026-07-19','/images/packages/kruger_safari.jpg',5.00,'2026-05-12 16:12:32'),
-(4,8,4,'Paris Romance','5 days in Paris including Eiffel Tower and Seine cruise',15000.00,5,'2026-06-05','2026-06-10','/images/packages/paris_romance.jpg',5.00,'2026-05-12 16:12:32'),
-(5,9,5,'Bangkok Foodie Tour','4 days of Thai street food and temples',12000.00,4,'2026-07-12','2026-07-16','/images/packages/bangkok_foodie.jpg',5.00,'2026-05-12 16:12:32'),
-(6,10,6,'Miami Beach Escape','5 days of sun, sand and nightlife',13500.00,5,'2026-08-05','2026-08-10','/images/packages/miami_escape.jpg',0.00,'2026-05-12 16:12:32'),
-(7,8,7,'London Heritage','4 days exploring British history and royal sites',14200.00,4,'2026-09-01','2026-09-05','/images/packages/london_heritage.jpg',0.00,'2026-05-12 16:12:32'),
-(8,9,8,'Tokyo Discovery','6 days of futuristic Tokyo and traditional culture',22000.00,6,'2026-09-10','2026-09-16','/images/packages/tokyo_discovery.jpg',0.00,'2026-05-12 16:12:32');
-/*!40000 ALTER TABLE `travel_package` ENABLE KEYS */;
+(1,6,1,'Cape Town Explorer','5 days in beautiful Cape Town including Table Mountain',8500.00,5,'2026-06-01','2026-06-05','https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800',3.00,'2026-05-12 16:12:32'),
+(2,6,1,'Garden Route Adventure','7 day road trip along South Africa\'s stunning coastline',12500.00,7,'2026-07-01','2026-07-07','https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800',0.00,'2026-05-12 16:12:32'),
+(3,7,3,'Kruger Big 5 Safari','4 day safari in Kruger National Park',18500.00,4,'2026-07-15','2026-07-19','https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800',5.00,'2026-05-12 16:12:32'),
+(4,8,4,'Paris Romance','5 days in Paris including Eiffel Tower and Seine cruise',15000.00,5,'2026-06-05','2026-06-10','https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',5.00,'2026-05-12 16:12:32'),
+(5,9,5,'Bangkok Foodie Tour','4 days of Thai street food and temples',12000.00,4,'2026-07-12','2026-07-16','https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800',5.00,'2026-05-12 16:12:32'),
+(6,10,6,'Miami Beach Escape','5 days of sun, sand and nightlife',13500.00,5,'2026-08-05','2026-08-10','https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800',0.00,'2026-05-12 16:12:32'),
+(7,8,7,'London Heritage','4 days exploring British history and royal sites',14200.00,4,'2026-09-01','2026-09-05','https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800',0.00,'2026-05-12 16:12:32'),
+(8,9,8,'Tokyo Discovery','6 days of futuristic Tokyo and traditional culture',22000.00,6,'2026-09-10','2026-09-16','https://images.unsplash.com/photo-1534430480872-3498386e7856?w=800',0.00,'2026-05-12 16:12:32');
 UNLOCK TABLES;
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
