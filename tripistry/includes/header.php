@@ -150,6 +150,16 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         btn.innerHTML = '<img src="<?= BASE_URL ?>/assets/moon.PNG" width="40" height="40"> Dark';
     }
+
+    // highlighting the active nav link based on current url/selected tab
+    (function() {
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (link.href && link.pathname === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    })();
 });
 
 

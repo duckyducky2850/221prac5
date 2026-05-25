@@ -101,6 +101,34 @@ body.dark-mode .stat-card {
     background: var(--clr-primary-light);
 }
 
+/* text visibility */
+body.dark-mode .page-header h1,
+body.dark-mode .section-heading h2,
+body.dark-mode .card-title,
+body.dark-mode .stat-card .stat-value,
+body.dark-mode .nav-brand {
+    color: #7ec8e3;
+}
+
+body.dark-mode .price-badge {
+    background: #1e3a4a;
+    color: #7ec8e3;
+}
+
+body.dark-mode .btn-outline {
+    border-color: #7ec8e3;
+    color: #7ec8e3;
+}
+
+body.dark-mode .btn-outline:hover {
+    background: #1e3a4a;
+}
+
+body.dark-mode .tab-btn.active {
+    color: #7ec8e3;
+    border-bottom-color: #7ec8e3;
+}
+
 /* ── Reset and base ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -177,6 +205,13 @@ img { max-width: 100%; display: block; }
 }
 
 .nav-links a:hover { background: var(--clr-primary-light); color: var(--clr-primary); }
+
+/* to make tye text inside the tab lighter */
+.nav-links a.active {
+    background: var(--clr-primary-light);
+    color: var(--clr-primary);
+    font-weight: 600;
+}
 
 /* ── Main content wrapper ───────────────────────────────────── */
 .main-content {
