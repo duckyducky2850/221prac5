@@ -147,7 +147,8 @@ function initFilterForm() {
         // if JS fetch fails, form still submits normally
         if (!resultsDiv) return;
         resultsDiv.style.opacity = '0.5';
-        fetch('/api/ajax.php?' + params.toString())
+
+        fetch('/tripistry/api/ajax.php?' + params.toString())
             .then(r => r.text())
             .then(html => {
                 resultsDiv.innerHTML = html;
