@@ -28,10 +28,10 @@ if ($selected_id) {
         $s = $db->prepare("SELECT t.*, d_orig.city_name AS origin_city FROM transport t JOIN destination d_orig ON d_orig.destination_id=t.origin_destination_id WHERE t.destination_id=? ORDER BY t.departure_time");
         $s->execute([$selected_id]); $transports = $s->fetchAll();
 
-        $s = $db->prepare("SELECT a.*, ta.opening_hours, ta.category, ta.entry_fee FROM activity a JOIN tourist_attraction ta ON ta.attraction_id=a.activity_id WHERE a.destination_id=? ORDER BY a.name");
+        $s = $db->prepare("SELECT * FROM activity WHERE destination_id=? AND activity_type != 'Restaurant' ORDER BY name");
         $s->execute([$selected_id]); $attractions = $s->fetchAll();
 
-        $s = $db->prepare("SELECT a.*, r.cuisine_type, r.price_range, r.opening_hours FROM activity a JOIN restaurant r ON r.restaurant_id=a.activity_id WHERE a.destination_id=? ORDER BY a.name");
+        $s = $db->prepare("SELECT * FROM activity WHERE destination_id=? AND activity_type = 'Restaurant' ORDER BY name");
         $s->execute([$selected_id]); $restaurants = $s->fetchAll();
     }
 }
@@ -80,7 +80,7 @@ require_once __DIR__ . '/../includes/header.php';
     <button class="tab-btn" data-tab="accommodation"><img src="<?= BASE_URL ?>/assets/stays.PNG" width = "40" height="40"> Stays (<?= count($accommodations) ?>)</button>
     <button class="tab-btn" data-tab="transport"><img src="<?= BASE_URL ?>/assets/transport.PNG" width = "40" height="40"> Transport (<?= count($transports) ?>)</button>
     <button class="tab-btn" data-tab="attractions"><img src="<?= BASE_URL ?>/assets/attractions.PNG" width = "40" height="40"> Attractions (<?= count($attractions) ?>)</button>
-    <button class="tab-btn" data-tab="restaurants"><img src="<?= BASE_URL ?>/assets/restaurant.PNG" width = "40" height="40"> Restaurants (<?= count($restaurants) ?>)</button>
+    <button class="tab-btn" data-tab="restaurants"><img src="<?= BASE_URL ?>/assets/restaurants.PNG" width = "40" height="40"> Restaurants (<?= count($restaurants) ?>)</button>
 </div>
 
 <!-- Flights -->
@@ -178,7 +178,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="grid-3">
         <?php foreach ($restaurants as $r): ?>
         <div class="card">
-            <div class="card-img-placeholder" style="height:120px"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/restaurant.PNG" width = "40" height="40"></div></div>
+            <div class="card-img-placeholder" style="height:120px"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/restaurants.PNG" width = "40" height="40"></div></div>
             <div class="card-body">
                 <div class="card-title"><?= e($r['name']) ?></div>
                 <?php if ($r['cuisine_type']): ?><div class="card-meta"><?= e($r['cuisine_type']) ?></div><?php endif; ?>
