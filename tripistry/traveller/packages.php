@@ -61,7 +61,7 @@ $where_sql = implode(' AND ', $where);
 /*$sql = "
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days, tp.description,
            ta.company_name, ta.agency_id,
-           d.city_name, d.country, d.image_url,
+           d.city_name, d.country, COALESCE(d.image_url, tp.image_url) AS image_url,
            ROUND(AVG(r.rating), 1) AS avg_rating,
            COUNT(DISTINCT r.review_id) AS review_count
     FROM travel_package tp
@@ -78,11 +78,11 @@ $where_sql = implode(' AND ', $where);
 $sql = "
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days,
        tp.description, ta.company_name, ta.agency_id,
-       d.city_name, d.country, d.image_url,
+       d.city_name, d.country, COALESCE(d.image_url, tp.image_url) AS image_url,
        ROUND(AVG(r.rating), 1) AS avg_rating,
        COUNT(DISTINCT r.review_id) AS review_count
     FROM (
-        SELECT package_id, name, base_price, duration_days, description, agency_id
+        SELECT package_id, name, base_price, duration_days, description, agency_id, image_url
         FROM travel_package
         WHERE base_price BETWEEN 10000 AND 30000
     ) tp

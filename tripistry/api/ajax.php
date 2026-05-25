@@ -57,7 +57,7 @@ $where_sql = implode(' AND ', $where);
 $stmt = $db->prepare("
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days, tp.description,
            ta.company_name,
-           d.city_name, d.country, d.image_url,
+           d.city_name, d.country, COALESCE(d.image_url, tp.image_url) AS image_url,
            ROUND(AVG(r.rating), 1) AS avg_rating,
            COUNT(DISTINCT r.review_id) AS review_count
     FROM travel_package tp

@@ -39,7 +39,7 @@
     --shadow-lg:         0 8px 32px rgba(0,0,0,.14);
 }
 
-/* ── Dark mode ────────────────────────────────────────────── */
+/* our Dark mode we implemented */
 body.dark-mode {
     --clr-bg:          #0f1117;
     --clr-surface:     #1a1d27;

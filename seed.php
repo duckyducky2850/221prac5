@@ -1,10 +1,25 @@
 <?php
-require_once 'tripistry/config/db.php';
+define('BASE_URL', '/tripistry');
+define('DB_HOST', '127.0.0.1');
+define('DB_NAME', 'tripistry');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_CHARSET', 'utf8mb4');
 
-$pdo = get_db();
+try {
+    $pdo = new PDO(
+        'mysql:host=127.0.0.1;port=3306;dbname=tripistry;charset=utf8mb4',
+        'root',
+        '',
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
+    );
+    echo "Connected successfully\n";
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage() . "\n");
+}
 
 echo " Seeding Tripistry database...\n\n";
-
 // Name
 $firstNames = [
     
