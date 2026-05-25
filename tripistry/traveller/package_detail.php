@@ -113,10 +113,10 @@ require_once __DIR__ . '/../includes/header.php';
     <!-- Itinerary panel -->
 <div class="tab-panel active" data-panel="itinerary">
     <?php $icons = [
-        'flight' => '<?= BASE_URL ?>/assets/plane.PNG',
-        'accommodation' =>'<?= BASE_URL ?>/assets/stays.PNG',
-        'transport'=> '<?= BASE_URL ?>/assets/transport.PNG',
-        'activity'=> '<?= BASE_URL ?>/assets/attractions.PNG',
+        'flight' => BASE_URL . '/assets/plane.PNG',
+        'accommodation' => BASE_URL . '/assets/stays.PNG',
+        'transport' => BASE_URL . '/assets/transport.PNG',
+        'activity' => BASE_URL . '/assets/attractions.PNG',
     ];
     $labels = ['flight'=>'Flights','accommodation'=>'Accommodation','transport'=>'Transport','activity'=>'Activities'];
     foreach ($icons as $type => $icon): ?>
