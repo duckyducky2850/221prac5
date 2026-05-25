@@ -59,17 +59,17 @@ require_once __DIR__ . '/../includes/header.php';
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40" alt="Bookings icon"></div>
         <div class="stat-value"><?= $booking_count ?></div>
         <div class="stat-label">Total Bookings</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/tick.PNG" width = "40" height="40"></div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/tick.PNG" width = "40" height="40" alt="Confirmed icon"></div>
         <div class="stat-value"><?= $confirmed ?></div>
         <div class="stat-label">Confirmed</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/star.PNG" width = "40" height="40"></div>
+        <div class="stat-icon"><img src="<?= BASE_URL ?>/assets/star.PNG" width = "40" height="40" alt="Reviews icon"></div>
         <div class="stat-value"><?= $review_count ?></div>
         <div class="stat-label">Reviews Written</div>
     </div>
@@ -83,16 +83,23 @@ require_once __DIR__ . '/../includes/header.php';
 
 <?php if (empty($recent_bookings)): ?>
     <div class="empty-state">
-        <div class="empty-icon"><img src="<?= BASE_URL ?>/assets/map.PNG" width = "40" height="40"></div>
+        <div class="empty-icon"><img src="<?= BASE_URL ?>/assets/map.PNG" width = "40" height="40" alt="No bookings icon"></div>
         <p>You haven't made any bookings yet.</p>
         <a href="<?= BASE_URL ?>/traveller/packages.php" class="btn btn-primary mt-2">Browse Packages</a>
     </div>
 <?php else: ?>
 <div class="table-wrap card">
     <table class="data-table">
-        <thead><tr>
-            <th>Package</th><th>Agency</th><th>Date</th><th>Price</th><th>Status</th><th></th>
-        </tr></thead>
+        <thead>
+            <tr>
+                <th>Package</th>
+                <th>Agency</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
         <tbody>
         <?php foreach ($recent_bookings as $b): ?>
         <tr>
