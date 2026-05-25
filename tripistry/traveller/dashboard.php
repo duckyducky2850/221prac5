@@ -126,7 +126,11 @@ require_once __DIR__ . '/../includes/header.php';
     <?php foreach ($recommended as $p): ?>
     <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
-        <div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40"></div>
+        <?php if (!empty($p['image_url'])): ?>
+            <div class="card-img-placeholder" style="height:120px;background-image:url('<?= e($p['image_url']) ?>');background-size:cover;background-position:center"></div>
+        <?php else: ?>
+            <div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/globe.PNG" width="40" height="40"></div>
+        <?php endif; ?>
         <div class="card-body" style="padding:.9rem">
             <div class="card-title" style="font-size:.95rem"><?= e($p['name']) ?></div>
             <div class="card-meta"><?= e($p['company_name']) ?></div>
