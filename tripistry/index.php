@@ -31,7 +31,7 @@ $packages = $db->query("
 
 // Popular destinations
 $destinations = $db->query("
-    SELECT d.destination_id, d.city_name, d.country, COALESCE(d.image_url, tp.image_url) AS image_url, d.popular_season,
+    SELECT d.destination_id, d.city_name, d.country, d.image_url, d.popular_season,
            COUNT(DISTINCT a.accommodation_id) AS accom_count
     FROM destination d
     LEFT JOIN accommodation a ON a.destination_id = d.destination_id
