@@ -236,7 +236,7 @@ require_once __DIR__ . '/../includes/header.php';
         <h4 style="margin-bottom:.75rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div>Agency</h4>
         <p><strong><?= e($pkg['company_name']) ?></strong></p>
         <?php if ($pkg['contact_number']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/phone.PNG" width = "40" height="40"></div> <?= e($pkg['contact_number']) ?></p><?php endif; ?>
-        <?php if ($pkg['website']): ?><p style="font-size:.88rem"><a href="<?= e($pkg['website']) ?>" target="_blank"><div class="card-img-placeholder" style="height:120px"><img src="../website/map.PNG" width = "40" height="40"></div> Website</a></p><?php endif; ?>
+        <?php if ($pkg['website']): ?><p style="font-size:.88rem"><a href="<?= e($pkg['website']) ?>" target="_blank"><img src="<?= BASE_URL ?>/assets/website.PNG" width="20" height="20"> Website</a></p><?php endif; ?>
         <?php if ($pkg['country']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"></div> <?= e($pkg['country']) ?></p><?php endif; ?>
         <a href="<?= BASE_URL ?>/traveller/packages.php?agency_id=<?= $pkg['agency_id'] ?>" class="btn btn-outline btn-sm mt-2">More from this agency</a>
     </div>
