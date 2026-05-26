@@ -1,5 +1,5 @@
 <?php
-/*Returns the package cards HTML fragment for AJAX filtering.
+/*Returns the package cards HTML fragment for AJAX filtering when typing in the search box, uses same filter logic as packages.php
 Called by js/main.js when filter form changes.
 All inputs sanitised via PDO prepared statements and integer casting.*/
 require_once __DIR__ . '/../config/db.php';
@@ -84,13 +84,19 @@ if (empty($packages)): ?>
 <div class="grid-3">
     <?php foreach ($packages as $p): ?>
     <div class="card">
-        <div class="card-img-placeholder"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40" alt="Destinations count"></div>
+        <div class="card-img-placeholder" style="position:relative;<?= !empty($p['image_url']) ? "background-image:url('".e($p['image_url'])."');background-size:cover;background-position:center;" : '' ?>">
+            <?php if (empty($p['image_url'])): ?>
+                <img src="<?= BASE_URL ?>/assets/globe.PNG" width="40" height="40" alt="Package image">
+            <?php endif; ?>
+        </div>
+
         <div class="card-body">
             <div class="card-title"><?= e($p['name']) ?></div>
             <div class="card-meta">
-                <?php if ($p['city_name']): ?><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40" alt="Location"> <?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
-                <img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40" alt="Agency"> <?= e($p['company_name']) ?>
+                <?php if ($p['city_name']): ?><img src="<?= BASE_URL ?>/assets/pin.PNG" width="16" height="16" alt="Location"> <?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
+                <img src="<?= BASE_URL ?>/assets/building.PNG" width="16" height="16" alt="Agency"> <?= e($p['company_name']) ?>
             </div>
+
             <div class="flex-between">
                 <span class="price-badge">R<?= number_format($p['base_price'], 2) ?></span>
                 <?php if ($p['avg_rating']): ?>

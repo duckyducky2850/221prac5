@@ -500,12 +500,12 @@ table.data-table {
 .stars-input input[type=radio] {
     display: none;
 }
-.stars-input input:checked ~ label, .stars-input label:hover,
-.stars-input label:hover ~ label {
+.stars-input input:checked + label,
+.stars-input input:checked ~ input ~ label {
     color: var(--clr-accent);
 }
 .stars-input {
-    display: flex; flex-direction: row-reverse; width: fit-content;
+    display: flex; flex-direction: row; width: fit-content;
 }
 
 /* ── Price badge ────────────────────────────────────────────── */

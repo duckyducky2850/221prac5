@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'cance
     }
     else {
         $bid = (int)($_POST['booking_id'] ?? 0);
-        $stmt = $db->prepare("UPDATE booking SET status='cancelled' WHERE booking_id=? AND traveller_id=? AND status='pending'");
+        $stmt = $db->prepare("UPDATE booking SET status='cancelled' WHERE booking_id=? AND traveller_id=? AND status IN ('pending','confirmed')");
         $stmt->execute([$bid, $uid]);
         set_flash('success', 'Booking cancelled.');
     }
@@ -91,7 +91,7 @@ require_once __DIR__ . '/../includes/header.php';
             </div>
             <?php endif; ?>
 
-            <?php if ($detail['status'] === 'pending'): ?>
+            <?php if (in_array($detail['status'], ['pending', 'confirmed'])): ?>
             <hr class="divider">
             <form method="POST" action="<?= BASE_URL ?>/traveller/bookings.php">
                 <?= csrf_field() ?>

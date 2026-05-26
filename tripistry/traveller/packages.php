@@ -58,7 +58,7 @@ if ($duration > 0) {
 
 $where_sql = implode(' AND ', $where);
 
-/*$sql = "
+$sql = "
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days, tp.description,
            ta.company_name, ta.agency_id,
            d.city_name, d.country, COALESCE(d.image_url, tp.image_url) AS image_url,
@@ -72,10 +72,10 @@ $where_sql = implode(' AND ', $where);
     LEFT JOIN review r ON r.package_id = tp.package_id
     WHERE $where_sql
     GROUP BY tp.package_id, d.destination_id
-    ORDER BY $order_by";*/
+    ORDER BY $order_by";
 
 //Optimized query, use unoptimised query when we want to do propper filtering because of hardcoded WHERE clause
-$sql = "
+/*$sql = "
     SELECT tp.package_id, tp.name, tp.base_price, tp.duration_days,
        tp.description, ta.company_name, ta.agency_id,
        d.city_name, d.country, COALESCE(d.image_url, tp.image_url) AS image_url,
@@ -103,14 +103,20 @@ $sql = "
     LEFT JOIN review r ON r.package_id = tp.package_id
     GROUP BY tp.package_id, d.destination_id
     ORDER BY avg_rating DESC;";
+*/
 
+$stmt = $db->prepare($sql);
+$stmt->execute($params);
+$packages = $stmt->fetchAll();
   
+/* use for optimised query
 $stmt = $db->prepare($sql);
 $stmt->execute([]);
 $packages = $stmt->fetchAll();
+*/
 
 // Dropdown data
-$destinations = $db->query("SELECT destination_id, city_name, country FROM destination ORDER BY city_name")->fetchAll();
+$destinations = $db->query("SELECT DISTINCT d.destination_id, d.city_name, d.country FROM destination d INNER JOIN travel_package tp ON tp.destination_id = d.destination_id ORDER BY d.city_name")->fetchAll();
 $agencies = $db->query("SELECT agency_id, company_name FROM travel_agency ORDER BY company_name")->fetchAll();
 
 // Compare mode, show side by side table
@@ -128,6 +134,7 @@ if (!empty($compare_ids))
         LEFT JOIN review r ON r.package_id = tp.package_id
         WHERE tp.package_id IN ($placeholders)
         GROUP BY tp.package_id");
+        
     $cstmt->execute($compare_ids);
     $compare_packages = $cstmt->fetchAll();
 }
@@ -264,11 +271,7 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="grid-3">
     <?php foreach ($packages as $p): ?>
     <div class="card">
-        <?php if ($p['image_url']): ?>
-            <div class="card-img-placeholder" style="background-image:url('<?= e($p['image_url']) ?>');background-size:cover;background-position:center;position:relative">
-        <?php else: ?>
-            <div class="card-img-placeholder" style="position:relative">
-        <?php endif; ?>
+        <div class="card-img-placeholder" style="position:relative;<?= $p['image_url'] ? "background-image:url('".e($p['image_url'])."');background-size:cover;background-position:center;" : '' ?>">
             <!-- Compare checkbox overlay -->
             <div style="position:absolute;top:8px;right:8px" onclick="event.stopPropagation()">
                 <label style="background:rgba(255,255,255,.9);padding:.2rem .5rem;border-radius:4px;font-size:.8rem;cursor:pointer">
@@ -282,8 +285,8 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="card-body">
             <div class="card-title"><?= e($p['name']) ?></div>
             <div class="card-meta">
-                <?php if ($p['city_name']): ?><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"></div><?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
-                <img src="<?= BASE_URL ?>/assets/building.PNG" width = "40" height="40"></div> <?= e($p['company_name']) ?>
+                <?php if ($p['city_name']): ?><img src="<?= BASE_URL ?>/assets/pin.PNG" width="16" height="16"> <?= e($p['city_name']) ?>, <?= e($p['country']) ?> &nbsp;·&nbsp;<?php endif; ?>
+                <img src="<?= BASE_URL ?>/assets/building.PNG" width="16" height="16"> <?= e($p['company_name']) ?>
             </div>
             <?php if ($p['description']): ?>
                 <p style="font-size:.87rem;color:var(--clr-text-muted);margin-bottom:.75rem">
@@ -300,7 +303,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </div>
             </div>
             <?php if ($p['duration_days']): ?>
-                <p class="text-muted mt-1" style="font-size:.82rem"><img src="<?= BASE_URL ?>/assets/clock.PNG" width = "40" height="40"></div> <?= (int)$p['duration_days'] ?> days</p>
+                <p class="text-muted mt-1" style="font-size:.82rem"><img src="<?= BASE_URL ?>/assets/clock.PNG" width="16" height="16"> <?= (int)$p['duration_days'] ?> days</p>
             <?php endif; ?>
             <div style="margin-top:.9rem;display:flex;gap:.5rem">
                 <a href="<?= BASE_URL ?>/traveller/package_detail.php?id=<?= $p['package_id'] ?>" class="btn btn-outline btn-sm">Details</a>

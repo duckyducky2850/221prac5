@@ -87,7 +87,11 @@ require_once __DIR__ . '/../includes/header.php';
 
 <!--Left: Main content-->
 <div>
-    <div class="card-img-placeholder" style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;font-size:4rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/globe.PNG" width = "40" height="40"></div></div>
+    <?php if (!empty($pkg['image_url'])): ?>
+        <div style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;background-image:url('<?= e($pkg['image_url']) ?>');background-size:cover;background-position:center"></div>
+    <?php else: ?>
+        <div class="card-img-placeholder" style="height:280px;border-radius:var(--radius-md);margin-bottom:1.5rem;font-size:4rem">🌏</div>
+    <?php endif; ?>
 
     <h1 style="font-family:var(--font-display);font-size:2rem;color:var(--clr-primary);margin-bottom:.4rem"><?= e($pkg['name']) ?></h1>
     <p class="text-muted mb-2">By <?= e($pkg['company_name']) ?></p>
@@ -238,7 +242,6 @@ require_once __DIR__ . '/../includes/header.php';
         <?php if ($pkg['contact_number']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/phone.PNG" width = "40" height="40"></div> <?= e($pkg['contact_number']) ?></p><?php endif; ?>
         <?php if ($pkg['website']): ?><p style="font-size:.88rem"><a href="<?= e($pkg['website']) ?>" target="_blank"><img src="<?= BASE_URL ?>/assets/website.PNG" width="20" height="20"> Website</a></p><?php endif; ?>
         <?php if ($pkg['country']): ?><p class="text-muted" style="font-size:.88rem"><div class="card-img-placeholder" style="height:120px"><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"></div> <?= e($pkg['country']) ?></p><?php endif; ?>
-        <a href="<?= BASE_URL ?>/traveller/packages.php?agency_id=<?= $pkg['agency_id'] ?>" class="btn btn-outline btn-sm mt-2">More from this agency</a>
     </div>
 
     <!-- Quick stats -->

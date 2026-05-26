@@ -110,7 +110,7 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="form-group">
             <label>Rating</label>
             <div class="stars-input">
-                <?php for ($i=5;$i>=1;$i--): ?>
+                <?php for ($i=1;$i<=5;$i++): ?>
                 <input type="radio" id="star<?=$i?>" name="rating" value="<?=$i?>">
                 <label for="star<?=$i?>">★</label>
                 <?php endfor; ?>

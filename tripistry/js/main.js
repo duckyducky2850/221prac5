@@ -73,20 +73,20 @@ function initTabs()
 /* ── Star rating widget ─────────────────────────────────────── */
 function initStarRatings() {
     document.querySelectorAll('.stars-input').forEach(widget => {
-        const labels = widget.querySelectorAll('label');
+        const labels = Array.from(widget.querySelectorAll('label'));
+        const inputs = Array.from(widget.querySelectorAll('input'));
+
         labels.forEach((lbl, i) => {
             lbl.addEventListener('mouseenter', () => {
                 labels.forEach((l, j) => {
-                    l.style.color = j >= labels.length - 1 - i
-                        ? 'var(--clr-accent)' : 'var(--clr-border)';
+                    l.style.color = j <= i ? 'var(--clr-accent)' : 'var(--clr-border)';
                 });
             });
             lbl.addEventListener('mouseleave', () => {
                 const checked = widget.querySelector('input:checked');
-                const val = checked ? parseInt(checked.value) : 0;
+                const val = checked ? parseInt(checked.value) - 1 : -1;
                 labels.forEach((l, j) => {
-                    l.style.color = j >= labels.length - val
-                        ? 'var(--clr-accent)' : 'var(--clr-border)';
+                    l.style.color = j <= val ? 'var(--clr-accent)' : 'var(--clr-border)';
                 });
             });
         });
@@ -194,7 +194,7 @@ function updateCompareBar() {
     }
     bar.innerHTML = `<span>Comparing ${compareList.size} package(s)</span>
         <div style="display:flex;gap:.5rem">
-            <a href="/traveller/packages.php?compare=${[...compareList].join(',')}"
+            <a href="/tripistry/traveller/packages.php?compare=${[...compareList].join(',')}"
                class="btn btn-accent btn-sm">Compare Now</a>
             <button onclick="clearCompare()" class="btn btn-outline btn-sm"
                     style="color:#fff;border-color:#fff">Clear</button>
