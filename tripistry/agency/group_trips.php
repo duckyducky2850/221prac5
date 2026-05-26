@@ -35,8 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'updat
         if (in_array($status, $valid)) {
             $stmt = $db->prepare("UPDATE group_trip SET status=? WHERE group_trip_id=? AND agency_id=?");
             $result = $stmt->execute([$status, $gid, $agency_id]);
-            if (!$result) { set_flash('error', 'query no go database'); }
-            //set_flash('success','Status updated.');
+            set_flash('success','Status updated.');
         }
     }
     header('Location: ' . BASE_URL . '/agency/group_trips.php'); exit;
