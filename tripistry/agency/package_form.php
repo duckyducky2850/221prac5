@@ -51,14 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             {
                 if ($edit_id) 
                 {
-                    $stmt = $db->prepare("UPDATE travel_package SET name=?,description=?,base_price=?,duration_days=? WHERE package_id=? AND agency_id=?");
-                    $stmt->execute([$name, $description ?: null, $base_price, $duration ?: null, $edit_id, $agency_id]);
+                    $stmt = $db->prepare("UPDATE travel_package SET destination_id=?,name=?,description=?,base_price=?,duration_days=? WHERE package_id=? AND agency_id=?");
+                    $stmt->execute([(int)($_POST['destination_id'] ?? 0), $name, $description ?: null, $base_price, $duration ?: null, $edit_id, $agency_id]);
                     $pid = $edit_id;
                     // Clearing and re inserting components
                     $db->prepare("DELETE FROM package_component WHERE package_id=?")->execute([$pid]);
                 } else {
-                    $stmt = $db->prepare("INSERT INTO travel_package (agency_id,name,description,base_price,duration_days) VALUES (?,?,?,?,?)");
-                    $stmt->execute([$agency_id, $name, $description ?: null, $base_price, $duration ?: null]);
+                    $stmt = $db->prepare("INSERT INTO travel_package (agency_id,destination_id,name,description,base_price,duration_days) VALUES (?,?,?,?,?,?)");
+                    $stmt->execute([$agency_id, (int)($_POST['destination_id'] ?? 0), $name, $description ?: null, $base_price, $duration ?: null]);
                     $pid = (int)$db->lastInsertId();
                 }
 
@@ -88,6 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         }
     }
 }
+
+// Destination dropdown
+$dest_options = $db->query("SELECT destination_id, city_name, country FROM destination ORDER BY city_name")->fetchAll();
 
 // Component options for our dropdowns
 $flights = $db->prepare("SELECT flight_id AS id, CONCAT(flight_number,' – ',airline) AS label FROM flight WHERE agency_id=?"); $flights->execute([$agency_id]);
@@ -127,6 +130,19 @@ require_once __DIR__ . '/../includes/header.php';
                 <label for="description">Description</label>
                 <textarea id="description" name="description" class="form-control" rows="3"><?= e($_POST['description'] ?? $pkg['description'] ?? '') ?></textarea>
             </div>
+            <div class="form-group">
+    <label for="destination_id">Destination *</label>
+    <select id="destination_id" name="destination_id" class="form-control" required>
+        <option value="">— Select Destination —</option>
+        <?php foreach ($dest_options as $dest): ?>
+            <option value="<?= $dest['destination_id'] ?>"
+                <?= (($_POST['destination_id'] ?? $pkg['destination_id'] ?? '') == $dest['destination_id']) ? 'selected' : '' ?>>
+                <?= e($dest['city_name']) ?>, <?= e($dest['country']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
                 <div class="form-group">
                     <label for="base_price">Base Price (R) *</label>

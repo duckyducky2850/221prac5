@@ -31,7 +31,7 @@ $packages = $db->query("
 
 // Popular destinations
 $destinations = $db->query("
-    SELECT d.destination_id, d.city_name, d.country, COALESCE(d.image_url, tp.image_url) AS image_url, d.popular_season,
+    SELECT d.destination_id, d.city_name, d.country, d.image_url, d.popular_season,
            COUNT(DISTINCT a.accommodation_id) AS accom_count
     FROM destination d
     LEFT JOIN accommodation a ON a.destination_id = d.destination_id
@@ -132,7 +132,11 @@ require_once __DIR__ . '/includes/header.php';
     <?php foreach ($destinations as $d): ?>
     <a href="<?= BASE_URL ?>/traveller/destinations.php?id=<?= $d['destination_id'] ?>" style="text-decoration:none;color:inherit">
     <div class="card">
-        <div class="card-img-placeholder" style="height:130px"><img src="<?= BASE_URL ?>/assets/HolidayPlaceholder.PNG" width = "130"></div>
+        <?php if (!empty($d['image_url'])): ?>
+            <div class="card-img-placeholder" style="height:130px;background-image:url('<?= e($d['image_url']) ?>');background-size:cover;background-position:center"></div>
+        <?php else: ?>
+            <div class="card-img-placeholder" style="height:130px"><img src="<?= BASE_URL ?>/assets/HolidayPlaceholder.PNG" width="130"></div>
+        <?php endif; ?>
         <div class="card-body" style="padding:.9rem">
             <div class="card-title" style="font-size:1rem"><?= e($d['city_name']) ?></div>
             <div class="card-meta"><img src="<?= BASE_URL ?>/assets/pin.PNG" width = "40" height="40"><?= e($d['country']) ?></div>

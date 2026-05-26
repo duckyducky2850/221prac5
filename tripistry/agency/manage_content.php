@@ -134,10 +134,10 @@ function dest_options(array $destinations, int $selected=0): string {
 
 <div class="tabs">
     <?php foreach ([
-        'flights'       => ['label' => 'Flights',   'icon' => '<?= BASE_URL ?>/assets/plane.png'],
-        'accommodation' => ['label' => 'Stays',      'icon' => '<?= BASE_URL ?>/assets/map.png'],
-        'transport'     => ['label' => 'Transport',  'icon' => '<?= BASE_URL ?>/assets/transport.png'],
-        'activities'    => ['label' => 'Activities', 'icon' => '<?= BASE_URL ?>/assets/img/attractions.png'],
+        'flights' => ['label' => 'Flights', 'icon' => BASE_URL . '/assets/plane.PNG'],
+        'accommodation' => ['label' => 'Stays', 'icon' => BASE_URL . '/assets/stays.PNG'],
+        'transport' => ['label' => 'Transport', 'icon' => BASE_URL . '/assets/transport.PNG'],
+        'activities' => ['label' => 'Activities', 'icon' => BASE_URL . '/assets/attractions.PNG'],
     ] as $t => $item): ?>
     <button class="tab-btn <?= $active_tab === $t ? 'active' : '' ?>" data-tab="<?= $t ?>">
         <img src="<?= $item['icon'] ?>" alt="<?= $item['label'] ?>">
