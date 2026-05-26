@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delet
     }
     else {
         $gid = (int)$_POST['group_trip_id'];
-        $db->prepare("DELETE FROM group_trip WHERE group_trip_id=? AND agency_id=?")->execute([$gid, $agency_id]);
+        $stmt = $db->prepare("DELETE FROM group_trip WHERE group_trip_id=? AND agency_id=?");
+        $result = $stmt->execute([$gid, $agency_id]);
         set_flash('success','Group trip deleted.');
     }
     header('Location: ' . BASE_URL . '/agency/group_trips.php'); exit;
@@ -32,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'updat
         $status = $_POST['status'] ?? '';
         $valid  = ['open','full','cancelled','completed'];
         if (in_array($status, $valid)) {
-            $db->prepare("UPDATE group_trip SET status=? WHERE group_trip_id=? AND agency_id=?")->execute([$status, $gid, $agency_id]);
+            $stmt = $db->prepare("UPDATE group_trip SET status=? WHERE group_trip_id=? AND agency_id=?");
+            $result = $stmt->execute([$status, $gid, $agency_id]);
             set_flash('success','Status updated.');
         }
     }
